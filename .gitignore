@@ -1,0 +1,21 @@
+# .NET C#
+/bin/
+/obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.csproj.user
+*.vcxproj.user
+
+# VS Code
+.vscode/
+
+# JetBrains Rider
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
