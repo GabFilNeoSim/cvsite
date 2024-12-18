@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using Web.Data;
+
 namespace Web;
 
 public class Program
@@ -6,6 +9,10 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+        builder.Services.AddDbContext<AppDbContext>(o => o.UseLazyLoadingProxies().UseSqlServer(connectionString));
+        
         // Add services to the container.
         builder.Services.AddControllersWithViews();
 
@@ -18,7 +25,7 @@ public class Program
             // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
         }
-
+        
         app.UseHttpsRedirection();
         app.UseStaticFiles();
 
