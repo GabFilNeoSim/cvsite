@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Web.Models;
+using Data.Models;
 
-namespace Web.Data;
+namespace Data.Contexts;
 
 public partial class AppDbContext : DbContext
 {

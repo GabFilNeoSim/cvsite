@@ -7,35 +7,35 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="Migrations\**" />
+      <Compile Remove="ViewModels\**" />
+      <Content Remove="Migrations\**" />
+      <Content Remove="ViewModels\**" />
+      <EmbeddedResource Remove="Migrations\**" />
+      <EmbeddedResource Remove="ViewModels\**" />
+      <None Remove="Migrations\**" />
+      <None Remove="ViewModels\**" />
+    </ItemGroup>
+
+    <ItemGroup>
       <Compile Remove="Views\Auth\Login.cs" />
       <Compile Remove="Views\Auth\Register.cs" />
     </ItemGroup>
 
     <ItemGroup>
       <None Remove="Controllers\NewFile.txt" />
-      <None Remove="Data\NewFile.txt" />
       <None Remove="Views\Auth\NewFile.txt" />
       <None Remove="Views\Messages\NewFile.txt" />
       <None Remove="Views\Profile\NewFile.txt" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
-        <PrivateAssets>all</PrivateAssets>
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      </PackageReference>
       <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="9.0.0" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0">
-        <PrivateAssets>all</PrivateAssets>
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      </PackageReference>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Migrations\" />
-      <Folder Include="ViewModels\" />
+      <ProjectReference Include="..\Data\Data.csproj" />
     </ItemGroup>
 
 </Project>

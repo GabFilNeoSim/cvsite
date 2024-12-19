@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Web.Data;
+using Data.Contexts;
 
 namespace Web;
 

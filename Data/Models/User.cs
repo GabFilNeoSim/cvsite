@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Web.Models;
+namespace Data.Models;
 
 public class User
 {
