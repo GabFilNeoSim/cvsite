@@ -1,10 +1,12 @@
-﻿
-#profile-container {
+﻿#profile-container {
     width: 80%;
-    margin: 0 auto;
+    margin: 20px auto 0 auto;
     display: flex;
     flex-direction: column;
     gap: 30px;
+    background-color: rgb(255, 255, 255);
+    padding: 45px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }
 
 #profile-header {
@@ -12,8 +14,9 @@
     flex-direction: row;
     align-items: center;
     gap: 15px;
-    padding: 20px 0;
+    padding: 20px 0 50px 0;
     /* background-color: red; */
+    border-bottom: 1px solid rgb(212, 212, 212);
 }
 
 #profile-avatar {
@@ -21,8 +24,20 @@
     align-self: center;
 }
 
+#profile-content {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
 #profile-info {
     height: max-content;
+    width: 50%;
+    border-right: 1px solid rgb(212, 212, 212);
+}
+
+#profile-info-header {
+    display: flex;
 }
 
 #profile-location {
@@ -35,8 +50,53 @@
         align-self: center;
     }
 
+#profile-edit-btn {
+    background-color: #5289ff;
+    height: max-content;
+    margin: auto 50px auto auto;
+    color: #fff;
+    padding: 7px 15px;
+    border-radius: 50px;
+}
+
+    #profile-edit-btn:hover {
+        background-color: #4172da;
+        transition: all 0.3s;
+        cursor: pointer;
+    }
+
 #profile-desc {
-    width: 50%;
+    width: 80%;
+}
+
+#profile-stats {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    margin: 0 auto;
+}
+
+.profile-stats-child {
+    display: flex;
+    flex-direction: row;
+}
+
+    .profile-stats-child img {
+        align-self: center;
+    }
+
+.profile-stats-child-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.profile-stats-child-amount {
+    font-weight: bolder;
+}
+
+.profile-stats-child-title {
+    color: rgb(88, 88, 88);
 }
 
 #profile-body {
@@ -45,13 +105,14 @@
 #profile-experience-parent {
     display: flex;
     flex-direction: row;
-    gap: 30px;
+    gap: 70px;
 }
 
 .profile-experience-child {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    width: 50%;
 }
 
 /* Roadmap */
@@ -79,7 +140,7 @@
     .roadmap-progress::before {
         position: absolute;
         content: "";
-        border: 2px solid blue;
+        border: 2px solid #5289ff;
         width: 15px;
         height: 15px;
         top: -17px;
@@ -96,11 +157,11 @@
 }
 
 .roadmap-date {
-    background-color: rgb(82, 137, 255);
+    background-color: #5289ff;
     width: max-content;
     padding: 5px 15px;
     margin: 10px 0;
-    color: var(--white);
+    color: #fff;
 }
 
 .roadmap-place {
@@ -112,10 +173,41 @@
 }
 
 
+@media only screen and (max-width: 950px) {
+    #profile-info {
+        width: 100%;
+        border-right: none;
+    }
+
+    #profile-content {
+        flex-direction: column;
+    }
+
+    #profile-stats {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    #profile-edit-btn {
+        margin: auto 0px auto auto;
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    #profile-stats {
+        flex-direction: column;
+        gap: 0;
+    }
+}
+
 @media only screen and (max-width: 600px) {
     #profile-experience-parent {
         flex-direction: column;
         gap: 40px;
+    }
+
+    .profile-experience-child {
+        width: 100%;
     }
 }
 
@@ -125,7 +217,7 @@
     }
 }
 
-@media only screen and (max-width: 470px) {
+@media only screen and (max-width: 530px) {
     #profile-header {
         flex-direction: column;
     }
