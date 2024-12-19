@@ -1,56 +1,93 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 using Web.Models;
+using Models;
 
 namespace Web.Controllers;
 
 public class AuthController : Controller
 {
-    private readonly ILogger<AuthController> _logger;
-    // private readonly UserManager<IdentityUser> _userManager;
-    // private readonly SignInManager<IdentityUser> _signInManager;
+    private readonly UserManager<User> _userManager;
+    private readonly SignInManager<User> _signInManager;
 
-    public AuthController(ILogger<AuthController> logger)
+    public AuthController
+    (
+        UserManager<User> userManager,
+        SignInManager<User> signInManager
+    )
     {
-        _logger = logger;
-        // _userManager = userManager;
-        // _signInManager = signInManager;
+        _userManager = userManager;
+        _signInManager = signInManager;
     }
-    
+
     [HttpGet] // GET /auth/register
-    public async Task<IActionResult> Register()
-    {
-        return View();
-    }
+    public IActionResult Register() => View(new RegisterViewModel());
 
     [HttpPost] // POST /auth/register
-    public async Task<IActionResult> Register2() // ViewModel
+    public async Task<IActionResult> Register(RegisterViewModel model)
     {
-        return View();
+        User newUser = new User
+        {   
+            UserName = model.Email,
+            FirstName = model.FirstName,
+            LastName = model.LastName,
+            Email = model.Email,
+            Address = model.Address
+        };
+
+        var result = await _userManager.CreateAsync(newUser, model.Password);
+
+        if (!result.Succeeded)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+            return View(model);
+        }
+
+        await _signInManager.SignInAsync(newUser, isPersistent: true);
+
+        return RedirectToAction("Index", "Profile");
     }
 
     [HttpGet] // GET /auth/login
-    public async Task<IActionResult> Login()
-    {
-        return View();
-    }
+    public IActionResult Login() => View(new LoginViewModel());
 
-    [HttpPost] // POST /auth/login
-    public async Task<IActionResult> Login2() // ViewModel
+    [HttpPost]
+    public async Task<IActionResult> Login(LoginViewModel model)
     {
-        return View();
-    }
+        if (!ModelState.IsValid) return View(model);
+    
+        User? user = await _userManager.FindByEmailAsync(model.Email);
+        if (user == null)
+        {
+            ModelState.AddModelError(string.Empty, "Wrong email or password");
+            return View(model);
+        }
 
-    [HttpGet] // GET /auth/logout
-    public async Task<IActionResult> Logout()
-    {
-        return View();
+        var result = await _signInManager.PasswordSignInAsync(
+            user,
+            model.Password,
+            isPersistent: model.RememberMe,
+            lockoutOnFailure: false
+        );
+
+        if (!result.Succeeded)
+        {
+            ModelState.AddModelError(string.Empty, "Wrong email or password");
+            return View(model);
+        }
+
+        return RedirectToAction("Index", "Profile");
     }
 
     [HttpPost] // POST /auth/logout
-    public async Task<IActionResult> Logout2() // ViewModel
+    public async Task<IActionResult> Logout()
     {
-        return View();
+        await _signInManager.SignOutAsync();
+        return RedirectToAction("Index", "Home");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

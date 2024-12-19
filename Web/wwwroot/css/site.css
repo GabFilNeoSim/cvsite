@@ -22,8 +22,48 @@ body {
     font-family: "Segoe UI", Tahoma, "Geneva", Verdana, sans-serif;
 }
 
-
 * {
     margin: 0;
     padding: 0;
+}
+
+header {
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0.5rem 2rem;
+    gap: 2rem;
+}
+
+.logo {
+    margin-right: auto;
+}
+
+.message {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.inbox {
+    background-color: hsl(0, 0%, 90%);
+    padding: 0.5rem;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.avatar {
+    object-fit: cover;
+    overflow: hidden;
+    border-radius: 15px;
+    width: 30px;
+    height: 30px;
 }

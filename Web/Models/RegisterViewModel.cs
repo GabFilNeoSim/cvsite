@@ -1,0 +1,34 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Web.Models
+{
+    public class RegisterViewModel
+    {   
+        [Required(ErrorMessage = "First name is required")]
+        [RegularExpression("^[a-zA-ZåäöÅÄÖ]+$", ErrorMessage = "Only letters are allowed, no special characters.")]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Last name is required")]
+        [RegularExpression("^[a-zA-ZåäöÅÄÖ]+$", ErrorMessage = "Only letters are allowed, no special characters.")]
+        public string LastName { get; set; }
+
+        [Required(ErrorMessage = "Email is required")]
+        [EmailAddress(ErrorMessage = "Invalid email address")]
+        [DataType(DataType.EmailAddress)]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "Password is required")]
+        [DataType(DataType.Password)]
+        [Compare("ConfirmPassword")]
+        public string Password { get; set; }
+
+        [Required(ErrorMessage = "Passwords must match")]
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        public string ConfirmPassword { get; set; }
+
+        [Required(ErrorMessage = "Address is required")]
+        [RegularExpression("^[a-zA-ZåäöÅÄÖ0-9\\s\\-,]+$", ErrorMessage = "Address can only contain letters, numbers, spaces, commas, and hyphens.")]
+        public string Address { get; set; }
+    }
+}

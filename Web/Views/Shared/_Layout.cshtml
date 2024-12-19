@@ -5,12 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"] - CSSITE</title>
     @* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/> *@
+    <script src="https://kit.fontawesome.com/4e3e087dd4.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/css/profile.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Web.styles.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/form.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/header.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Web.styles.css" asp-append-version="true" />
 </head>
 <body>
-<header>
+@* <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container-fluid">
             <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CVSITE</a>
@@ -26,17 +29,42 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Project" asp-action="Index">Project</a>
                     </li>
-                     @* If !isAuthenticated: *@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Login">Login</a>
                     </li>
-                    @* Else /profile *@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Profile" asp-action="Index">Profile</a>
                     </li>
                 </ul>
             </div>
         </div>
+    </nav>
+</header> *@
+<header>
+    <nav>
+        <a class="logo" asp-action="Index"> CV-Site </a>
+        <div class="message"> 
+            <a asp-controller="Messages" asp-action="Index"> Messages</a>
+            <i class="fa-regular fa-envelope"></i>
+            <div class="inbox">
+                <p> 7 </p>
+            </div>
+        </div>
+        <a asp-controller="Project" asp-action="Index"> Project </a>
+        @if (!User.Identity.IsAuthenticated) {
+            <a asp-controller="Auth" asp-action="Login"> Login </a>
+        }
+        else
+        {
+            <form asp-controller="Auth" asp-action="Logout">
+                <button type="submit">Logout</button>
+            </form>
+            <div class="profile">
+                <a asp-controller="Profile" asp-action="Index"> Profile </a>
+                <img src=`/assets/${User.Avatar}` class="avatar" />
+            </div>
+        }
+
     </nav>
 </header>
 <div class="container">

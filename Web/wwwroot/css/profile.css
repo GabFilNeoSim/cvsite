@@ -45,10 +45,10 @@
     margin: 4px 0 10px 0;
 }
 
-    #profile-location img {
-        width: 20px;
-        align-self: center;
-    }
+#profile-location img {
+    width: 20px;
+    align-self: center;
+}
 
 #profile-edit-btn {
     background-color: #5289ff;
@@ -81,9 +81,9 @@
     flex-direction: row;
 }
 
-    .profile-stats-child img {
-        align-self: center;
-    }
+.profile-stats-child img {
+    align-self: center;
+}
 
 .profile-stats-child-text {
     display: flex;
@@ -99,9 +99,6 @@
     color: rgb(88, 88, 88);
 }
 
-#profile-body {
-}
-
 #profile-experience-parent {
     display: flex;
     flex-direction: row;
@@ -115,7 +112,6 @@
     width: 50%;
 }
 
-/* Roadmap */
 .roadmap-parent {
     display: flex;
     flex-direction: column;
@@ -126,7 +122,6 @@
     display: flex;
     flex-direction: row;
     position: relative;
-    /* background-color: red; */
 }
 
 .roadmap-progress {
@@ -137,17 +132,17 @@
     top: 20px;
 }
 
-    .roadmap-progress::before {
-        position: absolute;
-        content: "";
-        border: 2px solid #5289ff;
-        width: 15px;
-        height: 15px;
-        top: -17px;
-        left: 50%;
-        transform: translateX(-50%);
-        border-radius: 50%;
-    }
+.roadmap-progress::before {
+    position: absolute;
+    content: "";
+    border: 2px solid #5289ff;
+    width: 15px;
+    height: 15px;
+    top: -17px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 50%;
+}
 
 .roadmap-content {
     padding: 0 20px;

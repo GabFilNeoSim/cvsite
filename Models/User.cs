@@ -1,23 +1,26 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
-namespace Data.Models;
+namespace Models;
 
-public class User
+public class User : IdentityUser
 {
-    public int Id { get; set; }
-
+    [Required]
     [MaxLength(100)]
-    public string Firstname { get; set; }
+    public string FirstName { get; set; }
 
+    [Required]
     [MaxLength(100)]
-    public string Lastname { get; set; }
+    public string LastName { get; set; }
 
+    [Required]
     public string Address { get; set; }
 
-    public string AvatarUri { get; set; }   
+    public string? AvatarUri { get; set; }
 
-    public bool Private { get; set; }
+    public bool Private { get; set; } = false;
 
+    // Navigation
     public virtual List<Skill> Skills { get; set; } = [];
 
     public virtual List<Qualification> Qualifications { get; set; } = [];

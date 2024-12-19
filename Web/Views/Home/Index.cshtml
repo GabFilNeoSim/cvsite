@@ -2,17 +2,21 @@
     ViewData["Title"] = "Home";
 }
 
-@using Data.Models
+@using Models
 @model List<User>
 
 <h1> Utforska CV </h1>
 
 @foreach (User user in Model)
 {
-    <p>@user.Firstname</p>
+    <p>@user.FirstName</p>
     <p>Skdills:</p>
     @foreach (Skill skill in user.Skills)
     {
         <p>@skill.Title</p>
     }
+}
+
+@if (User.Identity.IsAuthenticated) {
+    <p>LOGGED IN</p>
 }

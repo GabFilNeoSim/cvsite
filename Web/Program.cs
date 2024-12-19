@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Data.Contexts;
+using Models;
 
 namespace Web;
 
@@ -11,9 +13,30 @@ public class Program
 
         var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
+        // EntityFramework
         builder.Services.AddDbContext<AppDbContext>(o => o.UseLazyLoadingProxies()
             .UseSqlServer(connectionString, options => options.MigrationsAssembly("Data")));
 
+        // Identiy
+        builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+
+        builder.Services.ConfigureApplicationCookie(options =>
+        {
+            options.ExpireTimeSpan = TimeSpan.FromDays(7); // Cookie lifespan
+            options.SlidingExpiration = true; // Extends the cookie expiration on activity
+            options.LoginPath = "/Auth/Login"; // Redirect to login page if not authenticated
+            options.AccessDeniedPath = "/Auth/Login"; // Redirect to access denied page
+        });
+
+        builder.Services.Configure<IdentityOptions>(options =>
+        {
+            options.Password.RequireDigit = false;
+            options.Password.RequireLowercase = false;
+            options.Password.RequireNonAlphanumeric = false;
+            options.Password.RequireUppercase = false;
+            options.Password.RequiredLength = 1;
+            options.Password.RequiredUniqueChars = 1;
+        });
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();
@@ -32,6 +55,9 @@ public class Program
         app.UseStaticFiles();
 
         app.UseRouting();
+
+        // Identity authentication
+        app.UseAuthentication();
 
         app.UseAuthorization();
 

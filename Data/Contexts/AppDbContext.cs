@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Data.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Models;
 
 namespace Data.Contexts;
 
-public partial class AppDbContext : DbContext
+public partial class AppDbContext : IdentityDbContext<User>
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
     
@@ -21,6 +22,8 @@ public partial class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+
         modelBuilder.Entity<Project>()
             .HasOne(p => p.Owner)
             .WithMany()
@@ -45,6 +48,6 @@ public partial class AppDbContext : DbContext
             .OnDelete(DeleteBehavior.NoAction);
 
         // Example data
-        LoadExampleData(modelBuilder);
+        // LoadExampleData(modelBuilder);
     }
 }

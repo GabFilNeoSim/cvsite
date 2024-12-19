@@ -1,1 +1,41 @@
-﻿
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+@model LoginViewModel
+
+<div asp-validation-summary="All"></div>
+
+<div class="form-container">
+    <div class="form-wrapper">
+        <div class="form-header">
+            <h2>Log in</h2>
+        </div>
+        <div class="form-content">
+            <form class="form" asp-action="Login">
+                <div class="form-child">
+                    <label>Email address</label>
+                    <div class="form-child-input">
+                        <div><i class="fa-solid fa-envelope"></i></div>
+                        <input type="text" placeholder="Enter email" asp-for="Email">
+                    </div>
+                </div>
+                <div class="form-child">
+                    <label>Password</label>
+                    <div class="form-child-input">
+                        <div><i class="fa-solid fa-lock"></i></div>
+                        <input type="password" placeholder="Password" asp-for="Password">
+                    </div>
+                </div>
+                <div class="remember">
+                    <input type="checkbox" asp-for="RememberMe">
+                    <label>Remember me</label>
+                </div>
+                <button type="submit" class="submit">Login</button>
+                <div class="register-wrapper">
+                    <a asp-controller="Auth" asp-action="Register">Don't have an account? Sign up here</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

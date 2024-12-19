@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Data.Models;
+namespace Models;
 
 public class Project
 {
@@ -12,7 +12,7 @@ public class Project
 
     public string Image { get; set; }
 
-    public int OwnerId { get; set; }
+    public string OwnerId { get; set; }
 
     [ForeignKey(nameof(OwnerId))]
     public virtual User Owner { get; set; }

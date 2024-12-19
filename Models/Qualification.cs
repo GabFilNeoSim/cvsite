@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Data.Models;
+namespace Models;
 
 public class Qualification
 {   
@@ -15,7 +15,8 @@ public class Qualification
     public DateOnly? EndDate { get; set; }
 
     public int TypeId { get; set; }
-    public int UserId {  get; set; }
+
+    public string UserId {  get; set; }
 
     [ForeignKey(nameof(TypeId))]
     public virtual QualificationType Type { get; set; }

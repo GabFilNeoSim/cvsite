@@ -1,4 +1,4 @@
-﻿namespace Data.Models;
+﻿namespace Models;
 
 public class QualificationType
 {
