@@ -1,18 +1,14 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
-
 @model List<User>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h1> Utforska CV </h1>
 
 @foreach (User user in Model)
 {
     <p>@user.Firstname</p>
-    <p>Skills:</p>
+    <p>Skdills:</p>
     @foreach (Skill skill in user.Skills)
     {
         <p>@skill.Title</p>
