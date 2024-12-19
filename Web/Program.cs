@@ -11,8 +11,10 @@ public class Program
 
         var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-        builder.Services.AddDbContext<AppDbContext>(o => o.UseLazyLoadingProxies().UseSqlServer(connectionString));
-        
+        builder.Services.AddDbContext<AppDbContext>(o => o.UseLazyLoadingProxies()
+            .UseSqlServer(connectionString, options => options.MigrationsAssembly("Data")));
+
+
         // Add services to the container.
         builder.Services.AddControllersWithViews();
 
