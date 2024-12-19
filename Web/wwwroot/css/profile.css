@@ -1,0 +1,132 @@
+﻿
+#profile-container {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+#profile-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+    padding: 20px 0;
+    /* background-color: red; */
+}
+
+#profile-avatar {
+    width: 130px;
+    align-self: center;
+}
+
+#profile-info {
+    height: max-content;
+}
+
+#profile-location {
+    display: flex;
+    margin: 4px 0 10px 0;
+}
+
+    #profile-location img {
+        width: 20px;
+        align-self: center;
+    }
+
+#profile-desc {
+    width: 50%;
+}
+
+#profile-body {
+}
+
+#profile-experience-parent {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
+
+.profile-experience-child {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Roadmap */
+.roadmap-parent {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.roadmap-child {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    /* background-color: red; */
+}
+
+.roadmap-progress {
+    background-color: black;
+    width: 3px;
+    min-height: calc(100% + 5px);
+    position: absolute;
+    top: 20px;
+}
+
+    .roadmap-progress::before {
+        position: absolute;
+        content: "";
+        border: 2px solid blue;
+        width: 15px;
+        height: 15px;
+        top: -17px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 50%;
+    }
+
+.roadmap-content {
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+}
+
+.roadmap-date {
+    background-color: rgb(82, 137, 255);
+    width: max-content;
+    padding: 5px 15px;
+    margin: 10px 0;
+    color: var(--white);
+}
+
+.roadmap-place {
+    margin-bottom: 10px;
+}
+
+.roadmap-strong {
+    font-weight: bold;
+}
+
+
+@media only screen and (max-width: 600px) {
+    #profile-experience-parent {
+        flex-direction: column;
+        gap: 40px;
+    }
+}
+
+@media only screen and (max-width: 830px) {
+    #profile-desc {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 470px) {
+    #profile-header {
+        flex-direction: column;
+    }
+}
