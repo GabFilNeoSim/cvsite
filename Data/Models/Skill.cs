@@ -1,4 +1,4 @@
-﻿namespace Web.Models;
+﻿namespace Data.Models;
 
 public class Skill
 {
