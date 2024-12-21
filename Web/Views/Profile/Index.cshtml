@@ -1,4 +1,10 @@
-﻿<div id="profile-container">
+﻿@{
+    ViewData["Title"] = "Profile";
+}
+
+@model User
+
+<div id="profile-container">
     <div id="profile-header">
         <img id="profile-avatar" src="https://cdn-icons-png.flaticon.com/512/3607/3607444.png">
 
@@ -7,10 +13,10 @@
             <div id="profile-info">
                 <div id="profile-info-header">
                     <div>
-                        <h2>Filip Siri</h2>
+                        <h2>@Model.FirstName @Model.LastName</h2>
                         <div id="profile-location">
                             <img src="~/assets/point.png">
-                            <p>Stockholm, Sverige</p>
+                            <p>@Model.Address</p>
                         </div>
                     </div>
                     <a id="profile-edit-btn">Edit profile</a>
@@ -78,9 +84,3 @@
         </div>
     </div>
 </div>
-
-<header>
-    <a class="logo"> länk 1</a>
-    <a> länk 2</a>
-    <a> länk 3</a>
- </header>

@@ -3,19 +3,9 @@
 }
 
 @using Models
-@model List<User>
 
 <h1> Utforska CV </h1>
 
-@foreach (User user in Model)
-{
-    <p>@user.FirstName</p>
-    <p>Skdills:</p>
-    @foreach (Skill skill in user.Skills)
-    {
-        <p>@skill.Title</p>
-    }
-}
 
 @if (User.Identity.IsAuthenticated) {
     <p>LOGGED IN</p>

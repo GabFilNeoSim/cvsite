@@ -21,10 +21,10 @@ public class AuthController : Controller
         _signInManager = signInManager;
     }
 
-    [HttpGet] // GET /auth/register
+    [HttpGet("auth/register")]
     public IActionResult Register() => View(new RegisterViewModel());
 
-    [HttpPost] // POST /auth/register
+    [HttpPost("auth/register")]
     public async Task<IActionResult> Register(RegisterViewModel model)
     {
         User newUser = new User
@@ -49,10 +49,10 @@ public class AuthController : Controller
 
         await _signInManager.SignInAsync(newUser, isPersistent: true);
 
-        return RedirectToAction("Index", "Profile");
+        return RedirectToAction("Index", "Profile", new { id = newUser.Id });
     }
 
-    [HttpGet] // GET /auth/login
+    [HttpGet("auth/login")]
     public IActionResult Login() => View(new LoginViewModel());
 
     [HttpPost]
@@ -80,10 +80,10 @@ public class AuthController : Controller
             return View(model);
         }
 
-        return RedirectToAction("Index", "Profile");
+        return RedirectToAction("Index", "Profile", new { id = user.Id });
     }
 
-    [HttpPost] // POST /auth/logout
+    [HttpPost("auth/logout")]
     public async Task<IActionResult> Logout()
     {
         await _signInManager.SignOutAsync();

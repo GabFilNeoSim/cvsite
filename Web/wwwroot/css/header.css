@@ -1,41 +1,72 @@
-﻿header{
-    width: 100vw;
-    background-color: red;
-}
-nav {
+﻿header nav {
     width: 90%;
     margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     padding: 0.5rem 2rem;
-    gap: 2rem;
+    gap: 3rem;
 }
-.logo{
+header a{
+    text-decoration: none;
+    color: hsl(0,0%, 10%);
+    font-size: 1.25rem;
+}
+header .logo{
     margin-right: auto;
+    font-size: 2rem;
 }
 
-.message{
-    display: flex;
+header .message{
+    position: relative;
+    display: flex; align-items: flex-end;
     gap: 0.5rem;
 }
+header i{
+    font-size: 1.5rem;
+    color: hsl(0, 0%, 20%);
+}
 
-.inbox{
-    background-color: hsl(0, 0%, 90%);
-    padding: 0.5rem;
-    border-radius: 10px;
-    width: 20px; height: 20px;
+header .inbox{
+    position: absolute; right: -15px; top: 10px;
+    background-color: #5289ff;
+    padding: 0.1rem;
+    border-radius: 15px;
+    width: 15px; height: 15px;
     display: flex; align-items: center; justify-content: center;
 }
 
-.profile{
+header .inbox p{
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: white;
+}
+
+header .profile{
     display: flex;
     gap: 0.5rem;
 }
 
-.avatar {
+header .avatar {
     object-fit: cover;
     overflow: hidden;
-    border-radius: 15px;
-    width: 30px; height: 30px;
+    border-radius: 30px;
+    width: 30px; height: 30px;  
+}
+
+header button {
+    background-color: transparent;
+    border: none;
+    font-size: 1.25rem;
+    color: hsl(0,0%, 10%);
+}
+header button:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: #5289ff;
+}
+header .login {
+    border: 2px solid #5289ff;
+    border-radius: 32px;
+    padding: 0rem 0.5rem 0.1rem 0.5rem;
 }
