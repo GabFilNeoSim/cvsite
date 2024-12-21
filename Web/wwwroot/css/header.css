@@ -1,4 +1,4 @@
-﻿header nav {
+﻿ header nav {
     width: 90%;
     margin: 0 auto;
     display: flex;
@@ -11,6 +11,10 @@ header a{
     text-decoration: none;
     color: hsl(0,0%, 10%);
     font-size: 1.25rem;
+}
+header a:not(.logo):hover{
+    text-decoration: underline;
+    text-decoration-color: #5289ff;
 }
 header .logo{
     margin-right: auto;

@@ -10,19 +10,8 @@ namespace Web.Controllers;
 
 public class ProfileController : BaseController
 {
-    private readonly ILogger<ProfileController> _logger;
-    private readonly AppDbContext _context;
-    private readonly UserManager<User> _userManager;
+    public ProfileController(AppDbContext context, UserManager<User> userManager) : base(context, userManager) { }
 
-    public ProfileController(
-        ILogger<ProfileController> logger,
-        AppDbContext context,
-        UserManager<User> userManager)
-    {
-        _logger = logger;
-        _context = context;
-        _userManager = userManager;
-    }
 
     [HttpGet("profile/{id}")]
     public async Task<IActionResult> Index(string id)

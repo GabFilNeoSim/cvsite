@@ -18,6 +18,8 @@ public class User : IdentityUser
 
     public string? AvatarUri { get; set; }
 
+    public string? Description { get; set; }
+
     public bool Private { get; set; } = false;
 
     // Navigation

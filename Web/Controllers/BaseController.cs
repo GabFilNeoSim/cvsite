@@ -1,32 +1,26 @@
-﻿using Data.Contexts;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Models;
 using System.Security.Claims;
+using Models;
+using Data.Contexts;
 
 public class BaseController : Controller
 {
-    private readonly AppDbContext _context;
+    protected readonly AppDbContext _context;
+    protected readonly UserManager<User> _userManager;
 
-    public BaseController(AppDbContext context)
+    public BaseController(AppDbContext context, UserManager<User> userManager)
     {
         _context = context;
+        _userManager = userManager;
     }
 
     public override void OnActionExecuting(ActionExecutingContext context)
     {
         if (User.Identity.IsAuthenticated)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            ViewData["UserId"] = userId;
-
-            var unreadMessageCount = ViewData["MessageCount"] = _context.Messages
-                .Where(m => m.ReceiverId == userId && m.Read == false)
-                .Count();
-
-            ViewData["UnreadMessagesCount"] = unreadMessageCount;
-
+            ViewData["UserId"] = User.FindFirstValue(ClaimTypes.NameIdentifier); ;
         }
 
         base.OnActionExecuting(context);
