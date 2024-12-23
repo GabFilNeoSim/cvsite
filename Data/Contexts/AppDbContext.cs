@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Data.Contexts;
 
-public partial class AppDbContext : IdentityDbContext<User>
+public class AppDbContext : IdentityDbContext<User>
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
@@ -77,19 +78,42 @@ public partial class AppDbContext : IdentityDbContext<User>
             .HasForeignKey(m => m.ReceiverId)
             .OnDelete(DeleteBehavior.NoAction);
 
+        var user = new User
+        {
+            Id = "bb29d713-9414-43fa-9c8e-65fa6ee39243",
+            FirstName = "Alice",
+            LastName = "Smith",
+            Address = "123 Main St",
+            AvatarUri = "avatar1.png",
+            Description = "desc1",
+            Private = false,
+            UserName = "alice.smith@example.com",
+            NormalizedUserName = "ALICE.SMITH@EXAMPLE.COM",
+            Email = "alice.smith@example.com",
+            NormalizedEmail = "ALICE.SMITH@EXAMPLE.COM",
+            EmailConfirmed = true,
+            PasswordHash = "", // 123
+            SecurityStamp = null,
+            ConcurrencyStamp = null,
+            PhoneNumber = null,
+            PhoneNumberConfirmed = false,
+            TwoFactorEnabled = false,
+            LockoutEnd = null,
+            LockoutEnabled = false,
+            AccessFailedCount = 0
+        };
 
-
-
-
+        modelBuilder.Entity<User>().HasData(
+            user
+        );
 
         // Users
-        modelBuilder.Entity<User>().HasData(
-            new User { Id = "d3f29f8c-5a1c-4b25-a05f-3e345d1e4b2e", FirstName = "Alice", LastName = "Smith", Address = "123 Main St", Email = "alice@example.com", PasswordHash = "hash1", AvatarUri = "avatar1.png", Private = false },
-            new User { Id = "a6e8482e-1d8a-4b7c-889b-bcd4ff3c9b1d", FirstName = "Bob", LastName = "Johnson", Address = "456 Oak Ave", Email = "bob@example.com", PasswordHash = "hash2", AvatarUri = "avatar2.png", Private = false },
-            new User { Id = "c438f5e2-72fc-491d-9111-5e1229e77a73", FirstName = "Charlie", LastName = "Brown", Address = "789 Pine Blvd", Email = "charlie@example.com", PasswordHash = "hash3", AvatarUri = "avatar3.png", Private = true },
-            new User { Id = "fe237f44-dff8-4d0d-99a6-8b56544d86e9", FirstName = "Diana", LastName = "White", Address = "321 Maple Ln", Email = "diana@example.com", PasswordHash = "hash4", AvatarUri = "avatar4.png", Private = false },
-            new User { Id = "b254b7d9-00e4-4cd6-a1e4-8339f2d881c5", FirstName = "Eve", LastName = "Davis", Address = "654 Elm Dr", Email = "eve@example.com", PasswordHash = "hash5", AvatarUri = "avatar5.png", Private = true }
-        );
+        //modelBuilder.Entity<User>().HasData(
+        //    new User { Id = "a6e8482e-1d8a-4b7c-889b-bcd4ff3c9b1d", FirstName = "Bob", LastName = "Johnson", Address = "456 Oak Ave", Email = "bob@example.com", PasswordHash = "hash2", AvatarUri = "avatar2.png", Private = false },
+        //    new User { Id = "c438f5e2-72fc-491d-9111-5e1229e77a73", FirstName = "Charlie", LastName = "Brown", Address = "789 Pine Blvd", Email = "charlie@example.com", PasswordHash = "hash3", AvatarUri = "avatar3.png", Private = true },
+        //    new User { Id = "fe237f44-dff8-4d0d-99a6-8b56544d86e9", FirstName = "Diana", LastName = "White", Address = "321 Maple Ln", Email = "diana@example.com", PasswordHash = "hash4", AvatarUri = "avatar4.png", Private = false },
+        //    new User { Id = "b254b7d9-00e4-4cd6-a1e4-8339f2d881c5", FirstName = "Eve", LastName = "Davis", Address = "654 Elm Dr", Email = "eve@example.com", PasswordHash = "hash5", AvatarUri = "avatar5.png", Private = true }
+        //);
 
         //// Projects
         //modelBuilder.Entity<Project>().HasData(
@@ -100,7 +124,7 @@ public partial class AppDbContext : IdentityDbContext<User>
         //    new Project { Id = 5, Title = "Project Epsilon", Description = "An advanced project.", Image = "image5.png", OwnerId = "b254b7d9-00e4-4cd6-a1e4-8339f2d881c5" }
         //);
 
-        //// Skills
+        // Skills
         //modelBuilder.Entity<Skill>().HasData(
         //    new Skill { Id = 1, Title = "C#" },
         //    new Skill { Id = 2, Title = "JavaScript" },
@@ -118,7 +142,7 @@ public partial class AppDbContext : IdentityDbContext<User>
         //    new UserSkill { UserId = "b254b7d9-00e4-4cd6-a1e4-8339f2d881c5", SkillId = 5 }
         //);
 
-        //// QualificationTypes
+        // QualificationTypes
         //modelBuilder.Entity<QualificationType>().HasData(
         //    new QualificationType { Id = 1, Name = "Bachelor's Degree" },
         //    new QualificationType { Id = 2, Name = "Master's Degree" },
