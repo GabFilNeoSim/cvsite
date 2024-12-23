@@ -6,6 +6,6 @@ public class Skill
 
     public string Title { get; set; }
 
-    public virtual List<User> Users { get; set; } = [];
+    public virtual ICollection<UserSkill> Users { get; set; } = [];
 }
 

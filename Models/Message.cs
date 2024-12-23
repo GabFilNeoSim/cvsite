@@ -12,16 +12,12 @@ public class Message
 
     public DateTime CreatedAt { get; set; }
 
-    public string AnonymousName { get; set; }
+    public string? AnonymousName { get; set; }
 
     public string SenderId { get; set; }
-    
-    public string ReceiverId { get; set; }
-
-    [ForeignKey(nameof(SenderId))]
     public virtual User Sender { get; set; }
 
-    [ForeignKey(nameof(ReceiverId))]
+    public string ReceiverId { get; set; }
     public virtual User Receiver { get; set; }
 }
 

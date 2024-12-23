@@ -6,6 +6,6 @@ public class QualificationType
 
     public string Name { get; set; }
 
-    public virtual List<Qualification> Qualifications { get; set; } = [];
+    public virtual ICollection<Qualification> Qualifications { get; set; } = [];
 }
 

@@ -23,9 +23,13 @@ public class User : IdentityUser
     public bool Private { get; set; } = false;
 
     // Navigation
-    public virtual List<Skill> Skills { get; set; } = [];
+    public virtual ICollection<UserSkill> Skills { get; set; } = [];
 
-    public virtual List<Qualification> Qualifications { get; set; } = [];
+    public virtual ICollection<Qualification> Qualifications { get; set; } = [];
 
-    public virtual List<Project> Projects { get; set; } = [];
+    public virtual ICollection<UserProject> Projects { get; set; } = [];
+
+    public virtual ICollection<Message> SentMessages { get; set; } = [];
+
+    public virtual ICollection<Message> ReceivedMessages { get; set; } = [];
 }

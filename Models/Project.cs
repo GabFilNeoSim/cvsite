@@ -17,5 +17,5 @@ public class Project
     [ForeignKey(nameof(OwnerId))]
     public virtual User Owner { get; set; }
 
-    public virtual List<User> Users { get; set; } = [];
+    public virtual ICollection<UserProject> Users { get; set; } = [];
 }
