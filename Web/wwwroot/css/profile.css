@@ -19,6 +19,37 @@
     border-bottom: 1px solid rgb(212, 212, 212);
 }
 
+#profile-avatar-parent {
+    position: relative;
+    width: 130px;
+    height: 130px;
+    align-self: center;
+    border-radius: 50%;
+}
+
+
+
+#profile-avatar-parent:hover #edit-profile {
+    opacity: 1;
+    cursor: pointer;
+}
+
+#edit-profile {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.4);
+    width: 100%;
+    color: #fff;
+    text-shadow: 0 0 5px black;
+    height: 100%;
+    border-radius: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: all 0.3s;
+    font-size: 25px;
+}
+
 #profile-avatar {
     width: 130px;
     align-self: center;
@@ -171,6 +202,17 @@
 
 #skills-wrapper {
     margin-top: 50px;
+}
+
+#skills-parent {
+    background: red;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.skills-child {
+    background: blue;
+    padding: 10px 20px;
 }
 
 
