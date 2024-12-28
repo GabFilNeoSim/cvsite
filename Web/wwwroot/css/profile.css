@@ -158,14 +158,19 @@
 .roadmap-date {
     background-color: #5289ff;
     width: max-content;
-    padding: 5px 15px;
+    padding: 2px 5px;
     margin: 10px 0;
     color: #fff;
+    margin-top: 10px;
     font-size: 14px;
 }
 
 .roadmap-strong {
     font-weight: bold;
+}
+
+#skills-wrapper {
+    margin-top: 50px;
 }
 
 

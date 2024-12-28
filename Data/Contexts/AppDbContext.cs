@@ -257,16 +257,44 @@ public class AppDbContext : IdentityDbContext<User>
             new Skill { Id = 2, Title = "JavaScript" },
             new Skill { Id = 3, Title = "Python" },
             new Skill { Id = 4, Title = "SQL" },
-            new Skill { Id = 5, Title = "DevOps" }
+            new Skill { Id = 5, Title = "DevOps" },
+            new Skill { Id = 6, Title = "HTML/CSS" },
+            new Skill { Id = 7, Title = "React" },
+            new Skill { Id = 8, Title = "ASP.NET Core" },
+            new Skill { Id = 9, Title = "Angular" },
+            new Skill { Id = 10, Title = "Cloud Computing" },
+            new Skill { Id = 11, Title = "Cybersecurity" },
+            new Skill { Id = 12, Title = "Data Analysis" },
+            new Skill { Id = 13, Title = "Machine Learning" },
+            new Skill { Id = 14, Title = "Docker" },
+            new Skill { Id = 15, Title = "Kubernetes" }
         );
 
         modelBuilder.Entity<UserSkill>().HasData(
             new UserSkill { UserId = user1.Id, SkillId = 1 },
+            new UserSkill { UserId = user1.Id, SkillId = 2 },
+            new UserSkill { UserId = user1.Id, SkillId = 6 },
+            new UserSkill { UserId = user1.Id, SkillId = 7 },
             new UserSkill { UserId = user2.Id, SkillId = 2 },
+            new UserSkill { UserId = user2.Id, SkillId = 3 },
+            new UserSkill { UserId = user2.Id, SkillId = 8 },
+            new UserSkill { UserId = user2.Id, SkillId = 9 },
             new UserSkill { UserId = user3.Id, SkillId = 3 },
+            new UserSkill { UserId = user3.Id, SkillId = 4 },
+            new UserSkill { UserId = user3.Id, SkillId = 10 },
+            new UserSkill { UserId = user3.Id, SkillId = 11 },
             new UserSkill { UserId = user4.Id, SkillId = 4 },
+            new UserSkill { UserId = user4.Id, SkillId = 5 },
+            new UserSkill { UserId = user4.Id, SkillId = 12 },
+            new UserSkill { UserId = user4.Id, SkillId = 13 },
             new UserSkill { UserId = user5.Id, SkillId = 5 },
-            new UserSkill { UserId = user6.Id, SkillId = 1 }
+            new UserSkill { UserId = user5.Id, SkillId = 14 },
+            new UserSkill { UserId = user5.Id, SkillId = 15 },
+            new UserSkill { UserId = user6.Id, SkillId = 1 },
+            new UserSkill { UserId = user6.Id, SkillId = 7 },
+            new UserSkill { UserId = user6.Id, SkillId = 8 },
+            new UserSkill { UserId = user6.Id, SkillId = 14 },
+            new UserSkill { UserId = user6.Id, SkillId = 15 }
         );
 
         modelBuilder.Entity<QualificationType>().HasData(
