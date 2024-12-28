@@ -44,7 +44,6 @@
         </div>
     </div>
     <div id="profile-body">
-
         <div id="profile-experience-parent">
             <div class="profile-experience-child">
                 <h2 class="content-title">Work experience</h2>
@@ -55,9 +54,8 @@
                                 <div class="roadmap-progress"></div>
                                 <div class="roadmap-content">
                                     <h3 class="roadmap-title">@q.Title</h3>
-                                    <i class="roadmap-place">@q.Location</i>
-                                    <span class="roadmap-date">@q.StartDate-@q.EndDate</span>
-                                    <span class="roadmap-strong">Description</span>
+                                    <p class="roadmap-place">@q.Location</p>
+                                    <span class="roadmap-date">@q.StartDate - @q.EndDate</span>
                                     <p>@q.Description</p>
                                 </div>
                             </div>
@@ -66,11 +64,9 @@
                         <p>User doesn't have any work experience.</p>
                     }
                 </div>
-
             </div>
             <div class="profile-experience-child">
-
-                <h2 class="content-title">Work Experience</h2>
+                <h2 class="content-title">Education</h2>
                 <div class="roadmap-parent">
                     @if (Model.EducationCount > 0) {
                         @foreach (QualificationViewModel e in Model.Education)
@@ -79,9 +75,8 @@
                                 <div class="roadmap-progress"></div>
                                 <div class="roadmap-content">
                                     <h3 class="roadmap-title">@e.Title</h3>
-                                    <i class="roadmap-place">@e.Location</i>
-                                    <span class="roadmap-date">@e.StartDate-@e.EndDate</span>
-                                    <span class="roadmap-strong">Description</span>
+                                    <p class="roadmap-place">@e.Location</p>
+                                    <span class="roadmap-date">@e.StartDate - @e.EndDate</span>
                                     <p>@e.Description</p>
                                 </div>
                             </div>

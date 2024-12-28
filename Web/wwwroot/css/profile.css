@@ -151,16 +151,17 @@
     height: auto;
 }
 
+.roadmap-place {
+    font-style: italic;
+}
+
 .roadmap-date {
     background-color: #5289ff;
     width: max-content;
     padding: 5px 15px;
     margin: 10px 0;
     color: #fff;
-}
-
-.roadmap-place {
-    margin-bottom: 10px;
+    font-size: 14px;
 }
 
 .roadmap-strong {

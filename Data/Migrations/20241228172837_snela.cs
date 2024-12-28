@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Data.Migrations
 {
     /// <inheritdoc />
-    public partial class snela1 : Migration
+    public partial class snela : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -248,6 +248,7 @@ namespace Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StartDate = table.Column<DateOnly>(type: "date", nullable: false),
                     EndDate = table.Column<DateOnly>(type: "date", nullable: true),
                     TypeId = table.Column<int>(type: "int", nullable: false),
@@ -369,18 +370,18 @@ namespace Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Qualifications",
-                columns: new[] { "Id", "Description", "EndDate", "StartDate", "Title", "TypeId", "UserId" },
+                columns: new[] { "Id", "Description", "EndDate", "Location", "StartDate", "Title", "TypeId", "UserId" },
                 values: new object[,]
                 {
-                    { 1, "3 årig kandidatexamen inom systemuveckling", new DateOnly(2019, 6, 30), new DateOnly(2015, 9, 1), "Kandidat inom systemutveckling", 1, "bb29d713-9414-43fa-9c8e-65fa6ee39243" },
-                    { 2, "2-year degree", new DateOnly(2022, 6, 30), new DateOnly(2020, 9, 1), "MSc Software Engineering", 1, "bb29d713-9414-43fa-9c8e-65fa6ee39243" },
-                    { 3, "Städare på donken.", new DateOnly(2021, 12, 31), new DateOnly(2021, 1, 1), "McDonalds medarbetare", 2, "bb29d713-9414-43fa-9c8e-65fa6ee39243" },
-                    { 4, "Intensive 12-week course on modern web development.", new DateOnly(2018, 5, 31), new DateOnly(2018, 3, 1), "Web Development Bootcamp", 2, "a1f2d713-1234-43fa-9c8e-65fa6ee39244" },
-                    { 5, "Doctoral degree focusing on big data analysis and AI.", new DateOnly(2021, 6, 30), new DateOnly(2016, 9, 1), "PhD in Data Science", 1, "c1f3d713-5678-43fa-9c8e-65fa6ee39245" },
-                    { 6, "Professional certification for project managers. Galeeeet stooooor.", new DateOnly(2020, 12, 31), new DateOnly(2020, 1, 1), "Project Management Professional (PMP)", 2, "d1f4d713-9101-43fa-9c8e-65fa6ee39246" },
-                    { 7, "1-year certification program focusing on cybersecurity fundamentals. Du får en tia om du visar kuken.", new DateOnly(2020, 6, 30), new DateOnly(2019, 9, 1), "Certificate in Cybersecurity", 2, "e1f5d713-1122-43fa-9c8e-65fa6ee39247" },
-                    { 8, "Undergraduate degree in IT with a focus on networking.", new DateOnly(2016, 6, 30), new DateOnly(2013, 9, 1), "BSc in Information Technology", 1, "bb29d713-9414-43fa-9c8e-65fa6ee39243" },
-                    { 9, "Internship focusing on data cleaning, visualization, and analysis. Filip luktar kiss", new DateOnly(2022, 8, 31), new DateOnly(2022, 5, 1), "Data Analyst Internship", 2, "a1f2d713-1234-43fa-9c8e-65fa6ee39244" }
+                    { 1, "3 årig kandidatexamen inom systemuveckling", new DateOnly(2019, 6, 30), "Örebro Universitet", new DateOnly(2015, 9, 1), "Kandidat inom systemutveckling", 1, "bb29d713-9414-43fa-9c8e-65fa6ee39243" },
+                    { 2, "2-year degree", new DateOnly(2022, 6, 30), "Seoul Food market", new DateOnly(2020, 9, 1), "MSc Software Engineering", 1, "bb29d713-9414-43fa-9c8e-65fa6ee39243" },
+                    { 3, "Städare på donken.", new DateOnly(2021, 12, 31), "Mcdonalds", new DateOnly(2021, 1, 1), "Medarbetare", 2, "bb29d713-9414-43fa-9c8e-65fa6ee39243" },
+                    { 4, "Intensive 12-week course on modern web development.", new DateOnly(2018, 5, 31), "Borlänge kommun", new DateOnly(2018, 3, 1), "Web Development Bootcamp", 1, "a1f2d713-1234-43fa-9c8e-65fa6ee39244" },
+                    { 5, "Doctoral degree focusing on big data analysis and AI.", new DateOnly(2021, 6, 30), "Vretstorps värdshus", new DateOnly(2016, 9, 1), "PhD in Data Science", 1, "c1f3d713-5678-43fa-9c8e-65fa6ee39245" },
+                    { 6, "Professional certification for project managers. Galeeeet stooooor.", new DateOnly(2020, 12, 31), "Harvard University", new DateOnly(2020, 1, 1), "Project Management Professional (PMP)", 2, "d1f4d713-9101-43fa-9c8e-65fa6ee39246" },
+                    { 7, "1-year certification program focusing on cybersecurity fundamentals. Du får en tia om du visar kuken.", new DateOnly(2020, 6, 30), "Neos pappas jobb", new DateOnly(2019, 9, 1), "Certificate in Cybersecurity", 2, "e1f5d713-1122-43fa-9c8e-65fa6ee39247" },
+                    { 8, "Undergraduate degree in IT with a focus on networking.", new DateOnly(2016, 6, 30), "Lunds Universitet", new DateOnly(2013, 9, 1), "BSc in Information Technology", 1, "bb29d713-9414-43fa-9c8e-65fa6ee39243" },
+                    { 9, "Internship focusing on data cleaning, visualization, and analysis. Filip luktar kiss", new DateOnly(2022, 8, 31), "Google", new DateOnly(2022, 5, 1), "Data Analyst Internship", 2, "a1f2d713-1234-43fa-9c8e-65fa6ee39244" }
                 });
 
             migrationBuilder.InsertData(

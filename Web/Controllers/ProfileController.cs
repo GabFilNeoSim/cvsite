@@ -40,8 +40,8 @@ public class ProfileController : BaseController
                 Title = y.Title,
                 Description = y.Description,
                 Location = y.Location,
-                StartDate = y.StartDate,
-                EndDate = y.EndDate
+                StartDate = y.StartDate.ToString("MMM yyyy"),
+                EndDate = y.EndDate?.ToString("MMM yyyy")
             }).ToList(),
 
             Education = user.Qualifications.Where(x => x.Type.Name == "Education").Select(y => new QualificationViewModel
@@ -49,8 +49,8 @@ public class ProfileController : BaseController
                 Title = y.Title,
                 Description = y.Description,
                 Location = y.Location,
-                StartDate = y.StartDate,
-                EndDate = y.EndDate
+                StartDate = y.StartDate.ToString("MMM yyyy"),
+                EndDate = y.EndDate?.ToString("MMM yyyy")
             }).ToList(),
 
 
