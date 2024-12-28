@@ -2,40 +2,40 @@
     ViewData["Title"] = "Profile";
 }
 
-@model User
+@model ProfileViewModel
 
 <div id="profile-container">
     <div id="profile-header">
         <img id="profile-avatar" src="https://cdn-icons-png.flaticon.com/512/3607/3607444.png">
-
         <div id="profile-content">
-
             <div id="profile-info">
                 <div id="profile-info-header">
                     <div>
-                        <h2>@Model.FirstName @Model.LastName</h2>
+                        <h2>@Model.User.FirstName @Model.User.LastName</h2>
                         <div id="profile-location">
                             <img src="~/assets/point.png">
-                            <p>@Model.Address</p>
+                            <p>@Model.User.Address</p>
                         </div>
                     </div>
-                    <a id="profile-edit-btn">Edit profile</a>
+                    @if ((string)ViewData["UserId"] == @Model.User.Id)
+                    {
+                        <a id="profile-edit-btn">Edit profile</a>
+                    }
                 </div>
-
-                <p id="profile-desc">Senior fullstack developer with 20 years experience in React and Asp.net</p>
+            <p id="profile-desc">@Model.User.Description</p>
             </div>
             <div id="profile-stats">
                 <div class="profile-stats-child">
                     <img src="~/assets/work.png">
                     <div class="profile-stats-child-text">
-                        <p class="profile-stats-child-amount">5</p>
+                        <p class="profile-stats-child-amount">@Model.WorkCount</p>
                         <p class="profile-stats-child-title">Workings</p>
                     </div>
                 </div>
                 <div class="profile-stats-child">
                     <img src="~/assets/education.png">
                     <div class="profile-stats-child-text">
-                        <p class="profile-stats-child-amount">5</p>
+                        <p class="profile-stats-child-amount">@Model.EducationCount</p>
                         <p class="profile-stats-child-title">Educations</p>
                     </div>
                 </div>
@@ -47,40 +47,50 @@
 
         <div id="profile-experience-parent">
             <div class="profile-experience-child">
-
                 <h2 class="content-title">Work experience</h2>
                 <div class="roadmap-parent">
-                    <div class="roadmap-child">
-                        <div class="roadmap-progress"></div>
-                        <div class="roadmap-content">
-                            <h3 class="roadmap-title">Detta är en titel</h3>
-                            <span class="roadmap-date">2017-2020</span>
-                            <i class="roadmap-place">USA, usa oh usa</i>
-                            <span class="roadmap-strong">Beskrivning</span>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est voluptatum libero earum! Quo in tempora dignissimos maxime. Alias aliquam nobis voluptates possimus tempore itaque sapiente quod delectus dicta, id exercitationem.</p>
-                        </div>
-                    </div>
+                    @if (Model.WorkCount > 0) {
+                        @foreach (QualificationViewModel q in Model.Work) {
+                            <div class="roadmap-child">
+                                <div class="roadmap-progress"></div>
+                                <div class="roadmap-content">
+                                    <h3 class="roadmap-title">@q.Title</h3>
+                                    <i class="roadmap-place">@q.Location</i>
+                                    <span class="roadmap-date">@q.StartDate-@q.EndDate</span>
+                                    <span class="roadmap-strong">Description</span>
+                                    <p>@q.Description</p>
+                                </div>
+                            </div>
+                        }
+                    } else {
+                        <p>User doesn't have any work experience.</p>
+                    }
                 </div>
 
             </div>
             <div class="profile-experience-child">
 
-                <h2 class="content-title">Education</h2>
+                <h2 class="content-title">Work Experience</h2>
                 <div class="roadmap-parent">
-                    <div class="roadmap-child">
-                        <div class="roadmap-progress"></div>
-                        <div class="roadmap-content">
-                            <h3 class="roadmap-title">Detta är en titel</h3>
-                            <span class="roadmap-date">2017-2020</span>
-                            <i class="roadmap-place">USA, usa oh usa</i>
-                            <span class="roadmap-strong">Beskrivning</span>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                        </div>
-                    </div>
+                    @if (Model.EducationCount > 0) {
+                        @foreach (QualificationViewModel e in Model.Education)
+                        {
+                            <div class="roadmap-child">
+                                <div class="roadmap-progress"></div>
+                                <div class="roadmap-content">
+                                    <h3 class="roadmap-title">@e.Title</h3>
+                                    <i class="roadmap-place">@e.Location</i>
+                                    <span class="roadmap-date">@e.StartDate-@e.EndDate</span>
+                                    <span class="roadmap-strong">Description</span>
+                                    <p>@e.Description</p>
+                                </div>
+                            </div>
+                        }
+                    }else {
+                        <p>User doesn't have any education.</p>
+                    }
                 </div>
-
             </div>
-
         </div>
     </div>
 </div>

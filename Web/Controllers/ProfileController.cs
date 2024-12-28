@@ -22,7 +22,45 @@ public class ProfileController : BaseController
             return Error();
         }
 
-        return View(user);
+        var profileViewModel = new ProfileViewModel
+        {
+            User = new UserViewModel
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Address = user.Address,
+                AvatarUri = user.AvatarUri,
+                Description = user.Description,
+                Private = user.Private,
+            },
+
+            Work = user.Qualifications.Where(x => x.Type.Name == "Work").Select(y => new QualificationViewModel
+            {
+                Title = y.Title,
+                Description = y.Description,
+                Location = y.Location,
+                StartDate = y.StartDate,
+                EndDate = y.EndDate
+            }).ToList(),
+
+            Education = user.Qualifications.Where(x => x.Type.Name == "Education").Select(y => new QualificationViewModel
+            {
+                Title = y.Title,
+                Description = y.Description,
+                Location = y.Location,
+                StartDate = y.StartDate,
+                EndDate = y.EndDate
+            }).ToList(),
+
+
+            Skill = user.Skills.Select(y => new SkillViewModel
+            {
+                Title = y.Skill.Title,
+            }).ToList()
+        };
+
+        return View(profileViewModel);
     }
 
     [Authorize]
