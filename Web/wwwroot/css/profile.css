@@ -50,9 +50,14 @@
     font-size: 25px;
 }
 
+#profile-change-avatar-input {
+    display: none
+}
+
 #profile-avatar {
     width: 130px;
     align-self: center;
+    cursor: pointer;
 }
 
 #profile-content {

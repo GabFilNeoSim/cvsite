@@ -12,14 +12,13 @@ public class ProfileController : BaseController
 {
     public ProfileController(AppDbContext context, UserManager<User> userManager) : base(context, userManager) { }
 
-
     [HttpGet("profile/{id}")]
     public async Task<IActionResult> Index(string id)
     {
         var user = await _userManager.FindByIdAsync(id);
         if (user == null)
         {
-            return Error();
+            return View(new ProfileViewModel()); // Fixa: Neo & Gabriel
         }
 
         var profileViewModel = new ProfileViewModel
@@ -61,6 +60,50 @@ public class ProfileController : BaseController
         };
 
         return View(profileViewModel);
+    }
+
+    // Fixa: Fungerar ej!
+    [Authorize]
+    [HttpPost("profile/{id}")]
+    public async Task<IActionResult> ChangeAvatar(string id, IFormFile avatar)
+    {
+        string[] allowedExtensions = [".jpg", ".jpeg", ".png"];
+
+        if (avatar == null) return RedirectToAction("Index", "Profile", new { id });
+
+        string extension = Path.GetExtension(avatar.FileName).ToLower();
+        if (!allowedExtensions.Contains(extension))
+        {
+            ModelState.AddModelError(string.Empty, "Invalid file type.");
+            return RedirectToAction("Index", "Profile", new { id });
+        };
+        
+        // Sätt uppladdningsmappen
+        string uploadDirectory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/avatars");
+        if (!Path.Exists(uploadDirectory))
+        {
+            Directory.CreateDirectory(uploadDirectory);
+        }
+
+        // Skapa ett unikt filnamn
+        string fileName = Guid.NewGuid().ToString() + extension;
+        string filePath = Path.Combine("avatars", fileName);
+
+        // Spara filen
+        using (var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+        {
+            await avatar.CopyToAsync(fileStream);
+        }
+
+        // Uppdatera användarens profilbild i databasen
+        User? user = await _userManager.FindByIdAsync(id);
+        if (user == null) return RedirectToAction("Index", "Profile", new { id });
+
+        user.AvatarUri = filePath;
+        await _context.SaveChangesAsync();
+
+        // Om uppladdningen lyckas, ladda om sidan
+        return RedirectToAction("Index", "Profile", new { id });
     }
 
     [Authorize]
