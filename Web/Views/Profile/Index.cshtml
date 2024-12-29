@@ -98,13 +98,20 @@
             </div>
         </div>
 
-        <div id="skills-wrapper">
-            <h2 class="content-title">Skills</h2>
-            <div id="skills-parent">
-                @foreach (SkillViewModel skill in Model.Skill) {
-                    <div class="skills-child">@skill.Title</div>
-                }
+        <div id="misc-parent">
+            <div class="misc-child">
+                <h2 class="content-title">Skills</h2>
+                <div id="skills-parent">
+                    @foreach (SkillViewModel skill in Model.Skill)
+                    {
+                        <div class="skills-child">@skill.Title</div>
+                    }
+                </div>
             </div>
+            <div class="misc-child">
+                <h2 class="content-title">Project</h2>
+            </div>
+
         </div>
     </div>
 </div>

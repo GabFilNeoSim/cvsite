@@ -204,8 +204,15 @@
     font-weight: bold;
 }
 
-#skills-wrapper {
-    margin-top: 50px;
+#misc-parent {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid rgb(212, 212, 212);
+    display: flex;
+}
+
+.misc-child {
+    width: 50%;
 }
 
 #skills-parent {
