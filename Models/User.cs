@@ -16,7 +16,7 @@ public class User : IdentityUser
     [Required]
     public string Address { get; set; }
 
-    public string? AvatarUri { get; set; }
+    public string? AvatarUri { get; set; } = "default.png";
 
     public string? Description { get; set; }
 

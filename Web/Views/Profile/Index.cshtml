@@ -11,9 +11,9 @@
 <div id="profile-container">
     <div id="profile-header">
         <div id="profile-avatar-parent">
-            <form id="profile-change-avatar" asp-controller="Profile" asp-action="ChangeAvatar" method="post" enctype="multipart/form-data">
-                <input id="profile-change-avatar-input" type="file">
-                <img id="profile-avatar" src="https://cdn-icons-png.flaticon.com/512/3607/3607444.png">
+            <form id="profile-change-avatar" asp-controller="Profile" asp-action="ChangeAvatar" asp-route-id="@Model.User.Id" method="post" enctype="multipart/form-data">
+                <input id="profile-change-avatar-input" type="file" name="avatar" hidden>
+                <img id="profile-avatar" src="/avatars/@Model.User.AvatarUri" alt="Profile Avatar">
             </form>
             <!-- <i class="fa-solid fa-pen"></i> -->
         </div>
