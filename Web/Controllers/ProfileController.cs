@@ -116,6 +116,7 @@ public class ProfileController : BaseController
             return Error();
         }
 
+        // Model to be sent to view needs to be a updateviewmodel.
         return View(user);
     }
 

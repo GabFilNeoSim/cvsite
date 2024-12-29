@@ -27,8 +27,6 @@
     border-radius: 50%;
 }
 
-
-
 #profile-avatar-parent:hover #edit-profile {
     opacity: 1;
     cursor: pointer;
@@ -93,13 +91,14 @@
     color: #fff;
     padding: 7px 15px;
     border-radius: 50px;
+    text-decoration: none;
 }
 
-    #profile-edit-btn:hover {
-        background-color: #4172da;
-        transition: all 0.3s;
-        cursor: pointer;
-    }
+#profile-edit-btn:hover {
+    background-color: #4172da;
+    transition: all 0.3s;
+    cursor: pointer;
+}
 
 #profile-desc {
     width: 80%;
