@@ -23,7 +23,13 @@
         <a class="logo" asp-controller="Home" asp-action="Index"> CV-Site </a>
         <div id="searchbar">
                 <i class="fa-solid fa-magnifying-glass icon"></i>
-                <input id="searchinput" type="text" placeholder="Search"/>
+                <input id="searchinput" type="text" placeholder="Search" autocomplete="off"/>
+                <div id="search-result">
+                    <a class="search-result-child">
+                        <img src="~/avatars/ID" />
+                        <p>name</p>
+                    </a>
+                </div>
         </div>
         <a class="message" asp-controller="Messages" asp-action="Index">
             <p> Messages</p>

@@ -19,26 +19,25 @@ public class HomeController : BaseController
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });    
     }
 
-    [HttpGet]
-    public IActionResult SearchUsers(string query)
+    [HttpGet("home/users")]
+    public IActionResult SearchUsers([FromQuery] string query)
     {
-        if (string.IsNullOrEmpty(query))
+        if (string.IsNullOrWhiteSpace(query))
         {
-            return Json(Enumerable.Empty<object>());
+            return Ok(new List<SearchUserViewModel>());
         }
 
-        // Perform the query
         var users = _context.Users
-            .Where(u => u.FirstName.Contains(query) || u.LastName.Contains(query))
-            .Select(u => new
+            .Where(u => u.FirstName.ToLower().Contains(query.ToLower()) || u.LastName.ToLower().Contains(query.ToLower()))
+            .Select(u => new SearchUserViewModel
             {
-                u.Id,
-                Name = $"{u.FirstName} {u.LastName}"
+                Id = u.Id,
+                Name = $"{u.FirstName} {u.LastName}",
+                Avatar = u.AvatarUri
             })
             .ToList();
 
-        // Return the results as JSON
-        Debug.WriteLine(Json(users));
-        return Json(users);
+        return Ok(users);
     }
+
 }
