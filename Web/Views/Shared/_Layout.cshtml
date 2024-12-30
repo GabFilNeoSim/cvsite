@@ -1,4 +1,9 @@
-﻿@* @{
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<User> signInManager
+@inject UserManager<User> userManager
+
+@* @{
     var unreadMessagesCount = ViewData["UnreadMessagesCount"] as int?;
     var displayMessageCount = unreadMessagesCount > 9 ? "9+" : unreadMessagesCount?.ToString() ?? "0";
 } *@
@@ -18,34 +23,49 @@
     <link rel="stylesheet" href="~/Web.styles.css" asp-append-version="true" />
 </head>
 <body>
-<header>
-    <nav>
-        <a class="logo" asp-controller="Home" asp-action="Index"> CV-Site </a>
+    <header>
+        <nav>
+            <a class="logo" asp-controller="Home" asp-action="Index"> CV-Site </a>
             <a class="message" asp-controller="Messages" asp-action="Index">
-            <p> Messages</p>
-            <i class="fa-regular fa-envelope"></i>
-            <div class="inbox">
-                @* <p>@displayMessageCount</p> *@
-            </div>
-        </a>
-        <a asp-controller="Project" asp-action="Index"> Projects </a>
-        @if (!User.Identity.IsAuthenticated) {
-            <a asp-controller="Auth" asp-action="Login" class="login"> Log in </a>
-        }
-        else
-        {
-            <form asp-controller="Auth" asp-action="Logout">
-                <button type="submit">Logout</button>
-            </form>
-            @if (User.Identity.IsAuthenticated && ViewData["UserId"] != null)
+                <p> Messages</p>
+                <i class="fa-regular fa-envelope"></i>
+                <div class="inbox">
+                    @{
+                        @if (signInManager.IsSignedIn(User))
+                        {                            
+                            User? user = await userManager.GetUserAsync(User);
+                            int? unreadMessages = user?.ReceivedMessages.Where(rm => !rm.Read).Count();
+                            <p>@unreadMessages</p>
+                        }
+                    }
+                </div>
+            </a>
+            <a asp-controller="Project" asp-action="Index"> Projects </a>
+            @if (!signInManager.IsSignedIn(User))
             {
+                <a asp-controller="Auth" asp-action="Login" class="login"> Log in </a>
+            }
+            else
+            {
+                <form asp-controller="Auth" asp-action="Logout">
+                    <button type="submit">Logout</button>
+                </form>
+
+                User? user = await userManager.GetUserAsync(User);
+
                 <div class="profile">
-                    <a asp-controller="Profile" asp-action="Index" asp-route-id="@ViewData["UserId"]"> Profile </a>
-                        <img src="https://cdn-icons-png.flaticon.com/512/3607/3607444.png" class="avatar" />
+                    <a asp-controller="Profile" asp-action="Index" asp-route-id="@user?.Id"> Profile </a>
+                    @{
+                        string directory = "~/avatars/";
+                        string defaultAvatar = "default.png";
+
+                        string avatar = user?.AvatarUri != defaultAvatar
+                            ? Url.Content(directory + user?.AvatarUri)
+                            : Url.Content(directory + defaultAvatar);
+                    }
+                    <img src="@avatar" class="avatar"/>
                 </div>
             }
-        }
-
     </nav>
 </header>
 <div class="container">
