@@ -29,7 +29,7 @@
                     </div>
                     @if ((string)ViewData["UserId"] == @Model.User.Id)
                     {
-                        <a asp-controller="Profile" asp-action="Edit" asp-route-id="@Model.User.Id" id="profile-edit-btn">Edit profile</a>
+                        <a asp-controller="Edit" asp-action="Index" asp-route-id="@Model.User.Id" id="profile-edit-btn">Edit profile</a>
                     }
                 </div>
             <p id="profile-desc">@Model.User.Description</p>
@@ -68,6 +68,9 @@
                                     <p>@q.Description</p>
                                     <span class="roadmap-date">@q.StartDate - @q.EndDate</span>
                                 </div>
+                                <a class="roadmap-edit">
+                                    <i class="fa-solid fa-pen"></i>
+                                </a>
                             </div>
                         }
                     } else {
@@ -89,6 +92,9 @@
                                     <p>@qualification.Description</p>
                                     <span class="roadmap-date">@qualification.StartDate - @qualification.EndDate</span>
                                 </div>
+                                <a class="roadmap-edit">
+                                    <i class="fa-solid fa-pen"></i>
+                                </a>
                             </div>
                         }
                     }else {

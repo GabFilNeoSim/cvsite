@@ -8,11 +8,12 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Web.Controllers;
 
+[Route("profile")]
 public class ProfileController : BaseController
 {
     public ProfileController(AppDbContext context, UserManager<User> userManager) : base(context, userManager) { }
 
-    [HttpGet("profile/{id}")]
+    [HttpGet("{id}")]
     public async Task<IActionResult> Index(string id)
     {
         var user = await _userManager.FindByIdAsync(id);
@@ -62,9 +63,8 @@ public class ProfileController : BaseController
         return View(profileViewModel);
     }
 
-    // Fixa: Funkar, men kolla igenom koden
     [Authorize]
-    [HttpPost("profile/{id}")]
+    [HttpPost("{id}")]
     public async Task<IActionResult> ChangeAvatar(string id, IFormFile avatar)
     {
         string[] allowedExtensions = [".jpg", ".jpeg", ".png"];
@@ -78,52 +78,31 @@ public class ProfileController : BaseController
             return RedirectToAction("Index", "Profile", new { id });
         }
 
-        // Sätt uppladdningsmappen
+        // Create upload folder
         string uploadDirectory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "avatars");
         if (!Directory.Exists(uploadDirectory))
         {
             Directory.CreateDirectory(uploadDirectory);
         }
 
-        // Skapa ett unikt filnamn
+        // Create a file name
         string fileName = Guid.NewGuid().ToString() + extension;
         string filePath = Path.Combine(uploadDirectory, fileName);
 
-        // Spara filen
+        // Save file
         using (var fileStream = new FileStream(filePath, FileMode.Create))
         {
             await avatar.CopyToAsync(fileStream);
         }
 
-        // Uppdatera användarens profilbild i databasen
+        // Update the avatar of the user in the database
         var user = await _userManager.FindByIdAsync(id);
         if (user == null) return RedirectToAction("Index", "Profile", new { id });
 
         user.AvatarUri = fileName;
         await _context.SaveChangesAsync();
 
-        // Om uppladdningen lyckas, ladda om sidan
+        // If the upload succeed, refresh the website
         return RedirectToAction("Index", "Profile", new { id });
-    }
-
-
-    [Authorize]
-    [HttpGet("profile/{id}/edit")]
-    public async Task<IActionResult> Edit(string id)
-    {
-        var user = await _userManager.FindByIdAsync(id);
-        if (user == null)
-        {
-            return Error();
-        }
-
-        // Model to be sent to view needs to be a updateviewmodel.
-        return View(user);
-    }
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }

@@ -161,6 +161,22 @@
     position: relative;
 }
 
+.roadmap-child:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.roadmap-child:hover > .roadmap-edit {
+    display: block;
+}
+
+.roadmap-edit {
+    display: none;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+
 .roadmap-progress {
     background-color: black;
     width: 3px;
@@ -182,7 +198,7 @@
 }
 
 .roadmap-content {
-    padding: 0 20px;
+    padding: 0 50px 0 20px;
     display: flex;
     flex-direction: column;
     height: auto;
