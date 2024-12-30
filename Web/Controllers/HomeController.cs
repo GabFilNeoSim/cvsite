@@ -18,4 +18,27 @@ public class HomeController : BaseController
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });    
     }
+
+    [HttpGet]
+    public IActionResult SearchUsers(string query)
+    {
+        if (string.IsNullOrEmpty(query))
+        {
+            return Json(Enumerable.Empty<object>());
+        }
+
+        // Perform the query
+        var users = _context.Users
+            .Where(u => u.FirstName.Contains(query) || u.LastName.Contains(query))
+            .Select(u => new
+            {
+                u.Id,
+                Name = $"{u.FirstName} {u.LastName}"
+            })
+            .ToList();
+
+        // Return the results as JSON
+        Debug.WriteLine(Json(users));
+        return Json(users);
+    }
 }

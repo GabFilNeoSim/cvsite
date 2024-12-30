@@ -21,7 +21,11 @@
 <header>
     <nav>
         <a class="logo" asp-controller="Home" asp-action="Index"> CV-Site </a>
-            <a class="message" asp-controller="Messages" asp-action="Index">
+        <div id="searchbar">
+                <i class="fa-solid fa-magnifying-glass icon"></i>
+                <input id="searchinput" type="text" placeholder="Search"/>
+        </div>
+        <a class="message" asp-controller="Messages" asp-action="Index">
             <p> Messages</p>
             <i class="fa-regular fa-envelope"></i>
             <div class="inbox">
