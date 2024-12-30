@@ -39,6 +39,7 @@ public class ProfileController : BaseController
 
             Work = user.Qualifications.Where(x => x.Type.Name == "Work").Select(y => new QualificationViewModel
             {
+                Id = y.Id,
                 Title = y.Title,
                 Description = y.Description,
                 Location = y.Location,
@@ -48,6 +49,7 @@ public class ProfileController : BaseController
 
             Education = user.Qualifications.Where(x => x.Type.Name == "Education").Select(y => new QualificationViewModel
             {
+                Id = y.Id,
                 Title = y.Title,
                 Description = y.Description,
                 Location = y.Location,

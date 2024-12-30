@@ -46,8 +46,8 @@ public class EditController : BaseController
     }
 
     [Authorize]
-    [HttpGet("qualifications")]
-    public async Task<IActionResult> Qualifications(string id)
+    [HttpGet("qualification/{qid}")]
+    public async Task<IActionResult> Qualifications(string id, string qid)
     {
         var user = await _userManager.FindByIdAsync(id);
         if (user == null)
@@ -56,5 +56,11 @@ public class EditController : BaseController
         }
 
         return View(user);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Qualifications(string id, User model)
+    {
+        return View();
     }
 }
