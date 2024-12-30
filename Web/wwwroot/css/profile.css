@@ -162,7 +162,10 @@
 }
 
 .roadmap-child:hover {
-    background: rgba(0, 0, 0, 0.1);
+    background-image: linear-gradient(to right, 
+                                    rgba(45,85,255,0) 1%,
+                                    rgba(45,85,255,0.1) 5%,
+                                    rgba(45,85,255,0.1));
 }
 
 .roadmap-child:hover > .roadmap-edit {
@@ -174,6 +177,11 @@
     position: absolute;
     top: 5px;
     right: 5px;
+}
+
+.roadmap-edit:hover {
+    color: royalblue;
+    cursor: pointer;
 }
 
 
