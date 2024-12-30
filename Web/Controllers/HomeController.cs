@@ -28,7 +28,7 @@ public class HomeController : BaseController
         }
 
         var users = _context.Users
-            .Where(u => u.FirstName.ToLower().Contains(query.ToLower()) || u.LastName.ToLower().Contains(query.ToLower()))
+            .Where(u => (u.FirstName + " " + u.LastName).ToLower().Contains(query.ToLower()))
             .Select(u => new SearchUserViewModel
             {
                 Id = u.Id,
@@ -39,5 +39,4 @@ public class HomeController : BaseController
 
         return Ok(users);
     }
-
 }
