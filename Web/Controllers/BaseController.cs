@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using System.Security.Claims;
 using Models;
 using Data.Contexts;
+using Web.Models;
 
 public class BaseController : Controller
 {
@@ -25,4 +26,7 @@ public class BaseController : Controller
 
         base.OnActionExecuting(context);
     }
+
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    protected IActionResult Error(string title, string message) => View("Error", new ErrorViewModel { Title = title, Message = message });
 }

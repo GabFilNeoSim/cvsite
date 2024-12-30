@@ -13,13 +13,15 @@ public class ProfileController : BaseController
 {
     public ProfileController(AppDbContext context, UserManager<User> userManager) : base(context, userManager) { }
 
+    public IActionResult Index() => RedirectToAction("Index", "Home");
+    
     [HttpGet("{id}")]
     public async Task<IActionResult> Index(string id)
     {
         var user = await _userManager.FindByIdAsync(id);
         if (user == null)
         {
-            return View(new ProfileViewModel()); // Fixa: Neo & Gabriel
+            return Error("Unknown profile", "This profile does not exist, please try again.");
         }
 
         var profileViewModel = new ProfileViewModel
