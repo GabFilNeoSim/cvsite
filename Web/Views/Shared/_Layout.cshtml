@@ -3,11 +3,6 @@
 @inject SignInManager<User> signInManager
 @inject UserManager<User> userManager
 
-@* @{
-    var unreadMessagesCount = ViewData["UnreadMessagesCount"] as int?;
-    var displayMessageCount = unreadMessagesCount > 9 ? "9+" : unreadMessagesCount?.ToString() ?? "0";
-} *@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,7 +21,7 @@
     <header>
         <nav>
             <a class="logo" asp-controller="Home" asp-action="Index"> CV-Site </a>
-            <a class="message" asp-controller="Messages" asp-action="Index">
+            <a class="message" asp-controller="Message" asp-action="Index">
                 <p> Messages</p>
                 <i class="fa-regular fa-envelope"></i>
                 <div class="inbox">
