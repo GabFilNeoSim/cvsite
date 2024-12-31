@@ -1,7 +1,6 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Data.Contexts;
-using Web.Models;
+using Web.Models.ProfileSettings;
 using Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
@@ -18,18 +17,48 @@ public class EditController : BaseController
     public async Task<IActionResult> Index(string id)
     {
         var user = await _userManager.FindByIdAsync(id);
-        if (user == null)
-        {
-            return View();
-        }
+        if (user == null) return Error("Unknown error", "An unexpected error happend!");
 
-        return View(user);
+        var model = new ProfileSettingsViewModel
+        {   
+            ChangeDetails = new ChangeDetailsViewModel
+            {       
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Address = user.Address,
+                IsPrivate = user.Private
+            },
+            ChangePassword = new ChangePasswordViewModel()
+        };
+
+        return View(model);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Index(string id, User model)
+    [Authorize]
+    [HttpPost("details")]
+    public async Task<IActionResult> ChangeDetails(string id, ChangeDetailsViewModel model)
+    {   
+        // TODO: Byt till något bättre!!
+        if (!ModelState.IsValid) return Error("Invalid fields", "All fields are not valid");
+
+        User? user = await _context.Users.FindAsync(id);
+        if (user == null) return Error("Unknown error", "An unexpected error happend!");
+
+        if (user.FirstName != model.FirstName) user.FirstName = model.FirstName;
+        if (user.LastName != model.LastName) user.LastName = model.LastName;
+        if (user.Address != model.Address) user.Address = model.Address;
+        if (user.Private != model.IsPrivate) user.Private = model.IsPrivate;
+
+        await _context.SaveChangesAsync();
+
+        return RedirectToAction("Index", new { id });
+    }
+
+    [Authorize]
+    [HttpPost("password")]
+    public async Task<IActionResult> ChangePassword(string id, ChangePasswordViewModel model)
     {
-        return View();
+        return RedirectToAction("Index", new { id });
     }
 
     [Authorize]

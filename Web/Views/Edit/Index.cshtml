@@ -1,45 +1,12 @@
-﻿@{
-    ViewData["Title"] = "Edit Profile";
+﻿@using Web.Models.ProfileSettings;
+
+@{
+    ViewData["Title"] = "Edit settings";
 }
 
-@model User // needs to be a UpdateProfileViewModel or something
+@model ProfileSettingsViewModel;
 
 <div class="form-container">
-    <div class="form-wrapper">
-        <div class="form-header">
-            <h2>Change profile information</h2>
-        </div>
-        <div class="form-content">
-            <form class="form" asp-action="Register">
-                <div class="form-row">
-                    <div class="form-child">
-                        <label>Firstname</label>
-                        <div class="form-child-input">
-                            <div><i class="fa-solid fa-signature"></i></div>
-                            <input type="text" placeholder="John">
-                        </div>
-                    </div>
-                    <div class="form-child">
-                        <label>Lastname</label>
-                        <div class="form-child-input">
-                            <div><i class="fa-solid fa-signature"></i></div>
-                            <input type="text" placeholder="Doe">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-child">
-                    <label>Address</label>
-                    <div class="form-child-input">
-                        <div><i class="fa-solid fa-house"></i></div>
-                        <input type="text" placeholder="Täby, Stockolm">
-                    </div>
-                </div>
-                <div class="form-checkbox">
-                    <input type="checkbox" id="private-db">
-                    <label for="private-db">Private profile</label>
-                </div>
-                <button type="submit" class="submit">Save</button>
-            </form>
-        </div>
-    </div>
+    <partial name="Partials/_ChangeDetails" model="Model.ChangeDetails"/>
+    <partial name="Partials/_ChangePassword" model="Model.ChangePassword"/>
 </div>
