@@ -29,7 +29,9 @@
                     </div>
                     @if ((string)ViewData["UserId"] == @Model.User.Id)
                     {
-                        <a asp-controller="Edit" asp-action="Index" asp-route-id="@Model.User.Id" id="profile-edit-btn">Edit profile</a>
+                        <a asp-controller="Edit" asp-action="Index" asp-route-id="@Model.User.Id" class="profile-btn">Edit profile</a>
+                    } else {
+                        <a asp-controller="Message" asp-action="Index" asp-route-id="@Model.User.Id" class="profile-btn">Send message</a>
                     }
                 </div>
             <p id="profile-desc">@Model.User.Description</p>

@@ -86,7 +86,7 @@
     align-self: center;
 }
 
-#profile-edit-btn {
+.profile-btn {
     background-color: #5289ff;
     height: max-content;
     margin: auto 50px auto auto;
@@ -96,7 +96,7 @@
     text-decoration: none;
 }
 
-#profile-edit-btn:hover {
+.profile-btn:hover {
     background-color: #4172da;
     transition: all 0.3s;
     cursor: pointer;
@@ -284,7 +284,7 @@
         margin-top: 20px;
     }
 
-    #profile-edit-btn {
+    .profile-btn {
         margin: auto 0px auto auto;
     }
 }
