@@ -71,9 +71,12 @@
                                         <p>@q.Description</p>
                                         <span class="roadmap-date">@q.StartDate - @q.EndDate</span>
                                     </div>
-                                    <a asp-controller="Edit" asp-action="Qualifications" asp-route-id="@Model.User.Id" asp-route-qid="@q.Id" class="roadmap-edit">
-                                        <i class="fa-solid fa-pen"></i>
-                                    </a>
+                                    @if ((string)ViewData["UserId"] == @Model.User.Id)
+                                    {
+                                        <a asp-controller="Edit" asp-action="Qualifications" asp-route-id="@Model.User.Id" asp-route-qid="@q.Id" class="roadmap-edit">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </a>
+                                    }
                                 </div>
                             }
                         } else {
@@ -95,9 +98,11 @@
                                         <p>@qualification.Description</p>
                                         <span class="roadmap-date">@qualification.StartDate - @qualification.EndDate</span>
                                     </div>
-                                    <a asp-controller="Edit" asp-action="Qualifications" asp-route-id="@Model.User.Id" asp-route-qid="@qualification.Id" class="roadmap-edit">
-                                        <i class="fa-solid fa-pen"></i>
-                                    </a>
+                                    @if ((string)ViewData["UserId"] == @Model.User.Id) {
+                                        <a asp-controller="Edit" asp-action="Qualifications" asp-route-id="@Model.User.Id" asp-route-qid="@qualification.Id" class="roadmap-edit">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </a>
+                                    }
                                 </div>
                             }
                         }else {
@@ -106,18 +111,40 @@
                     </div>
                 </div>
             </div>
-            <a id="add-experience-btn">Add qualification</a>
+            @if ((string)ViewData["UserId"] == @Model.User.Id) {
+                <a id="add-experience-btn">Add qualification</a>
+            }
         </div>
 
         <div id="misc-parent">
             <div class="misc-child">
                 <h2 class="content-title">Skills</h2>
-                @* <div id="skills-parent"> *@
-                @*     @foreach (SkillViewModel skill in Model.Skill) *@
-                @*     { *@
-                @*         <div class="skills-child">@skill.Title</div> *@
-                @*     } *@
-                @* </div> *@
+                <div id="skills-parent">
+                     @foreach (SkillViewModel skill in Model.Skills)
+                     {
+                         <div class="skills-child">
+                             @skill.Title
+                            @if ((string)ViewData["UserId"] == @Model.User.Id)
+                            {
+                                <a class="skill-delete"><i class="fa-solid fa-xmark"></i></a>
+                            }
+                         </div>
+                     }
+                    @if ((string)ViewData["UserId"] == @Model.User.Id) {
+                         <div class="skills-child add">
+                             Add skill
+                            <i class="fa-solid fa-plus"></i>
+
+                            <div class="skills-add-drop">
+                                <div class="skills-add-drop-parent">
+                                    @foreach (SkillViewModel skill in Model.UnusedSkills) {
+                                        <a>@skill.Title</a>
+                                    }
+                                </div>
+                            </div>
+                         </div>
+                    }
+                 </div> 
             </div>
             <div class="misc-child">
                 <h2 class="content-title">Project</h2>

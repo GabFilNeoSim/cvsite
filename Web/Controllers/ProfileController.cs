@@ -5,6 +5,7 @@ using Web.Models;
 using Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace Web.Controllers;
 
@@ -23,6 +24,15 @@ public class ProfileController : BaseController
         {
             return Error("Unknown profile", "This profile does not exist, please try again.");
         }
+
+        var allSkills = await _context.Skills.ToListAsync();
+
+        var unusedSkills = allSkills
+            .Where(skill => !user.Skills.Any(userSkill => userSkill.SkillId == skill.Id))
+            .Select(skill => new SkillViewModel
+            {
+                Title = skill.Title
+            }).ToList();
 
         var profileViewModel = new ProfileViewModel
         {
@@ -58,10 +68,12 @@ public class ProfileController : BaseController
             }).ToList(),
 
 
-            Skill = user.Skills.Select(y => new SkillViewModel
+            Skills = user.Skills.Select(y => new SkillViewModel
             {
                 Title = y.Skill.Title,
-            }).ToList()
+            }).ToList(),
+
+            UnusedSkills = unusedSkills
         };
 
         return View(profileViewModel);
