@@ -68,13 +68,23 @@
     gap: 0.75rem;
 }
 
-.submit {
+.submit, .delete {
     width: max-content;
     padding: 0.4rem 1rem;
     border: none;
     background-color: #5289ff;
     color: #fff;
     border-radius: 4px;
+}
+
+.delete {
+    background-color: red !important;
+}
+
+.delete:hover {
+    background-color: darkred !important;
+    cursor: pointer;
+    transition: all 0.3s;
 }
 
 .submit:hover {

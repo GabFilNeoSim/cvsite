@@ -10,6 +10,8 @@
         public List<QualificationViewModel> Education { get; set; }
         public int EducationCount => Education.Count;
 
-        public List<SkillViewModel> Skill { get; set; }
+        public List<SkillViewModel> Skills { get; set; }
+
+        public List<SkillViewModel> UnusedSkills { get; set; }
     }
 }

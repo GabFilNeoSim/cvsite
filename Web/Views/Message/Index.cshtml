@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<User> signInManager
+@inject UserManager<User> userManager
+
+@model User
+
+@{
+    ViewData["Title"] = "Messages";
+}
+
+<h1>Messages</h1>
+
+@if (signInManager.IsSignedIn(User))
+{
+    @foreach (Message message in Model.ReceivedMessages)
+    {
+        if (message.Sender == null)
+        {
+            <h2>Anonymous sender: @message.AnonymousName</h2>
+        }
+        else
+        {
+            <h2>Sender: @message.Sender.FirstName @message.Sender.LastName</h2>
+        }
+        <p>@message.Text</p>
+    }
+}
+
+<a asp-controller="Message" asp-action="New">New message</a>

@@ -29,7 +29,9 @@
                     </div>
                     @if ((string)ViewData["UserId"] == @Model.User.Id)
                     {
-                        <a asp-controller="Edit" asp-action="Index" asp-route-id="@Model.User.Id" id="profile-edit-btn">Edit profile</a>
+                        <a asp-controller="Edit" asp-action="Index" asp-route-id="@Model.User.Id" class="profile-btn">Edit profile</a>
+                    } else {
+                        <a asp-controller="Message" asp-action="Index" asp-route-id="@Model.User.Id" class="profile-btn">Send message</a>
                     }
                 </div>
             <p id="profile-desc">@Model.User.Description</p>
@@ -54,65 +56,95 @@
         </div>
     </div>
     <div id="profile-body">
-        <div id="profile-experience-parent">
-            <div class="profile-experience-child">
-                <h2 class="content-title">Work experience</h2>
-                <div class="roadmap-parent">
-                    @if (Model.WorkCount > 0) {
-                        @foreach (QualificationViewModel q in Model.Work) {
-                            <div class="roadmap-child">
-                                <div class="roadmap-progress"></div>
-                                <div class="roadmap-content">
-                                    <h3 class="roadmap-title">@q.Title</h3>
-                                    <p class="roadmap-place">@q.Location</p>
-                                    <p>@q.Description</p>
-                                    <span class="roadmap-date">@q.StartDate - @q.EndDate</span>
+        <div>
+            <div id="profile-experience-parent">
+                <div class="profile-experience-child">
+                    <h2 class="content-title">Work experience</h2>
+                    <div class="roadmap-parent">
+                        @if (Model.WorkCount > 0) {
+                            @foreach (QualificationViewModel q in Model.Work) {
+                                <div class="roadmap-child">
+                                    <div class="roadmap-progress"></div>
+                                    <div class="roadmap-content">
+                                        <h3 class="roadmap-title">@q.Title</h3>
+                                        <p class="roadmap-place">@q.Location</p>
+                                        <p>@q.Description</p>
+                                        <span class="roadmap-date">@q.StartDate - @q.EndDate</span>
+                                    </div>
+                                    @if ((string)ViewData["UserId"] == @Model.User.Id)
+                                    {
+                                        <a asp-controller="Edit" asp-action="Qualifications" asp-route-id="@Model.User.Id" asp-route-qid="@q.Id" class="roadmap-edit">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </a>
+                                    }
                                 </div>
-                                <a class="roadmap-edit">
-                                    <i class="fa-solid fa-pen"></i>
-                                </a>
-                            </div>
+                            }
+                        } else {
+                            <p>User doesn't have any work experience.</p>
                         }
-                    } else {
-                        <p>User doesn't have any work experience.</p>
-                    }
+                    </div>
+                </div>
+                <div class="profile-experience-child">
+                    <h2 class="content-title">Education</h2>
+                    <div class="roadmap-parent">
+                        @if (Model.EducationCount > 0) {
+                            @foreach (QualificationViewModel qualification in Model.Education)
+                            {
+                                <div class="roadmap-child">
+                                    <div class="roadmap-progress"></div>
+                                    <div class="roadmap-content">
+                                        <h3 class="roadmap-title">@qualification.Title</h3>
+                                        <p class="roadmap-place">@qualification.Location</p>
+                                        <p>@qualification.Description</p>
+                                        <span class="roadmap-date">@qualification.StartDate - @qualification.EndDate</span>
+                                    </div>
+                                    @if ((string)ViewData["UserId"] == @Model.User.Id) {
+                                        <a asp-controller="Edit" asp-action="Qualifications" asp-route-id="@Model.User.Id" asp-route-qid="@qualification.Id" class="roadmap-edit">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </a>
+                                    }
+                                </div>
+                            }
+                        }else {
+                            <p>User doesn't have any education.</p>
+                        }
+                    </div>
                 </div>
             </div>
-            <div class="profile-experience-child">
-                <h2 class="content-title">Education</h2>
-                <div class="roadmap-parent">
-                    @if (Model.EducationCount > 0) {
-                        @foreach (QualificationViewModel qualification in Model.Education)
-                        {
-                            <div class="roadmap-child">
-                                <div class="roadmap-progress"></div>
-                                <div class="roadmap-content">
-                                    <h3 class="roadmap-title">@qualification.Title</h3>
-                                    <p class="roadmap-place">@qualification.Location</p>
-                                    <p>@qualification.Description</p>
-                                    <span class="roadmap-date">@qualification.StartDate - @qualification.EndDate</span>
-                                </div>
-                                <a class="roadmap-edit">
-                                    <i class="fa-solid fa-pen"></i>
-                                </a>
-                            </div>
-                        }
-                    }else {
-                        <p>User doesn't have any education.</p>
-                    }
-                </div>
-            </div>
+            @if ((string)ViewData["UserId"] == @Model.User.Id) {
+                <a id="add-experience-btn">Add qualification</a>
+            }
         </div>
 
         <div id="misc-parent">
             <div class="misc-child">
                 <h2 class="content-title">Skills</h2>
                 <div id="skills-parent">
-                    @foreach (SkillViewModel skill in Model.Skill)
-                    {
-                        <div class="skills-child">@skill.Title</div>
+                     @foreach (SkillViewModel skill in Model.Skills)
+                     {
+                         <div class="skills-child">
+                             @skill.Title
+                            @if ((string)ViewData["UserId"] == @Model.User.Id)
+                            {
+                                <a class="skill-delete"><i class="fa-solid fa-xmark"></i></a>
+                            }
+                         </div>
+                     }
+                    @if ((string)ViewData["UserId"] == @Model.User.Id) {
+                         <div class="skills-child add">
+                             Add skill
+                            <i class="fa-solid fa-plus"></i>
+
+                            <div class="skills-add-drop">
+                                <div class="skills-add-drop-parent">
+                                    @foreach (SkillViewModel skill in Model.UnusedSkills) {
+                                        <a>@skill.Title</a>
+                                    }
+                                </div>
+                            </div>
+                         </div>
                     }
-                </div>
+                 </div> 
             </div>
             <div class="misc-child">
                 <h2 class="content-title">Project</h2>

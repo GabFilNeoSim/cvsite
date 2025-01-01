@@ -1,0 +1,51 @@
+﻿@using System.Security.Claims
+@using Web.Models.ProfileSettings;
+
+@model ChangeDetailsViewModel;
+
+@{
+    var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+}
+
+<div class="form-container">
+    <div class="form-wrapper">
+        <div class="form-header">
+            <h2>Change profile information</h2>
+        </div>
+        <div class="form-content">
+            <form class="form" asp-controller="Edit" asp-action="ChangeDetails" asp-route-id="@userId">
+                <div class="form-row">
+                    <div class="form-child">
+                        <label asp-for="FirstName">Firstname</label>
+                        <div class="form-child-input">
+                            <div><i class="fa-solid fa-signature"></i></div>
+                            <input type="text" asp-for="FirstName">
+                            <span asp-validation-for="FirstName"></span>
+                        </div>
+                    </div>
+                    <div class="form-child">
+                        <label asp-for="LastName">Lastname</label>
+                        <div class="form-child-input">
+                            <div><i class="fa-solid fa-signature"></i></div>
+                            <input type="text" asp-for="LastName">
+                            <span asp-validation-for="LastName"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-child">
+                    <label asp-for="Address">Address</label>
+                    <div class="form-child-input">
+                        <div><i class="fa-solid fa-house"></i></div>
+                        <input type="text" asp-for="Address">
+                        <span asp-validation-for="Address"></span>
+                    </div>
+                </div>
+                <div class="form-checkbox">
+                    <input type="checkbox" id="private-db" asp-for="IsPrivate">
+                    <label for="private-db">Private profile</label>
+                </div>
+                <button type="submit" class="submit">Save</button>
+            </form>
+        </div>
+    </div>
+</div>

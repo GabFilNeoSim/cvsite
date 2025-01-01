@@ -86,7 +86,7 @@
     align-self: center;
 }
 
-#profile-edit-btn {
+.profile-btn {
     background-color: #5289ff;
     height: max-content;
     margin: auto 50px auto auto;
@@ -96,7 +96,7 @@
     text-decoration: none;
 }
 
-#profile-edit-btn:hover {
+.profile-btn:hover {
     background-color: #4172da;
     transition: all 0.3s;
     cursor: pointer;
@@ -136,10 +136,27 @@
     color: rgb(88, 88, 88);
 }
 
+#add-experience-btn {
+    background: #5289ff;
+    display: block;
+    margin: 50px 0 0 auto;
+    width: max-content;
+    padding: 5px 15px;
+    border-radius: 15px;
+    color: #fff;
+    cursor: pointer;
+}
+
+#add-experience-btn:hover {
+    background: #4172da;
+    transition: all 0.3s;
+}
+
 #profile-experience-parent {
     display: flex;
     flex-direction: row;
     gap: 70px;
+    margin-bottom: 50px;
 }
 
 .profile-experience-child {
@@ -162,7 +179,10 @@
 }
 
 .roadmap-child:hover {
-    background: rgba(0, 0, 0, 0.1);
+    background-image: linear-gradient(to right, 
+                                    rgba(45,85,255,0) 1%,
+                                    rgba(45,85,255,0.1) 5%,
+                                    rgba(45,85,255,0.1));
 }
 
 .roadmap-child:hover > .roadmap-edit {
@@ -174,6 +194,11 @@
     position: absolute;
     top: 5px;
     right: 5px;
+}
+
+.roadmap-edit:hover {
+    color: royalblue;
+    cursor: pointer;
 }
 
 
@@ -223,7 +248,7 @@
 }
 
 #misc-parent {
-    margin-top: 60px;
+    margin-top: 20px;
     padding-top: 20px;
     border-top: 1px solid rgb(212, 212, 212);
     display: flex;
@@ -231,19 +256,76 @@
 
 .misc-child {
     width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 #skills-parent {
-    background: red;
     display: flex;
     flex-wrap: wrap;
+    gap: 5px;
 }
 
 .skills-child {
-    background: blue;
-    padding: 10px 20px;
+    background: #5289ff;
+    border-radius: 20px;
+    display: flex;
+    gap: 10px;
+    padding: 4px 15px;
+    color: #fff;
+    user-select: none;
 }
 
+.skill-delete {
+    cursor: pointer;
+    opacity: 0;
+    color: lightgray;
+}
+
+.skills-child:hover > .skill-delete {
+    opacity: 1;
+}
+
+.skills-child.add {
+    display: block;
+    background: rgba(82, 137, 255, 0.7);
+    position: relative;
+    z-index: 1000;
+    padding: 4px 35px;
+}
+
+.skills-child.add:hover {
+    background: rgba(82, 137, 255, 1);
+    border-radius: 0 0 15px 15px;
+}
+
+.skills-child.add:hover .skills-add-drop {
+    display: block;
+}
+
+.skills-add-drop {
+    display: none;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 100%;
+}
+
+.skills-add-drop-parent {
+    background: #5289ff;
+    display: flex;
+    flex-direction: column;
+}
+
+.skills-add-drop a {
+    padding: 2px 5px;
+}
+
+.skills-add-drop a:hover {
+    filter: opacity(0.6);
+    cursor: pointer;
+}
 
 @media only screen and (max-width: 950px) {
     #profile-info {
@@ -260,7 +342,7 @@
         margin-top: 20px;
     }
 
-    #profile-edit-btn {
+    .profile-btn {
         margin: auto 0px auto auto;
     }
 }

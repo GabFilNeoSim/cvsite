@@ -5,6 +5,7 @@ using Web.Models;
 using Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace Web.Controllers;
 
@@ -13,14 +14,25 @@ public class ProfileController : BaseController
 {
     public ProfileController(AppDbContext context, UserManager<User> userManager) : base(context, userManager) { }
 
+    public IActionResult Index() => RedirectToAction("Index", "Home");
+    
     [HttpGet("{id}")]
     public async Task<IActionResult> Index(string id)
     {
         var user = await _userManager.FindByIdAsync(id);
         if (user == null)
         {
-            return View(new ProfileViewModel()); // Fixa: Neo & Gabriel
+            return Error("Unknown profile", "This profile does not exist, please try again.");
         }
+
+        var allSkills = await _context.Skills.ToListAsync();
+
+        var unusedSkills = allSkills
+            .Where(skill => !user.Skills.Any(userSkill => userSkill.SkillId == skill.Id))
+            .Select(skill => new SkillViewModel
+            {
+                Title = skill.Title
+            }).ToList();
 
         var profileViewModel = new ProfileViewModel
         {
@@ -37,6 +49,7 @@ public class ProfileController : BaseController
 
             Work = user.Qualifications.Where(x => x.Type.Name == "Work").Select(y => new QualificationViewModel
             {
+                Id = y.Id,
                 Title = y.Title,
                 Description = y.Description,
                 Location = y.Location,
@@ -46,6 +59,7 @@ public class ProfileController : BaseController
 
             Education = user.Qualifications.Where(x => x.Type.Name == "Education").Select(y => new QualificationViewModel
             {
+                Id = y.Id,
                 Title = y.Title,
                 Description = y.Description,
                 Location = y.Location,
@@ -54,10 +68,12 @@ public class ProfileController : BaseController
             }).ToList(),
 
 
-            Skill = user.Skills.Select(y => new SkillViewModel
+            Skills = user.Skills.Select(y => new SkillViewModel
             {
                 Title = y.Skill.Title,
-            }).ToList()
+            }).ToList(),
+
+            UnusedSkills = unusedSkills
         };
 
         return View(profileViewModel);

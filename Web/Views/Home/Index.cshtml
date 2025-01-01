@@ -1,11 +1,14 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
+
+@inject SignInManager<User> signInManager
+@inject UserManager<User> userManager
+
+@{
     ViewData["Title"] = "Home";
 }
 
-@using Models
-
 <h1> Utforska CV </h1>
-
 
 @if (User.Identity.IsAuthenticated) {
     <p>LOGGED IN</p>
