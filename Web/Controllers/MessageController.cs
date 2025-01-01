@@ -18,6 +18,10 @@ public class MessageController : BaseController
         _signInManager = signInManager;
     }
 
+    /// <summary>
+    /// Message page endpoint
+    /// </summary>
+    /// <returns>Messages view</returns>
     [Authorize]
     [HttpGet]
     public async Task<ActionResult> Index()
@@ -27,6 +31,7 @@ public class MessageController : BaseController
         if (loggedInUser == null)
             return RedirectToAction("Login", "Account");
 
+        // Get users all messages, grouped by user.
         var userMessages = await _context.Messages
             .Where(m => m.SenderId == loggedInUser.Id || m.ReceiverId == loggedInUser.Id)
             .OrderByDescending(m => m.CreatedAt)
@@ -54,12 +59,18 @@ public class MessageController : BaseController
     }
 
 
+    /// <summary>
+    /// Chat view endpoint.
+    /// </summary>
+    /// <param name="id">User id</param>
+    /// <returns>View of chat with user</returns>
     [HttpGet("chat/{id}")]
     public async Task<ActionResult> Chat(string id)
     {
         User? loggedInUser = await _userManager.GetUserAsync(User);
         if (loggedInUser == null) return RedirectToAction("Login", "Auth");
 
+        // Get the chat user, as a userviewmodel
         var chatUser = await _context.Users
            .Where(u => u.Id == id)
            .Select(u => new UserViewModel
@@ -73,10 +84,12 @@ public class MessageController : BaseController
 
         if (chatUser == null) return NotFound("User not found.");
 
+        // Get all unread messages.
         var unreadMessages = await _context.Messages
             .Where(m => m.SenderId == id && m.ReceiverId == loggedInUser.Id && !m.Read)
             .ToListAsync();
 
+        // Set read state to true.
         foreach (var message in unreadMessages)
         {
             message.Read = true;
@@ -84,6 +97,7 @@ public class MessageController : BaseController
 
         await _context.SaveChangesAsync();
 
+        // Get all the message history for those two individs, related to each other.
         var messages = await _context.Messages
            .Where(m => (m.SenderId == loggedInUser.Id && m.ReceiverId == id) ||
                        (m.SenderId == id && m.ReceiverId == loggedInUser.Id))
@@ -100,6 +114,7 @@ public class MessageController : BaseController
                })
                .ToListAsync();
 
+        // Declare chatviewmodel
         var chatViewModel = new ChatViewModel
         {
             ChatUser = chatUser,
@@ -109,22 +124,28 @@ public class MessageController : BaseController
         return View(chatViewModel);
     }
 
+    /// <summary>
+    /// Send message endpoint
+    /// </summary>
+    /// <param name="model">The viewmodel for the chat message to be sent</param>
+    /// <returns>Redirection to same chat.</returns>
     [HttpPost]
     public async Task<ActionResult> Send(SendMessageViewModel model)
     {
-
+        // Return if validation fails.
         if (!ModelState.IsValid)
         {
             return RedirectToAction("Chat", new { id = model.ChatUserId });
         }
 
+        // Get users involved.
         User? loggedInUser = await _userManager.GetUserAsync(User);
         if (loggedInUser == null) return RedirectToAction("Login", "Auth");
 
         User? receivingUser = await _context.Users.FirstOrDefaultAsync(x => x.Id == model.ChatUserId);
         if (receivingUser == null) return Content("Bad");
 
-
+        // Create message object.
         var message = new Message
         {
             Sender = loggedInUser,
@@ -132,10 +153,10 @@ public class MessageController : BaseController
             Text = model.Text,
         };
 
+        // Add and save message to database
         await _context.Messages.AddAsync(message);
         await _context.SaveChangesAsync();
 
         return RedirectToAction("Chat", new { id = model.ChatUserId });
-
     }
 }
