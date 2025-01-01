@@ -16,25 +16,28 @@
             <form class="form" asp-controller="Edit" asp-action="ChangeDetails" asp-route-id="@userId">
                 <div class="form-row">
                     <div class="form-child">
-                        <label>Firstname</label>
+                        <label asp-for="FirstName">Firstname</label>
                         <div class="form-child-input">
                             <div><i class="fa-solid fa-signature"></i></div>
                             <input type="text" asp-for="FirstName">
+                            <span asp-validation-for="FirstName"></span>
                         </div>
                     </div>
                     <div class="form-child">
-                        <label>Lastname</label>
+                        <label asp-for="LastName">Lastname</label>
                         <div class="form-child-input">
                             <div><i class="fa-solid fa-signature"></i></div>
                             <input type="text" asp-for="LastName">
+                            <span asp-validation-for="LastName"></span>
                         </div>
                     </div>
                 </div>
                 <div class="form-child">
-                    <label>Address</label>
+                    <label asp-for="Address">Address</label>
                     <div class="form-child-input">
                         <div><i class="fa-solid fa-house"></i></div>
                         <input type="text" asp-for="Address">
+                        <span asp-validation-for="Address"></span>
                     </div>
                 </div>
                 <div class="form-checkbox">

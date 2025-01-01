@@ -37,9 +37,15 @@ public class EditController : BaseController
     [Authorize]
     [HttpPost("details")]
     public async Task<IActionResult> ChangeDetails(string id, ChangeDetailsViewModel model)
-    {   
-        // TODO: Byt till något bättre!!
-        if (!ModelState.IsValid) return Error("Invalid fields", "All fields are not valid");
+    {
+        if (!ModelState.IsValid)
+        {
+            return View("Index", new ProfileSettingsViewModel
+            {
+                ChangeDetails = model,
+                ChangePassword = new ChangePasswordViewModel()
+            });
+        }
 
         User? user = await _context.Users.FindAsync(id);
         if (user == null) return Error("Unknown error", "An unexpected error happend!");
