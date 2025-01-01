@@ -24,36 +24,34 @@ public class MessageController : BaseController
     {
         User? loggedInUser = await _userManager.GetUserAsync(User);
 
-        var messages = _context.Messages
-                .Where(x => x.SenderId == loggedInUser.Id || x.ReceiverId == loggedInUser.Id);
+        if (loggedInUser == null)
+            return RedirectToAction("Login", "Account");
 
-        var userMessages = await messages
-        .GroupBy(m => m.SenderId == loggedInUser.Id ? m.ReceiverId : m.SenderId)
-        .Select(g => new UserMessagesViewModel
-        {
-            User = _context.Users
-                .Where(u => u.Id == g.Key)
-                .Select(u => new UserViewModel
-                {
-                    Id = u.Id,
-                    FirstName = u.FirstName ?? "Unknown",
-                    LastName = u.LastName ?? "User",
-                    AvatarUri = u.AvatarUri ?? "default.png"
-                })
-                .FirstOrDefault() ?? new UserViewModel
-                {
-                    Id = g.Key ?? "Unknown",
-                    FirstName = "Unknown",
-                    LastName = "User",
-                    AvatarUri = "default.png"
-                },
-            LastMessage = g.OrderByDescending(m => m.CreatedAt).FirstOrDefault().Text
-        })
-        .ToListAsync();
-
+        var userMessages = await _context.Messages
+            .Where(m => m.SenderId == loggedInUser.Id || m.ReceiverId == loggedInUser.Id)
+            .OrderByDescending(m => m.CreatedAt)
+            .GroupBy(m => m.SenderId == loggedInUser.Id ? m.ReceiverId : m.SenderId)
+            .Select(g => new UserMessagesViewModel
+            {
+                User = _context.Users
+                    .Where(u => u.Id == g.Key)
+                    .Select(u => new UserViewModel
+                    {
+                        Id = u.Id,
+                        FirstName = u.FirstName,
+                        LastName = u.LastName,
+                        AvatarUri = u.AvatarUri
+                    })
+                    .FirstOrDefault(),
+                LastMessage = g.OrderByDescending(m => m.CreatedAt).First().Text,
+                UnreadCount = g.Count(m => !m.Read && m.ReceiverId == loggedInUser.Id)
+            })
+            .OrderByDescending(um => um.LastMessage)
+            .ToListAsync();
 
         return View(userMessages);
     }
+
 
     [HttpGet("chat/{id}")]
     public async Task<ActionResult> Chat(string id)
@@ -74,23 +72,32 @@ public class MessageController : BaseController
 
         if (chatUser == null) return NotFound("User not found.");
 
+        var unreadMessages = await _context.Messages
+            .Where(m => m.SenderId == id && m.ReceiverId == loggedInUser.Id && !m.Read)
+            .ToListAsync();
+
+        foreach (var message in unreadMessages)
+        {
+            message.Read = true;
+        }
+
+        await _context.SaveChangesAsync();
+
         var messages = await _context.Messages
-       .Where(m => (m.SenderId == loggedInUser.Id && m.ReceiverId == id) ||
-                   (m.SenderId == id && m.ReceiverId == loggedInUser.Id))
-           .OrderBy(m => m.CreatedAt)
-           .Select(m => new ChatMessageViewModel
-           {
-               Text = m.Text,
-               IsSentByCurrentUser = m.SenderId == loggedInUser.Id,
-               Avatar = m.SenderId == loggedInUser.Id
-                    ? loggedInUser.AvatarUri ?? "default.png"
-                    : _context.Users
-                              .Where(u => u.Id == m.SenderId)
-                              .Select(u => u.AvatarUri)
-                              .FirstOrDefault() ?? "default.png",
-               CreatedAt = m.CreatedAt
-           })
-           .ToListAsync();
+           .Where(m => (m.SenderId == loggedInUser.Id && m.ReceiverId == id) ||
+                       (m.SenderId == id && m.ReceiverId == loggedInUser.Id))
+               .OrderBy(m => m.CreatedAt)
+               .Select(m => new ChatMessageViewModel
+               {
+                   Text = m.Text,
+                   Read = m.Read,
+                   IsSentByCurrentUser = m.SenderId == loggedInUser.Id,
+                   Avatar = m.SenderId == loggedInUser.Id
+                        ? loggedInUser.AvatarUri ?? "default.png"
+                        : m.Sender.AvatarUri ?? "default.png",
+                   CreatedAt = m.CreatedAt
+               })
+               .ToListAsync();
 
         var chatViewModel = new ChatViewModel
         {

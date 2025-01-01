@@ -31,7 +31,7 @@
                     {
                         <a asp-controller="Edit" asp-action="Index" asp-route-id="@Model.User.Id" class="profile-btn">Edit profile</a>
                     } else {
-                        <a asp-controller="Message" asp-action="Index" asp-route-id="@Model.User.Id" class="profile-btn">Send message</a>
+                        <a asp-controller="Message" asp-action="Chat" asp-route-id="@Model.User.Id" class="profile-btn">Send message</a>
                     }
                 </div>
             <p id="profile-desc">@Model.User.Description</p>

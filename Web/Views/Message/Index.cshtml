@@ -14,7 +14,12 @@
     <h1>Messages</h1>
     <div id="contacts-parent">
         @foreach(UserMessagesViewModel message in @Model) {
-            <a asp-controller="Message" asp-action="Chat" asp-route-id="@message.User.Id" class="contacts-child">
+            <a asp-controller="Message" asp-action="Chat" asp-route-id="@message.User.Id" class="contacts-child  @(message.UnreadCount > 0 ? "new" : "")">
+                @if (@message.UnreadCount > 0) {
+                    <div class="contacts-new">
+                        <p>@message.UnreadCount</p>
+                    </div>
+                }
                 <img src="/avatars/@message.User.AvatarUri">
                 <div>
                     <h3>@message.User.FirstName @message.User.LastName</h3>

@@ -14,19 +14,40 @@
 }
 
 .contacts-child {
-    background-color: #5289ff;
+    background-color: #7a9ade;
     color: #fff;
     display: flex;
     gap: 20px;
     padding: 10px;
     align-items: center;
     text-decoration: none;
+    position: relative;
+}
+
+.contacts-child.new {
+    background-color: #5289ff !important;
 }
 
 .contacts-child:hover {
-    background: #4172da;
+    background: #4172da !important;
     cursor: pointer;
     transition: all 0.3s;
+}
+
+.contacts-new {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    background: lightgreen;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+    font-size: 12px;
+    color: black;
 }
 
 .contacts-child img {
