@@ -16,7 +16,9 @@ public class EditController : BaseController
     [HttpGet]
     public async Task<IActionResult> Index(string id)
     {
-        var user = await _userManager.FindByIdAsync(id);
+        if (!await IsProfileOwner(id)) return RedirectToAction("Login", "Auth");
+
+        User? user = await _userManager.FindByIdAsync(id);
         if (user == null) return Error("Unknown error", "An unexpected error happend!");
 
         var model = new ProfileSettingsViewModel
@@ -38,6 +40,8 @@ public class EditController : BaseController
     [HttpPost("details")]
     public async Task<IActionResult> ChangeDetails(string id, ChangeDetailsViewModel model)
     {
+        if (!await IsProfileOwner(id)) return RedirectToAction("Login", "Auth");
+
         if (!ModelState.IsValid)
         {
             return View("Index", new ProfileSettingsViewModel
@@ -64,6 +68,31 @@ public class EditController : BaseController
     [HttpPost("password")]
     public async Task<IActionResult> ChangePassword(string id, ChangePasswordViewModel model)
     {
+        if (!await IsProfileOwner(id)) return RedirectToAction("Login", "Auth");
+
+        if (!ModelState.IsValid)
+        {
+            return View("Index", new ProfileSettingsViewModel
+            {
+                ChangeDetails = new ChangeDetailsViewModel(),
+                ChangePassword = model
+            });
+        }
+
+        User? user = await _context.Users.FindAsync(id);
+        if (user == null) return Error("Unknown error", "An unexpected error happend!");
+
+        IdentityResult result = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+        if (!result.Succeeded)
+        {
+            ModelState.AddModelError("OldPassword", "The old password does not match.");
+            return View("Index", new ProfileSettingsViewModel
+            {
+                ChangeDetails = new ChangeDetailsViewModel(),
+                ChangePassword = model
+            });
+        }
+
         return RedirectToAction("Index", new { id });
     }
 
