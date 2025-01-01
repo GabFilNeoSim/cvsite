@@ -39,17 +39,6 @@ public class Program
             options.Password.RequiredUniqueChars = 1;
         });
 
-        builder.Services.AddAuthorizationBuilder()
-            .AddPolicy("IsProfileOwner", policy =>
-            {
-                policy.RequireAssertion(context =>
-                {
-                    var loggedInUser = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-                    var endpointUserId = context.Resource as string;
-                    return loggedInUser == endpointUserId;
-                });
-            });
-
         // Add services to the container.
         builder.Services.AddControllersWithViews();
 
