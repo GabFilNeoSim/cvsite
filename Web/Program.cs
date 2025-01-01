@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Data.Contexts;
 using Models;
+using System.Security.Claims;
 
 namespace Web;
 

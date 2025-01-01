@@ -1,30 +1,26 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using Web.Models.Message
 
 @inject SignInManager<User> signInManager
 @inject UserManager<User> userManager
 
-@model User
+@model List<UserMessagesViewModel>
 
 @{
     ViewData["Title"] = "Messages";
 }
 
-<h1>Messages</h1>
-
-@if (signInManager.IsSignedIn(User))
-{
-    @foreach (Message message in Model.ReceivedMessages)
-    {
-        if (message.Sender == null)
-        {
-            <h2>Anonymous sender: @message.AnonymousName</h2>
+<div class="contacts-container">
+    <h1>Messages</h1>
+    <div id="contacts-parent">
+        @foreach(UserMessagesViewModel message in @Model) {
+            <a asp-controller="Message" asp-action="Chat" asp-route-id="@message.User.Id" class="contacts-child">
+                <img src="/avatars/@message.User.AvatarUri">
+                <div>
+                    <h3>@message.User.FirstName @message.User.LastName</h3>
+                    <p>@message.LastMessage</p>
+                </div>
+            </a>
         }
-        else
-        {
-            <h2>Sender: @message.Sender.FirstName @message.Sender.LastName</h2>
-        }
-        <p>@message.Text</p>
-    }
-}
-
-<a asp-controller="Message" asp-action="New">New message</a>
+    </div>
+</div>

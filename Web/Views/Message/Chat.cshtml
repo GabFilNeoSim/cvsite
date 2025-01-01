@@ -1,0 +1,34 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Web.Models.Message
+
+@inject SignInManager<User> signInManager
+@inject UserManager<User> userManager
+
+@model ChatViewModel
+
+@{
+    ViewData["Title"] = "Messages";
+}
+
+<div class="contacts-container">
+    <div class="message-header">
+        <img src="/avatars/@Model.ChatUser.AvatarUri">
+        <h2>@Model.ChatUser.FirstName @Model.ChatUser.LastName</h2>
+    </div>
+    <div class="message-parent">
+
+        @foreach (var message in Model.Messages)
+        {
+            <div class="message-child @(message.IsSentByCurrentUser ? "self" : "")">
+            <img src="/avatars/@message.Avatar">
+                <div class="message-child-body">
+                    <p class="message-child-time">@message.CreatedAt.ToString("g")</p>
+                    <p>@message.Text</p>
+                </div>
+            </div>
+        }
+    </div>
+
+    <partial name="Partials/_SendMessage" model="new SendMessageViewModel {ChatUserId = Model.ChatUser.Id}"/>
+
+</div>
