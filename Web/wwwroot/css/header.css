@@ -16,13 +16,80 @@ header a{
     text-decoration: none;
     color: hsl(0,0%, 10%);
     font-size: 1.25rem;
+    text-align: center;
 }
-header a:not(.logo):hover{
+header a:not(#home):hover{
     text-decoration-color: #5289ff;
 }
-header .logo{
+header #home{
     margin-right: auto;
     font-size: 2rem;
+}
+
+header #searchbar{
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+header #search-result {
+    display: none;
+    position: absolute;
+    margin-top: 5px;
+    border-radius: 8px 8px 16px 16px;
+    width: 100%;
+    height: auto;
+    background: hsl(0,0%,95%);
+    box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+}
+
+header #search-result .search-result-child {
+    background: transparent;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px;
+}
+
+header #search-result .search-result-child:first-child {
+    padding-top: 10px;
+}
+
+header #search-result .search-result-child:hover {
+    background: hsl(0,0%,92%);
+}
+
+header #search-result .search-result-child img{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+header #search-result .search-result-child p {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+header #searchbar .icon{
+    font-size: 1rem;
+    color: hsl(0,0%,20%);
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+header #searchbar input {
+    background-color: transparent;
+    padding: 2px 8px 2px 32px;
+    border: 1.5px solid hsl(0,0%,40%);
+    border-radius: 16px;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    font-size: 1rem;
+    color: hsl(0,0%,10%);
 }
 
 header .message{
@@ -59,6 +126,7 @@ header .inbox p{
 header .profile{
     display: flex;
     gap: 0.5rem;
+    align-items: center;
 }
 
 header .avatar {
@@ -81,5 +149,37 @@ header button:hover {
 header .login {
     border: 2px solid #5289ff;
     border-radius: 32px;
-    padding: 0rem 0.5rem 0.1rem 0.5rem;
+    padding: 0 16px 4px 16px;
+}
+
+@media (max-width: 900px){
+    header nav{
+        gap: 30px;
+        justify-content: space-between;
+    }
+
+    header #home{
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-right: 0px;
+    }
+
+}
+
+@media (max-width: 700px){
+    header nav{
+        gap: 15px;
+    }
+
+    header .message p{
+        display: none;
+    }
+
+    header #searchbar{
+        width: 150px;
+    }
+
+    header .profile span{
+        display: none;
+    }
 }
