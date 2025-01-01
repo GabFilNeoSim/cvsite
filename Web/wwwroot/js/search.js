@@ -3,6 +3,20 @@ $("#searchbar input").on('keyup', function (event) {
     processChange(event);
 });
 
+function updateLinkContent() {
+    if ($(window).width() <= 700) {
+        $('#home').html('<i class="fa fa-home"></i>');
+    } else {
+        $('#home').text('CV-Site');
+    }
+}
+
+// Run on page load
+$(document).ready(updateLinkContent);
+
+// Run on window resize
+$(window).resize(updateLinkContent);
+
 function debounce(func, timeout = 500) {
     let timer;
     return (...args) => {

@@ -20,7 +20,7 @@
 <body>
 <header>
     <nav>
-        <a class="logo" asp-controller="Home" asp-action="Index"> CV-Site </a>
+        <a id="home" asp-controller="Home" asp-action="Index"> CV-Site </a>
         <div id="searchbar">
                 <i class="fa-solid fa-magnifying-glass icon"></i>
                 <input id="searchinput" type="text" placeholder="Search" autocomplete="off"/>
@@ -39,15 +39,15 @@
         }
         else
         {
-            <form asp-controller="Auth" asp-action="Logout">
+            <form asp-controller="Auth" asp-action="Logout" class="desktop">
                 <button type="submit">Logout</button>
             </form>
             @if (User.Identity.IsAuthenticated && ViewData["UserId"] != null)
             {
-                <div class="profile">
-                    <a asp-controller="Profile" asp-action="Index" asp-route-id="@ViewData["UserId"]"> Profile </a>
-                        <img src="https://cdn-icons-png.flaticon.com/512/3607/3607444.png" class="avatar" />
-                </div>
+                <a asp-controller="Profile desktop" asp-action="Index" asp-route-id="@ViewData["UserId"]" class="profile">
+                     <span>Profile</span>
+                    <img src="https://cdn-icons-png.flaticon.com/512/3607/3607444.png" class="avatar" />
+                </a>   
             }
         }
 
