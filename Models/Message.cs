@@ -8,9 +8,9 @@ public class Message
 
     public string Text{ get; set; }
 
-    public bool Read { get; set; }
+    public bool Read { get; set; } = false;
 
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public string? AnonymousName { get; set; }
 

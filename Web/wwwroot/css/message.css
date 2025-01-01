@@ -1,0 +1,156 @@
+﻿.contacts-container {
+    width: 80%;
+    margin: 20px auto 0 auto;
+    background-color: rgb(255, 255, 255);
+    padding: 25px 50px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#contacts-parent {
+    background-color: red;
+}
+
+.contacts-child {
+    background-color: #5289ff;
+    color: #fff;
+    display: flex;
+    gap: 20px;
+    padding: 10px;
+    align-items: center;
+    text-decoration: none;
+}
+
+.contacts-child:hover {
+    background: #4172da;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.contacts-child img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.message-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgb(212, 212, 212);
+}
+
+.message-header img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+.message-header h2 {
+    font-size: 24px;
+}
+
+.message-parent {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 460px;
+    overflow-y: scroll;
+}
+
+.message-parent::-webkit-scrollbar {
+    width: 5px;
+}
+
+.message-parent::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.message-parent::-webkit-scrollbar-thumb {
+    background: #5289ff;
+}
+
+.message-parent::-webkit-scrollbar-thumb:hover {
+    background: #2663e7;
+}
+
+.message-child {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.message-child.self {
+    flex-direction: row-reverse;
+}
+
+.message-child img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+}
+
+.message-child-body {
+    max-width: 250px;
+    background-color: #5289ff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.message-child.self .message-child-body {
+    background-color: #2663e7;
+}
+
+.message-child-body p {
+    color: #fff;
+}
+
+.message-child-time {
+    font-size: 12px;
+}
+
+.message-send-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-top: 1px solid rgb(212, 212, 212);
+}
+
+.message-send-wrapper textarea {
+    border: none;
+    outline: none;
+    background-color: rgb(235, 235, 235);
+    padding: 10px;
+    resize: none;
+    width: 50%;
+    height: 60px;
+    box-sizing: border-box;
+}
+
+.message-send-btn {
+    background-color: #5289ff;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+    padding: 0 20px;
+    border: none;
+}
+
+.message-send-btn:hover {
+    background-color: #4576e0;
+    cursor: pointer;
+}

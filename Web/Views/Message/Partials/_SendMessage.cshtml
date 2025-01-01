@@ -1,0 +1,9 @@
+﻿@using Web.Models.Message
+
+@model SendMessageViewModel
+
+<form class="message-send-wrapper" asp-controller="Message" asp-action="Send">
+    <input type="hidden" asp-for="ChatUserId" />
+    <textarea asp-for="Text"></textarea>
+    <button class="message-send-btn">Send</button>
+</form>
