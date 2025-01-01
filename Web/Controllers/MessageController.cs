@@ -44,9 +44,10 @@ public class MessageController : BaseController
                     })
                     .FirstOrDefault(),
                 LastMessage = g.OrderByDescending(m => m.CreatedAt).First().Text,
+                LastMessageTime = g.OrderByDescending(m => m.CreatedAt).First().CreatedAt,
                 UnreadCount = g.Count(m => !m.Read && m.ReceiverId == loggedInUser.Id)
             })
-            .OrderByDescending(um => um.LastMessage)
+            .OrderByDescending(um => um.LastMessageTime)
             .ToListAsync();
 
         return View(userMessages);
