@@ -27,6 +27,12 @@ public class BaseController : Controller
         base.OnActionExecuting(context);
     }
 
+    protected async Task<bool> IsProfileOwner(string endpointUserId)
+    {
+        User? signedInUser = await _userManager.GetUserAsync(User);
+        return signedInUser?.Id == endpointUserId;
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     protected IActionResult Error(string title, string message) => View("Error", new ErrorViewModel { Title = title, Message = message });
 }

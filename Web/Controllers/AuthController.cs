@@ -72,22 +72,20 @@ public class AuthController : Controller
             return View(model);
         }
 
-        //var result = await _signInManager.PasswordSignInAsync(
-        //    user,
-        //    model.Password,
-        //    isPersistent: model.RememberMe,
-        //    lockoutOnFailure: false
-        //);
+        var result = await _signInManager.PasswordSignInAsync(
+            user,
+            model.Password,
+            isPersistent: model.RememberMe,
+            lockoutOnFailure: false
+        );
 
-
-        // TODO: FIX THIS BACK TO NORMAL
         await _signInManager.SignInAsync(user, false);
 
-        //if (!result.Succeeded)
-        //{
-        //    ModelState.AddModelError(string.Empty, "Wrong email or password");
-        //    return View(model);
-        //}
+        if (!result.Succeeded)
+        {
+            ModelState.AddModelError(string.Empty, "Wrong email or password");
+            return View(model);
+        }
 
         return RedirectToAction("Index", "Profile", new { id = user.Id });
     }
