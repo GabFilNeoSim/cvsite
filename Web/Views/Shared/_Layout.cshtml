@@ -27,20 +27,20 @@
                     <input id="searchinput" type="text" placeholder="Search" autocomplete="off"/>
                     <div id="search-result"></div>
             </div>
-            <a class="message" asp-controller="Message" asp-action="Index">
-                <p> Messages</p>
-                <i class="fa-regular fa-envelope"></i>
-                <div class="inbox">
-                    @{
-                        @if (signInManager.IsSignedIn(User))
-                        {                            
+            @if (signInManager.IsSignedIn(User))
+            {
+                <a class="message" asp-controller="Message" asp-action="Index">
+                    <p> Messages</p>
+                    <i class="fa-regular fa-envelope"></i>
+                    <div class="inbox">
+                        @{                      
                             User? user = await userManager.GetUserAsync(User);
                             int? unreadMessages = user?.ReceivedMessages.Where(rm => !rm.Read).Count();
                             <p>@unreadMessages</p>
-                        }
-                    }
-                </div>
-            </a>
+                         }
+                    </div>
+                </a>
+            }
             <a asp-controller="Project" asp-action="Index"> Projects </a>
             @if (!signInManager.IsSignedIn(User))
             {
