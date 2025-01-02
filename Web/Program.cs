@@ -2,9 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Data.Contexts;
 using Models;
-using System.Security.Claims;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System;
 
 namespace Web;
 
