@@ -6,6 +6,10 @@
 
 @model UpdateQualificationViewModel
 
+@{
+    var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+}
+
 <div class="form-container">
     <div class="form-wrapper">
         <div class="form-header">
@@ -13,8 +17,16 @@
         </div>
         <div asp-validation-summary="All"></div>
         <div class="form-content">
+<<<<<<< HEAD:Web/Views/Profile/UpdateQualification.cshtml
             <form class="form" asp-controller="Profile" asp-action="UpdateQualification" asp-route-id="@userId" asp-route-qid="@Model.QualId" method="post">
                 <input type="hidden" asp-for="QualId" />
+=======
+
+            <div asp-validation-summary="All"></div>
+
+            <form class="form" asp-controller="Edit" asp-action="EditQualification" asp-route-id="@userId" asp-route-qid="@Model.QualId" method="post">
+                <input type="hidden" asp-for="QualId"/>
+>>>>>>> 4d4e95a5254c073dde5934b3241ac2c1f0ef685a:Web/Views/Edit/EditQualification.cshtml
                 <div class="form-child">
                     <label>Title</label>
                     <div class="form-child-input">
