@@ -2,7 +2,7 @@
 
 namespace Web.Models
 {
-    public class EditQualificationViewModel
+    public class UpdateQualificationViewModel
     {
         public int QualId { get; set; }
 
@@ -17,7 +17,7 @@ namespace Web.Models
 
         [Required(ErrorMessage = "Start date is required")]
         public DateOnly StartDate { get; set; }
-        
+
         public DateOnly? EndDate { get; set; }
 
         [Required(ErrorMessage = "Qualification type is required")]
