@@ -36,14 +36,6 @@ public class EditController : BaseController
             ChangePassword = new ChangePasswordViewModel()
         };
 
-        List<SelectListItem> qualificationTypes = await _context.QualificationTypes.Select(x => new SelectListItem
-        {
-            Text = x.Name,
-            Value = x.Id.ToString()
-        }).ToListAsync();
-
-        ViewBag.options = qualificationTypes;
-
         return View(model);
     }
 
@@ -72,7 +64,7 @@ public class EditController : BaseController
 
         await _context.SaveChangesAsync();
 
-        return RedirectToAction("Index", new { id });
+        return RedirectToAction("Index", "Profile", new { id });
     }
 
     [Authorize]
@@ -104,7 +96,7 @@ public class EditController : BaseController
             });
         }
 
-        return RedirectToAction("Index", new { id });
+        return RedirectToAction("Index", "Profile", new { id });
     }
 
     [Authorize]
@@ -124,17 +116,17 @@ public class EditController : BaseController
     [HttpGet("qualification/{qid}")]
     public async Task<IActionResult> EditQualification(string id, int qid)
     {
-        var user = await _userManager.FindByIdAsync(id);
-        if (user == null)
-        {
-            return View();
-        }
+        if (!await IsProfileOwner(id)) return RedirectToAction("Login", "Auth");
 
-        var qualification = await _context.Qualifications.FirstOrDefaultAsync(x => x.Id == qid);
+        var qualification = await _context.Qualifications.FirstOrDefaultAsync(q => q.Id == qid);
+        if (qualification == null)
+        {
+            return Error("Unknown qualification", "Qualification not found!");
+        }
 
         var model = new EditQualificationViewModel
         {
-            Id = qualification.Id,
+            QualId = qualification.Id,
             Title = qualification.Title,
             Description = qualification.Description,
             StartDate = qualification.StartDate,
@@ -143,21 +135,33 @@ public class EditController : BaseController
             TypeId = qualification.TypeId
         };
 
+        List<SelectListItem> qualificationTypes = await _context.QualificationTypes.Select(x => new SelectListItem
+        {
+            Text = x.Name,
+            Value = x.Id.ToString()
+        }).ToListAsync();
+
+        ViewBag.options = qualificationTypes;
+
         return View(model);
     }
 
     [Authorize]
-    [HttpPost]
-    public async Task<IActionResult> EditQualification(string id, EditQualificationViewModel model)
+    [HttpPost("qualification/{qid}")]
+    public async Task<IActionResult> EditQualification(string id, int qid, EditQualificationViewModel model)
     {
         if (!await IsProfileOwner(id)) return RedirectToAction("Login", "Auth");
 
         if (!ModelState.IsValid)
         {
-            return View(model);
+            ViewBag.QualificationTypes = await _context.QualificationTypes
+                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name })
+                .ToListAsync();
+
+            return View("EditQualification", model);
         }
         
-        var qualification = await _context.Qualifications.FirstOrDefaultAsync(x => x.Id == model.Id);
+        var qualification = await _context.Qualifications.FirstOrDefaultAsync(x => x.Id == qid);
         if (qualification == null)
         {
             return Error(string.Empty, "Qualification was not found!");
@@ -172,7 +176,7 @@ public class EditController : BaseController
 
         await _context.SaveChangesAsync();
 
-        return RedirectToAction("Index", new { id });
+        return RedirectToAction("Index", "Profile", new { id });
     }
 
     [Authorize]

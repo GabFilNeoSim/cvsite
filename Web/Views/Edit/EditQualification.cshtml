@@ -1,8 +1,13 @@
-﻿@{
+﻿@using System.Security.Claims
+@{
     ViewData["Title"] = "Edit qualification";
 }
 
 @model EditQualificationViewModel
+
+@{
+    var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+}
 
 <div class="form-container">
     <div class="form-wrapper">
@@ -10,8 +15,11 @@
             <h2>Change qualification</h2>
         </div>
         <div class="form-content">
-            <form class="form" asp-controller="Edit" asp-action="EditQualification" method="post">
-                <input type="hidden" asp-for="Id" />
+
+            <div asp-validation-summary="All"></div>
+
+            <form class="form" asp-controller="Edit" asp-action="EditQualification" asp-route-id="@userId" asp-route-qid="@Model.QualId" method="post">
+                <input type="hidden" asp-for="QualId"/>
                 <div class="form-child">
                     <label>Title</label>
                     <div class="form-child-input">
