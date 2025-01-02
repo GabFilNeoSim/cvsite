@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using Data.Contexts;
 using Models;
 using System.Security.Claims;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System;
 
 namespace Web;
 
@@ -61,6 +63,13 @@ public class Program
         app.UseAuthentication();
 
         app.UseAuthorization();
+
+        app.UseStatusCodePagesWithRedirects("/error404");
+
+        app.MapControllerRoute(
+            name: "error404",
+            pattern: "Error404",
+            defaults: new { controller = "Base", action = "Error404" });
 
         app.MapControllerRoute(
             name: "default",

@@ -17,6 +17,8 @@ public class BaseController : Controller
         _userManager = userManager;
     }
 
+    public IActionResult Error404() => Error("404 - Page not found", "The specified page was not found.");
+
     public override void OnActionExecuting(ActionExecutingContext context)
     {
         if (User.Identity.IsAuthenticated)
