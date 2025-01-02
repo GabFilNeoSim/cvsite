@@ -9,7 +9,6 @@
     ViewData["Title"] = "Profile";
 }
 
-
 @section Scripts {
     <script src="~/js/profile.js"></script>
 }
@@ -19,7 +18,7 @@
         <div id="profile-avatar-parent">
             @if (Model.IsProfileOwner)
             {
-                <form id="profile-change-avatar" asp-controller="Profile" asp-action="ChangeAvatar" asp-route-id="@Model.User.Id" method="post" enctype="multipart/form-data">
+                <form id="profile-change-avatar" asp-controller="Profile" asp-action="UpdateAvatar" asp-route-id="@Model.User.Id" method="post" enctype="multipart/form-data">
                     <input id="profile-change-avatar-input" type="file" name="avatar" hidden>
                     <img id="profile-avatar" src="/avatars/@Model.User.AvatarUri" alt="Profile Avatar">
                 </form>
@@ -40,7 +39,7 @@
                     </div>
                     @if (Model.IsProfileOwner)
                     {
-                        <a asp-controller="Edit" asp-action="Index" asp-route-id="@Model.User.Id" class="profile-btn">Edit profile</a>
+                        <a asp-controller="Profile" asp-action="UpdateDetails" asp-route-id="@Model.User.Id" class="profile-btn">Edit profile</a>
                     } else {
                         <a asp-controller="Message" asp-action="Chat" asp-route-id="@Model.User.Id" class="profile-btn">Send message</a>
                     }
@@ -84,7 +83,7 @@
                                     </div>
                                     @if (Model.IsProfileOwner)
                                     {
-                                        <a asp-controller="Edit" asp-action="EditQualification" asp-route-id="@Model.User.Id" asp-route-qid="@q.Id" class="roadmap-edit">
+                                        <a asp-controller="Profile" asp-action="UpdateQualification" asp-route-id="@Model.User.Id" asp-route-qid="@q.Id" class="roadmap-edit">
                                             <i class="fa-solid fa-pen"></i>
                                         </a>
                                     }
@@ -111,7 +110,7 @@
                                     </div>
                                     @if (Model.IsProfileOwner)
                                     {
-                                        <a asp-controller="Edit" asp-action="EditQualification" asp-route-id="@Model.User.Id" asp-route-qid="@qualification.Id" class="roadmap-edit">
+                                        <a asp-controller="Profile" asp-action="UpdateQualification" asp-route-id="@Model.User.Id" asp-route-qid="@qualification.Id" class="roadmap-edit">
                                             <i class="fa-solid fa-pen"></i>
                                         </a>
                                     }
@@ -125,7 +124,7 @@
             </div>
             @if (Model.IsProfileOwner)
             {
-                <a id="add-experience-btn" asp-controller="Edit" asp-action="AddQualification" asp-route-id="@Model.User.Id">Add qualification</a>
+                <a id="add-experience-btn" asp-controller="Profile" asp-action="AddQualification" asp-route-id="@Model.User.Id">Add qualification</a>
             }
         </div>
 
