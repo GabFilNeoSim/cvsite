@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
-namespace Web.Controllers;
+namespace Web.Controllers.Profile;
 
 [Route("profile")]
 public class ProfileController : BaseController
@@ -15,7 +15,7 @@ public class ProfileController : BaseController
     public ProfileController(AppDbContext context, UserManager<User> userManager) : base(context, userManager) { }
 
     public IActionResult Index() => RedirectToAction("Index", "Home");
-    
+
     [HttpGet("{id}")]
     public async Task<IActionResult> Index(string id)
     {
@@ -33,6 +33,8 @@ public class ProfileController : BaseController
             {
                 Title = skill.Title
             }).ToList();
+
+        var isProfileOwner = await IsProfileOwner(user.Id);
 
         var profileViewModel = new ProfileViewModel
         {
@@ -73,7 +75,9 @@ public class ProfileController : BaseController
                 Title = y.Skill.Title,
             }).ToList(),
 
-            UnusedSkills = unusedSkills
+            UnusedSkills = unusedSkills,
+
+            IsProfileOwner = isProfileOwner
         };
 
         return View(profileViewModel);

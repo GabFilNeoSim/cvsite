@@ -4,8 +4,11 @@ using Web.Models.ProfileSettings;
 using Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using Web.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Web.Controllers;
+namespace Web.Controllers.Profile;
 
 [Route("profile/{id}/edit")]
 public class EditController : BaseController
@@ -22,9 +25,9 @@ public class EditController : BaseController
         if (user == null) return Error("Unknown error", "An unexpected error happend!");
 
         var model = new ProfileSettingsViewModel
-        {   
+        {
             ChangeDetails = new ChangeDetailsViewModel
-            {       
+            {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Address = user.Address,
@@ -32,6 +35,14 @@ public class EditController : BaseController
             },
             ChangePassword = new ChangePasswordViewModel()
         };
+
+        List<SelectListItem> qualificationTypes = await _context.QualificationTypes.Select(x => new SelectListItem
+        {
+            Text = x.Name,
+            Value = x.Id.ToString()
+        }).ToListAsync();
+
+        ViewBag.options = qualificationTypes;
 
         return View(model);
     }
@@ -111,7 +122,62 @@ public class EditController : BaseController
 
     [Authorize]
     [HttpGet("qualification/{qid}")]
-    public async Task<IActionResult> Qualifications(string id, string qid)
+    public async Task<IActionResult> EditQualification(string id, int qid)
+    {
+        var user = await _userManager.FindByIdAsync(id);
+        if (user == null)
+        {
+            return View();
+        }
+
+        var qualification = await _context.Qualifications.FirstOrDefaultAsync(x => x.Id == qid);
+
+        var model = new EditQualificationViewModel
+        {
+            Id = qualification.Id,
+            Title = qualification.Title,
+            Description = qualification.Description,
+            StartDate = qualification.StartDate,
+            EndDate = qualification.EndDate,
+            Location = qualification.Location,
+            TypeId = qualification.TypeId
+        };
+
+        return View(model);
+    }
+
+    [Authorize]
+    [HttpPost]
+    public async Task<IActionResult> EditQualification(string id, EditQualificationViewModel model)
+    {
+        if (!await IsProfileOwner(id)) return RedirectToAction("Login", "Auth");
+
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+        
+        var qualification = await _context.Qualifications.FirstOrDefaultAsync(x => x.Id == model.Id);
+        if (qualification == null)
+        {
+            return Error(string.Empty, "Qualification was not found!");
+        }
+
+        if (qualification.Title != model.Title) qualification.Title = model.Title;
+        if (qualification.Description != model.Description) qualification.Description = model.Description;
+        if (qualification.StartDate != model.StartDate) qualification.StartDate = model.StartDate;
+        if (qualification.EndDate != model.EndDate) qualification.EndDate = model.EndDate;
+        if (qualification.Location != model.Location) qualification.Location = model.Location;
+        if (qualification.TypeId != model.TypeId) qualification.TypeId = model.TypeId;
+
+        await _context.SaveChangesAsync();
+
+        return RedirectToAction("Index", new { id });
+    }
+
+    [Authorize]
+    [HttpGet("qualification/add")]
+    public async Task<IActionResult> AddQualification(string id)
     {
         var user = await _userManager.FindByIdAsync(id);
         if (user == null)
@@ -123,7 +189,7 @@ public class EditController : BaseController
     }
 
     [HttpPost]
-    public async Task<IActionResult> Qualifications(string id, User model)
+    public async Task<IActionResult> AddQualification(string id, User model)
     {
         return View();
     }

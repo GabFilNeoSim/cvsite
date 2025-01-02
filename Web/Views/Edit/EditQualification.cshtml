@@ -2,7 +2,7 @@
     ViewData["Title"] = "Edit qualification";
 }
 
-@model User // needs to be a UpdateProfileViewModel or something
+@model EditQualificationViewModel
 
 <div class="form-container">
     <div class="form-wrapper">
@@ -10,26 +10,27 @@
             <h2>Change qualification</h2>
         </div>
         <div class="form-content">
-            <form class="form" asp-action="Register">
+            <form class="form" asp-controller="Edit" asp-action="EditQualification" method="post">
+                <input type="hidden" asp-for="Id" />
                 <div class="form-child">
                     <label>Title</label>
                     <div class="form-child-input">
                         <div><i class="fa-solid fa-heading"></i></div>
-                        <input type="text" placeholder="Write title here">
+                        <input type="text" placeholder="Write title here" asp-for="Title">
                     </div>
                 </div>
                 <div class="form-child">
                     <label>Location</label>
                     <div class="form-child-input">
                         <div><i class="fa-solid fa-location-dot"></i></div>
-                        <input type="text" placeholder="Stockholm">
+                        <input type="text" placeholder="Stockholm" asp-for="Location">
                     </div>
                 </div>
                 <div class="form-child">
                     <label>Description</label>
                     <div class="form-child-input">
                         <div><i class="fa-solid fa-quote-left"></i></div>
-                        <input type="text" placeholder="Lorem ipsum">
+                        <input type="text" placeholder="Lorem ipsum" asp-for="Description">
                     </div>
                 </div>
                 <div class="form-row">
@@ -37,20 +38,27 @@
                         <label>Start date</label>
                         <div class="form-child-input">
                             <div><i class="fa-solid fa-calendar-days"></i></div>
-                            <input type="date" placeholder="2024-01-01">
+                            <input type="date" placeholder="2024-01-01" asp-for="StartDate">
                         </div>
                     </div>
                     <div class="form-child">
                         <label>End date</label>
                         <div class="form-child-input">
                             <div><i class="fa-solid fa-calendar-days"></i></div>
-                            <input type="date" placeholder="2025-01-01">
+                            <input type="date" placeholder="2025-01-01" asp-for="EndDate">
                         </div>
+                    </div>
+                </div>
+                <div class="form-child">
+                    <label>Type</label>
+                    <div class="form-child-input">
+                        <div><i class="fa-solid fa-quote-left"></i></div>
+                        <select asp-items="@ViewBag.options" asp-for="TypeId"></select>
                     </div>
                 </div>
                 <div class="form-row">
                     <button type="submit" class="submit">Save</button>
-                    <button type="submit" class="delete">Delete</button>
+                    @* <button type="submit" class="delete">Delete</button> *@
                 </div>
             </form>
         </div>

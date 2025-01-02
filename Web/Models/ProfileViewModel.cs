@@ -13,5 +13,7 @@
         public List<SkillViewModel> Skills { get; set; }
 
         public List<SkillViewModel> UnusedSkills { get; set; }
+
+        public bool IsProfileOwner { get; set; }
     }
 }

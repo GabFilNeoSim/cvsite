@@ -79,8 +79,6 @@ public class AuthController : Controller
             lockoutOnFailure: false
         );
 
-        await _signInManager.SignInAsync(user, false);
-
         if (!result.Succeeded)
         {
             ModelState.AddModelError(string.Empty, "Wrong email or password");
