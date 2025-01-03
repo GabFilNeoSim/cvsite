@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Web.Models;
 
-public class UpdateQualificationViewModel
+public class AddQualificationViewModel
 {
     [Required(ErrorMessage = "Title is required")]
     public string Title { get; set; }
@@ -15,7 +15,7 @@ public class UpdateQualificationViewModel
     public string Location { get; set; }
 
     [Required(ErrorMessage = "Start date is required")]
-    public DateOnly StartDate { get; set; }
+    public DateOnly StartDate { get; set; } = new DateOnly();
 
     public DateOnly? EndDate { get; set; }
 

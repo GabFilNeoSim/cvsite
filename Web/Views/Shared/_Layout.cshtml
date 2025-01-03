@@ -57,37 +57,20 @@
                         string defaultAvatar = "default.png";
 
                         string avatar = user?.AvatarUri != defaultAvatar
-                        ? Url.Content(directory + user?.AvatarUri)
-                        : Url.Content(directory + defaultAvatar);
+                            ? Url.Content(directory + user?.AvatarUri)
+                            : Url.Content(directory + defaultAvatar);
                     }
                     <img src="@avatar" class="avatar" />
                     </summary>
                     <div id="options">
-                        <form asp-controller="Auth" asp-action="Logout">
-                            <button type="submit">Logout</button>
-                        </form>
                         <a asp-controller="Profile" asp-action="Index" asp-route-id="@user?.Id" class="profile">
                             <p>Profile</p>
                         </a>
+                        <form asp-controller="Auth" asp-action="Logout">
+                            <button type="submit">Logout</button>
+                        </form>
                     </div>
                 </details>
-                @* <form asp-controller="Auth" asp-action="Logout">
-                    <button type="submit">Logout</button>
-                </form>
-
-
-                <a asp-controller="Profile" asp-action="Index" asp-route-id="@user?.Id" class="profile">
-                    <p>Profile</p>
-                    @{
-                        string directory = "~/avatars/";
-                        string defaultAvatar = "default.png";
-
-                        string avatar = user?.AvatarUri != defaultAvatar
-                            ? Url.Content(directory + user?.AvatarUri)
-                            : Url.Content(directory + defaultAvatar);
-                    }
-                    <img src="@avatar" class="avatar"/>
-                </a> *@
             }
     </nav>
 </header>

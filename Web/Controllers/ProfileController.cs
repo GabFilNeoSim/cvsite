@@ -232,30 +232,36 @@ public class ProfileController : BaseController
             StartDate = qualification.StartDate,
             EndDate = qualification.EndDate,
             Location = qualification.Location,
-            TypeId = qualification.TypeId
+            TypeId = qualification.TypeId,
+            UserId = id,
+            Types = await _context.QualificationTypes.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }).ToListAsync(),
         };
-
-        ViewBag.options = await _context.QualificationTypes.Select(x => new SelectListItem
-        {
-            Text = x.Name,
-            Value = x.Id.ToString()
-        }).ToListAsync();
 
         return View(model);
     }
 
     [Authorize]
     [HttpPost("{id}/edit/qualifications/{qid}")]
-    public async Task<IActionResult> UpdateQualification(string id, UpdateQualificationViewModel model)
+    public async Task<IActionResult> UpdateQualification(string id, int qid, UpdateQualificationViewModel model)
     {
         if (!await IsProfileOwner(id)) return RedirectToAction("Login", "Auth");
 
         if (!ModelState.IsValid)
         {
+            model.Types = await _context.QualificationTypes.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }).ToListAsync();
+
             return View(model);
         }
 
-        var qualification = await _context.Qualifications.FirstOrDefaultAsync(x => x.Id == model.QualId);
+        var qualification = await _context.Qualifications.FirstOrDefaultAsync(x => x.Id == qid);
         if (qualification == null)
         {
             return Error(string.Empty, "Qualification was not found!");
@@ -277,12 +283,91 @@ public class ProfileController : BaseController
     [HttpGet("{id}/qualifications/add")]
     public async Task<IActionResult> AddQualification(string id)
     {
+        if (!await IsProfileOwner(id))
+        {
+            return RedirectToAction("Login", "Auth");
+        }
+
+        var model = new AddQualificationViewModel
+        {
+            UserId = id,
+            Types = await _context.QualificationTypes.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }).ToListAsync(),
+        };
+
+        return View(model);
+    }
+
+    [Authorize]
+    [HttpPost("{id}/qualifications/add")]
+    public async Task<IActionResult> AddQualification(string id, AddQualificationViewModel model)
+    {
+        if (!await IsProfileOwner(id))
+        {
+            return RedirectToAction("Login", "Auth");
+        }
+
         var user = await _userManager.FindByIdAsync(id);
         if (user == null)
         {
-            return View();
+            return Error("Unknown Error", "An unexcpected error happend");
         }
 
-        return View(user);
+        if (!ModelState.IsValid)
+        {
+            model.Types = await _context.QualificationTypes.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }).ToListAsync();
+
+            return View(model);
+        }
+
+        var qualification = new Qualification
+        {
+            Title = model.Title,
+            Description = model.Description,
+            Location = model.Location,
+            StartDate = model.StartDate,
+            EndDate = model.EndDate,
+            TypeId = model.TypeId,
+            UserId = user.Id
+        };
+
+        _context.Qualifications.Add(qualification);
+        await _context.SaveChangesAsync();
+
+        return RedirectToAction("Index", new { id });
+    }
+
+    [Authorize]
+    [HttpPost("{id}/qualifications/delete/{qid}")]
+    public async Task<IActionResult> DeleteQualification(string id, int qid)
+    {
+        if (!await IsProfileOwner(id))
+        {
+            return RedirectToAction("Login", "Auth");
+        }
+
+        var user = await _userManager.FindByIdAsync(id);
+        if (user == null)
+        {
+            return Error("Unknown Error", "An unexcpected error happend");
+        }
+
+        var qualification = await _context.Qualifications.FirstOrDefaultAsync(q => q.Id == qid);
+        if (qualification == null)
+        {
+            return Error("Unknown qualification", "Qualification not found!");
+        }
+
+        _context.Qualifications.Remove(qualification);
+        await _context.SaveChangesAsync();
+
+        return RedirectToAction("Index", new { id });
     }
 }

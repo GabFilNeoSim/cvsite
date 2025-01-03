@@ -1,7 +1,5 @@
-﻿@using System.Security.Claims
-@{
+﻿@{
     ViewData["Title"] = "Edit qualification";
-    var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 }
 
 @model UpdateQualificationViewModel
@@ -11,26 +9,29 @@
         <div class="form-header">
             <h2>Change qualification</h2>
         </div>
-        <div asp-validation-summary="All"></div>
         <div class="form-content">
-            <form class="form" asp-controller="Profile" asp-action="UpdateQualification" asp-route-id="@userId" asp-route-qid="@Model.QualId" method="post">
+            <div class="form-error" asp-validation-summary="All"></div>
+            <form class="form" asp-controller="Profile" asp-action="UpdateQualification" asp-route-id="@Model.UserId" asp-route-qid="@Model.QualId" method="post">
+                <input type="hidden" asp-for="UserId"/>
                 <input type="hidden" asp-for="QualId"/>
+                <input type="hidden" asp-for="Types"/>
+
                 <div class="form-child">
-                    <label>Title</label>
+                    <label asp-for="Title">Title</label>
                     <div class="form-child-input">
                         <div><i class="fa-solid fa-heading"></i></div>
                         <input type="text" placeholder="Write title here" asp-for="Title">
                     </div>
                 </div>
                 <div class="form-child">
-                    <label>Location</label>
+                    <label asp-for="Location">Location</label>
                     <div class="form-child-input">
                         <div><i class="fa-solid fa-location-dot"></i></div>
                         <input type="text" placeholder="Stockholm" asp-for="Location">
                     </div>
                 </div>
                 <div class="form-child">
-                    <label>Description</label>
+                    <label asp-for="Description">Description</label>
                     <div class="form-child-input">
                         <div><i class="fa-solid fa-quote-left"></i></div>
                         <input type="text" placeholder="Lorem ipsum" asp-for="Description">
@@ -38,14 +39,14 @@
                 </div>
                 <div class="form-row">
                     <div class="form-child">
-                        <label>Start date</label>
+                        <label asp-for="StartDate">Start date</label>
                         <div class="form-child-input">
                             <div><i class="fa-solid fa-calendar-days"></i></div>
                             <input type="date" placeholder="2024-01-01" asp-for="StartDate">
                         </div>
                     </div>
                     <div class="form-child">
-                        <label>End date</label>
+                        <label asp-for="EndDate">End date</label>
                         <div class="form-child-input">
                             <div><i class="fa-solid fa-calendar-days"></i></div>
                             <input type="date" placeholder="2025-01-01" asp-for="EndDate">
@@ -53,15 +54,14 @@
                     </div>
                 </div>
                 <div class="form-child">
-                    <label>Type</label>
+                    <label asp-for="TypeId">Type</label>
                     <div class="form-child-input">
                         <div><i class="fa-solid fa-quote-left"></i></div>
-                        <select asp-items="@ViewBag.options" asp-for="TypeId"></select>
+                        <select asp-items="@Model.Types" asp-for="TypeId"></select>
                     </div>
                 </div>
                 <div class="form-row">
                     <button type="submit" class="submit">Save</button>
-                    @* <button type="submit" class="delete">Delete</button> *@
                 </div>
             </form>
         </div>

@@ -145,6 +145,7 @@
     border-radius: 15px;
     color: #fff;
     cursor: pointer;
+    text-decoration: none;
 }
 
 #add-experience-btn:hover {
@@ -185,7 +186,7 @@
                                     rgba(45,85,255,0.1));
 }
 
-.roadmap-child:hover > .roadmap-edit {
+.roadmap-child:hover > .roadmap-edit, .roadmap-child:hover > .roadmap-delete {
     display: block;
 }
 
@@ -194,10 +195,34 @@
     position: absolute;
     top: 5px;
     right: 5px;
+    color: black;
+}
+
+.roadmap-delete {
+    display: none;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
+
+.roadmap-delete button i {
+    color: lightcoral;
+    font-size: 16px;
+}
+
+.roadmap-delete button {
+    background: none;
+    border: none;
+    outline: none;
 }
 
 .roadmap-edit:hover {
     color: royalblue;
+    cursor: pointer;
+}
+
+.roadmap-delete button i:hover {
+    color: red;
     cursor: pointer;
 }
 

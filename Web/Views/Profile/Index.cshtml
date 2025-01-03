@@ -99,6 +99,9 @@ else
                                             <a asp-controller="Profile" asp-action="UpdateQualification" asp-route-id="@Model.User.Id" asp-route-qid="@q.Id" class="roadmap-edit">
                                                 <i class="fa-solid fa-pen"></i>
                                             </a>
+                                            <form asp-controller="Profile" asp-action="DeleteQualification" asp-route-id="@Model.User.Id" asp-route-qid="@q.Id" class="roadmap-delete">
+                                                <button type="submit"><i class="fa-solid fa-trash"></i></button>
+                                            </form>
                                         }
                                     </div>
                                 }
@@ -129,6 +132,9 @@ else
                                             <a asp-controller="Profile" asp-action="UpdateQualification" asp-route-id="@Model.User.Id" asp-route-qid="@qualification.Id" class="roadmap-edit">
                                                 <i class="fa-solid fa-pen"></i>
                                             </a>
+                                            <form asp-controller="Profile" asp-action="DeleteQualification" asp-route-id="@Model.User.Id" asp-route-qid="@qualification.Id" class="roadmap-delete">
+                                                <button type="submit"><i class="fa-solid fa-trash"></i></button>
+                                            </form>
                                         }
                                     </div>
                                 }

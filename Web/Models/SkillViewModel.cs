@@ -1,7 +1,6 @@
-﻿namespace Web.Models
+﻿namespace Web.Models;
+
+public class SkillViewModel
 {
-    public class SkillViewModel
-    {
-        public string Title { get; set; }
-    }
+    public string Title { get; set; }
 }

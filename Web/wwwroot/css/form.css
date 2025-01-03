@@ -108,3 +108,7 @@
     padding-top: 20px;
     margin-top: 10px;
 }
+
+.form-error {
+    color: red;
+}
