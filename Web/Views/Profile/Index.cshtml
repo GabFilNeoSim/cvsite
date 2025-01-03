@@ -13,154 +13,175 @@
     <script src="~/js/profile.js"></script>
 }
 
-<div id="profile-container">
-    <div id="profile-header">
-        <div id="profile-avatar-parent">
-            @if (Model.IsProfileOwner)
-            {
-                <form id="profile-change-avatar" asp-controller="Profile" asp-action="UpdateAvatar" asp-route-id="@Model.User.Id" method="post" enctype="multipart/form-data">
-                    <input id="profile-change-avatar-input" type="file" name="avatar" hidden>
+@if (!signInManager.IsSignedIn(User) && Model.User.Private)
+{
+    <h1>This profile is private!</h1>
+    <a asp-controller="Auth" asp-action="Login">Login to access this users profile page.</a>
+}
+else
+{
+    <div id="profile-container">
+        <div id="profile-header">
+            <div id="profile-avatar-parent">
+                @if (Model.IsProfileOwner)
+                {
+                    <form id="profile-change-avatar" asp-controller="Profile" asp-action="UpdateAvatar" asp-route-id="@Model.User.Id" method="post" enctype="multipart/form-data">
+                        <input id="profile-change-avatar-input" type="file" name="avatar" hidden>
+                        <img id="profile-avatar" src="/avatars/@Model.User.AvatarUri" alt="Profile Avatar">
+                    </form>
+                }
+                else
+                {
                     <img id="profile-avatar" src="/avatars/@Model.User.AvatarUri" alt="Profile Avatar">
-                </form>
-            } else {
-                <img id="profile-avatar" src="/avatars/@Model.User.AvatarUri" alt="Profile Avatar">
-            }
-            <!-- <i class="fa-solid fa-pen"></i> -->
-        </div>
-        <div id="profile-content">
-            <div id="profile-info">
-                <div id="profile-info-header">
-                    <div>
-                        <h2>@Model.User.FirstName @Model.User.LastName</h2>
-                        <div id="profile-location">
-                            <img src="~/assets/point.png">
-                            <p>@Model.User.Address</p>
+                }
+                <!-- <i class="fa-solid fa-pen"></i> -->
+            </div>
+            <div id="profile-content">
+                <div id="profile-info">
+                    <div id="profile-info-header">
+                        <div>
+                            <h2>@Model.User.FirstName @Model.User.LastName</h2>
+                            <div id="profile-location">
+                                <img src="~/assets/point.png">
+                                <p>@Model.User.Address</p>
+                            </div>
+                        </div>
+                        @if (Model.IsProfileOwner)
+                        {
+                            <a asp-controller="Profile" asp-action="UpdateDetails" asp-route-id="@Model.User.Id" class="profile-btn">Edit profile</a>
+                        }
+                        else
+                        {
+                            <a asp-controller="Message" asp-action="Chat" asp-route-id="@Model.User.Id" class="profile-btn">Send message</a>
+                        }
+                    </div>
+                    <p id="profile-desc">@Model.User.Description</p>
+                </div>
+                <div id="profile-stats">
+                    <div class="profile-stats-child">
+                        <img src="~/assets/work.png">
+                        <div class="profile-stats-child-text">
+                            <p class="profile-stats-child-amount">@Model.WorkCount</p>
+                            <p class="profile-stats-child-title">Workings</p>
                         </div>
                     </div>
-                    @if (Model.IsProfileOwner)
-                    {
-                        <a asp-controller="Profile" asp-action="UpdateDetails" asp-route-id="@Model.User.Id" class="profile-btn">Edit profile</a>
-                    } else {
-                        <a asp-controller="Message" asp-action="Chat" asp-route-id="@Model.User.Id" class="profile-btn">Send message</a>
-                    }
-                </div>
-            <p id="profile-desc">@Model.User.Description</p>
-            </div>
-            <div id="profile-stats">
-                <div class="profile-stats-child">
-                    <img src="~/assets/work.png">
-                    <div class="profile-stats-child-text">
-                        <p class="profile-stats-child-amount">@Model.WorkCount</p>
-                        <p class="profile-stats-child-title">Workings</p>
+                    <div class="profile-stats-child">
+                        <img src="~/assets/education.png">
+                        <div class="profile-stats-child-text">
+                            <p class="profile-stats-child-amount">@Model.EducationCount</p>
+                            <p class="profile-stats-child-title">Educations</p>
+                        </div>
                     </div>
                 </div>
-                <div class="profile-stats-child">
-                    <img src="~/assets/education.png">
-                    <div class="profile-stats-child-text">
-                        <p class="profile-stats-child-amount">@Model.EducationCount</p>
-                        <p class="profile-stats-child-title">Educations</p>
-                    </div>
-                </div>
-            </div>
 
+            </div>
         </div>
-    </div>
-    <div id="profile-body">
-        <div>
-            <div id="profile-experience-parent">
-                <div class="profile-experience-child">
-                    <h2 class="content-title">Work experience</h2>
-                    <div class="roadmap-parent">
-                        @if (Model.WorkCount > 0) {
-                            @foreach (QualificationViewModel q in Model.Work) {
-                                <div class="roadmap-child">
-                                    <div class="roadmap-progress"></div>
-                                    <div class="roadmap-content">
-                                        <h3 class="roadmap-title">@q.Title</h3>
-                                        <p class="roadmap-place">@q.Location</p>
-                                        <p>@q.Description</p>
-                                        <span class="roadmap-date">@q.StartDate - @q.EndDate</span>
-                                    </div>
-                                    @if (Model.IsProfileOwner)
-                                    {
-                                        <a asp-controller="Profile" asp-action="UpdateQualification" asp-route-id="@Model.User.Id" asp-route-qid="@q.Id" class="roadmap-edit">
-                                            <i class="fa-solid fa-pen"></i>
-                                        </a>
-                                    }
-                                </div>
-                            }
-                        } else {
-                            <p>User doesn't have any work experience.</p>
-                        }
-                    </div>
-                </div>
-                <div class="profile-experience-child">
-                    <h2 class="content-title">Education</h2>
-                    <div class="roadmap-parent">
-                        @if (Model.EducationCount > 0) {
-                            @foreach (QualificationViewModel qualification in Model.Education)
+        <div id="profile-body">
+            <div>
+                <div id="profile-experience-parent">
+                    <div class="profile-experience-child">
+                        <h2 class="content-title">Work experience</h2>
+                        <div class="roadmap-parent">
+                            @if (Model.WorkCount > 0)
                             {
-                                <div class="roadmap-child">
-                                    <div class="roadmap-progress"></div>
-                                    <div class="roadmap-content">
-                                        <h3 class="roadmap-title">@qualification.Title</h3>
-                                        <p class="roadmap-place">@qualification.Location</p>
-                                        <p>@qualification.Description</p>
-                                        <span class="roadmap-date">@qualification.StartDate - @qualification.EndDate</span>
+                                @foreach (QualificationViewModel q in Model.Work)
+                                {
+                                    <div class="roadmap-child">
+                                        <div class="roadmap-progress"></div>
+                                        <div class="roadmap-content">
+                                            <h3 class="roadmap-title">@q.Title</h3>
+                                            <p class="roadmap-place">@q.Location</p>
+                                            <p>@q.Description</p>
+                                            <span class="roadmap-date">@q.StartDate - @q.EndDate</span>
+                                        </div>
+                                        @if (Model.IsProfileOwner)
+                                        {
+                                            <a asp-controller="Profile" asp-action="UpdateQualification" asp-route-id="@Model.User.Id" asp-route-qid="@q.Id" class="roadmap-edit">
+                                                <i class="fa-solid fa-pen"></i>
+                                            </a>
+                                        }
                                     </div>
-                                    @if (Model.IsProfileOwner)
-                                    {
-                                        <a asp-controller="Profile" asp-action="UpdateQualification" asp-route-id="@Model.User.Id" asp-route-qid="@qualification.Id" class="roadmap-edit">
-                                            <i class="fa-solid fa-pen"></i>
-                                        </a>
-                                    }
-                                </div>
+                                }
                             }
-                        }else {
-                            <p>User doesn't have any education.</p>
-                        }
+                            else
+                            {
+                                <p>User doesn't have any work experience.</p>
+                            }
+                        </div>
+                    </div>
+                    <div class="profile-experience-child">
+                        <h2 class="content-title">Education</h2>
+                        <div class="roadmap-parent">
+                            @if (Model.EducationCount > 0)
+                            {
+                                @foreach (QualificationViewModel qualification in Model.Education)
+                                {
+                                    <div class="roadmap-child">
+                                        <div class="roadmap-progress"></div>
+                                        <div class="roadmap-content">
+                                            <h3 class="roadmap-title">@qualification.Title</h3>
+                                            <p class="roadmap-place">@qualification.Location</p>
+                                            <p>@qualification.Description</p>
+                                            <span class="roadmap-date">@qualification.StartDate - @qualification.EndDate</span>
+                                        </div>
+                                        @if (Model.IsProfileOwner)
+                                        {
+                                            <a asp-controller="Profile" asp-action="UpdateQualification" asp-route-id="@Model.User.Id" asp-route-qid="@qualification.Id" class="roadmap-edit">
+                                                <i class="fa-solid fa-pen"></i>
+                                            </a>
+                                        }
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <p>User doesn't have any education.</p>
+                            }
+                        </div>
                     </div>
                 </div>
+                @if (Model.IsProfileOwner)
+                {
+                    <a id="add-experience-btn" asp-controller="Profile" asp-action="AddQualification" asp-route-id="@Model.User.Id">Add qualification</a>
+                }
             </div>
-            @if (Model.IsProfileOwner)
-            {
-                <a id="add-experience-btn" asp-controller="Profile" asp-action="AddQualification" asp-route-id="@Model.User.Id">Add qualification</a>
-            }
-        </div>
 
-        <div id="misc-parent">
-            <div class="misc-child">
-                <h2 class="content-title">Skills</h2>
-                <div id="skills-parent">
-                     @foreach (SkillViewModel skill in Model.Skills)
-                     {
-                         <div class="skills-child">
-                             @skill.Title
-                            @if (Model.IsProfileOwner)
-                            {
-                                <a class="skill-delete"><i class="fa-solid fa-xmark"></i></a>
-                            }
-                         </div>
-                     }
-                    @if (Model.IsProfileOwner) {
-                         <div class="skills-child add">
-                             Add skill
-                            <i class="fa-solid fa-plus"></i>
+            <div id="misc-parent">
+                <div class="misc-child">
+                    <h2 class="content-title">Skills</h2>
+                    <div id="skills-parent">
+                        @foreach (SkillViewModel skill in Model.Skills)
+                        {
+                            <div class="skills-child">
+                                @skill.Title
+                                @if (Model.IsProfileOwner)
+                                {
+                                    <a class="skill-delete"><i class="fa-solid fa-xmark"></i></a>
+                                }
+                            </div>
+                        }
+                        @if (Model.IsProfileOwner)
+                        {
+                            <div class="skills-child add">
+                                Add skill
+                                <i class="fa-solid fa-plus"></i>
 
-                            <div class="skills-add-drop">
-                                <div class="skills-add-drop-parent">
-                                    @foreach (SkillViewModel skill in Model.UnusedSkills) {
-                                        <a>@skill.Title</a>
-                                    }
+                                <div class="skills-add-drop">
+                                    <div class="skills-add-drop-parent">
+                                        @foreach (SkillViewModel skill in Model.UnusedSkills)
+                                        {
+                                            <a>@skill.Title</a>
+                                        }
+                                    </div>
                                 </div>
                             </div>
-                         </div>
-                    }
-                 </div> 
-            </div>
-            <div class="misc-child">
-                <h2 class="content-title">Project</h2>
+                        }
+                    </div>
+                </div>
+                <div class="misc-child">
+                    <h2 class="content-title">Project</h2>
+                </div>
             </div>
         </div>
     </div>
-</div>
+}
