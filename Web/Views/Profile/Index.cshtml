@@ -52,7 +52,13 @@ else
                         }
                         else
                         {
-                            <a asp-controller="Message" asp-action="Chat" asp-route-id="@Model.User.Id" class="profile-btn">Send message</a>
+                            if (signInManager.IsSignedIn(User)) {
+                                <a asp-controller="Message" asp-action="Chat" asp-route-id="@Model.User.Id" class="profile-btn">Send message</a>
+                            }
+                            else
+                            {
+                                <a id="profile-anonymous-message-btn" class="profile-btn">Send message</a>
+                            }
                         }
                     </div>
                     <p id="profile-desc">@Model.User.Description</p>
@@ -183,5 +189,6 @@ else
                 </div>
             </div>
         </div>
+        <partial name="Partials/_AnonymousMessageModal" />
     </div>
 }
