@@ -16,15 +16,6 @@ public class ProfileController : BaseController
 {
     public ProfileController(AppDbContext context, UserManager<User> userManager, SignInManager<User> signInManager) : base(context, userManager) { }
 
-    public IActionResult Index()
-    {   
-        if (!User.Identity.IsAuthenticated) return RedirectToAction("Index", "Home");
-
-        string? userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-        return RedirectToAction("Index", new { Id = userId });
-    }
-
     [HttpGet("{id}")]
     public async Task<IActionResult> Index(string id)
     {
