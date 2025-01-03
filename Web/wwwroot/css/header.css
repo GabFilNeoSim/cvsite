@@ -35,12 +35,13 @@ header #searchbar{
 header #search-result {
     display: none;
     position: absolute;
-    margin-top: 5px;
+    top: 30px;
     border-radius: 8px 8px 16px 16px;
-    width: 100%;
+    width: 150px;
     height: auto;
     background: hsl(0,0%,95%);
     box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+    z-index: 2;
 }
 
 header #search-result .search-result-child {
@@ -80,7 +81,12 @@ header #searchbar .icon{
     transform: translateY(-50%);
 }
 
-header #searchbar input {
+header #searchbar .back{
+    display: none;
+    
+}
+
+header #searchinput {
     background-color: transparent;
     padding: 2px 8px 2px 32px;
     border: 1.5px solid hsl(0,0%,40%);
@@ -127,6 +133,28 @@ header .profile{
     display: flex;
     gap: 0.5rem;
     align-items: center;
+    position: relative;
+}
+
+header .profile summary {
+    list-style: none;
+    cursor: pointer;
+}
+
+header .profile #options{
+    position: absolute;
+    right: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    padding: 12px;
+    background-color: hsl(0,0%,95%);
+    border-bottom-right-radius: 12px; border-bottom-left-radius: 12px; border-top-left-radius: 12px;
+}
+
+header .profile #options form{
+    display: inline-block;
 }
 
 header .avatar {
@@ -140,7 +168,7 @@ header button {
     background-color: transparent;
     border: none;
     font-size: 1.25rem;
-    color: hsl(0,0%, 10%);
+    color: hsl(0,0%, 30%);
 }
 header button:hover {
     cursor: pointer;
@@ -171,7 +199,7 @@ header .login {
         gap: 15px;
     }
 
-    header .message p{
+    header .message p:not(.inbox p){
         display: none;
     }
 
@@ -179,7 +207,59 @@ header .login {
         width: 150px;
     }
 
-    header .profile span{
+}
+
+@media (max-width: 500px){
+    header #searchbar{
+        transition: width ease 300ms;
+        z-index: 2;
+        background-color: white;
+    }
+
+    header #searchinput {
+    }
+
+    header #searchbar:not(#searchinput:focus){
+        width: 30px;
+        overflow: hidden;
+    }
+
+    header #searchbar:not(#searchinput:focus) #searchinput{
+        border: none;
+    }
+
+    header #searchbar:not(#searchinput:focus) .icon{
+        font-size: 1.5rem;
+    }
+
+    header #searchbar:has(#searchinput:focus){
+        position: absolute;
+        height: 50px;
+        width: 100vw;
+        left: 0px;
+        justify-content: flex-end;
+    }
+
+    header #searchinput:focus{
+        height: unset;
+        width: 75%;
+        margin-right: 15px;
+        padding: 2px 8px;
+        font-size: 1.2rem;
+    }
+
+
+    header #searchbar:has(#searchinput:focus) .icon {
         display: none;
+    }
+
+    header #searchbar:has(#searchinput:focus) .back{
+        display: block;
+        margin-right: 15px;
+    }
+
+    header #searchbar:has(#searchinput:focus) #search-result{
+        top: 50px;
+        left: 18%;
     }
 }

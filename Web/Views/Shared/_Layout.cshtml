@@ -23,6 +23,7 @@
         <nav>
             <a id="home" asp-controller="Home" asp-action="Index"> CV-Site </a>
             <div id="searchbar">
+                    <i class="fa-solid fa-arrow-left back"></i>
                     <i class="fa-solid fa-magnifying-glass icon"></i>
                     <input id="searchinput" type="text" placeholder="Search" autocomplete="off"/>
                     <div id="search-result"></div>
@@ -48,14 +49,35 @@
             }
             else
             {
-                <form asp-controller="Auth" asp-action="Logout">
+                User? user = await userManager.GetUserAsync(User);
+                <details class="profile">
+                    <summary>
+                    @{
+                        string directory = "~/avatars/";
+                        string defaultAvatar = "default.png";
+
+                        string avatar = user?.AvatarUri != defaultAvatar
+                        ? Url.Content(directory + user?.AvatarUri)
+                        : Url.Content(directory + defaultAvatar);
+                    }
+                    <img src="@avatar" class="avatar" />
+                    </summary>
+                    <div id="options">
+                        <form asp-controller="Auth" asp-action="Logout">
+                            <button type="submit">Logout</button>
+                        </form>
+                        <a asp-controller="Profile" asp-action="Index" asp-route-id="@user?.Id" class="profile">
+                            <p>Profile</p>
+                        </a>
+                    </div>
+                </details>
+                @* <form asp-controller="Auth" asp-action="Logout">
                     <button type="submit">Logout</button>
                 </form>
 
-                User? user = await userManager.GetUserAsync(User);
 
-                <div class="profile">
-                    <a asp-controller="Profile" asp-action="Index" asp-route-id="@user?.Id"> Profile </a>
+                <a asp-controller="Profile" asp-action="Index" asp-route-id="@user?.Id" class="profile">
+                    <p>Profile</p>
                     @{
                         string directory = "~/avatars/";
                         string defaultAvatar = "default.png";
@@ -65,7 +87,7 @@
                             : Url.Content(directory + defaultAvatar);
                     }
                     <img src="@avatar" class="avatar"/>
-                </div>
+                </a> *@
             }
     </nav>
 </header>
