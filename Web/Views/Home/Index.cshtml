@@ -8,8 +8,102 @@
     ViewData["Title"] = "Home";
 }
 
-<h1> Utforska CV </h1>
+<h1> Recommended profiles to visit </h1>
+<div class="carousel-container">
+    <div class="controls">
+        <button id="left"><i class="fa-solid fa-chevron-left" id="profile-left"></i></button>
+        <button id="right"><i class="fa-solid fa-chevron-right" id="profile-right"></i></button>
+    </div>
+    <div class="carousel">
+        <div class="card" id="1">
+            <img src="~/avatars/default.png" />
+            <p>Simon Persson</p>
+            <p>Software Engineer</p>
+            <a href="">Visit profile</a>
+        </div>
+        <div class="card" id="2">
+            <img src="~/avatars/default.png" />
+            <p>Alice Smith</p>
+            <p>Software Engineer</p>
+            <a href="">Visit profile</a>
+        </div>
+        <div class="card" id="3">
+            <img src="~/avatars/default.png" />
+            <p>Bob Jones</p>
+            <p>Software Engineer</p>
+            <a href="">Visit profile</a>
+        </div>
+        <div class="card" id="4">
+            <img src="~/avatars/default.png" />
+            <p>Filip Siri</p>
+            <p>Software Engineer</p>
+            <a href="">Visit profile</a>
+        </div>
+        <div class="card" id="5">
+            <img src="~/avatars/default.png" />
+            <p>Gabriel Dolk</p>
+            <p>Software Engineer</p>
+            <a href="">Visit profile</a>
+        </div>
+        <div class="card" id="6">
+            <img src="~/avatars/default.png" />
+            <p>Neo Åhlander </p>
+            <p>Software Engineer</p>
+            <a href="">Visit profile</a>
+        </div>
+    </div>
+</div>
 
-@if (User.Identity.IsAuthenticated) {
-    <p>LOGGED IN</p>
-}
+<div class="project-container">
+    <h1>The most recent project</h1>
+    <div class="project">
+        <img src="~/avatars/default.png" class="image" />
+
+        <div class="text-container">
+            <p class="title">
+                Projektets namn
+            </p>
+            <p class="description">
+                Verksamhetsutveckling i hälso- och sjukvården på medicinsk grund
+
+                Vi stärker hälso- och sjukvården med kliniskt gångbara, evidensbaserade åtgärder. Genom analys och medicinsk expertis hjälper vi er att utvecklas
+            </p>
+            <div class="participants">
+
+                <div class="participant">
+                    <a href="">
+                        <img src="~/avatars/default.png" class="avatar" />
+                    </a>
+                    <i class="fa-solid fa-crown crown"></i>
+                    <p class="name">
+                        Simon Persson
+                    </p>
+                </div>
+                <div class="participant">
+                    <a href="">
+                        <img src="~/avatars/default.png" class="avatar" />
+                    </a>
+                    <p class="name">
+                        Alice Smith
+                    </p>
+                </div>
+                <div class="participant">
+                    <a href="">
+                        <img src="~/avatars/default.png" class="avatar" />
+                    </a>
+                    <p class="name">
+                        Bob Jones
+                    </p>
+                </div>
+                <div class="participant">
+                    <a href="">
+                        <img src="~/avatars/default.png" class="avatar" />
+                    </a>
+                    <p class="name">
+                         Gabriel Dolk
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
