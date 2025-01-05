@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Web.Models;
 using Models;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Web.Controllers;
 

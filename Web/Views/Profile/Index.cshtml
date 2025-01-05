@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using Web.Models.Message
 
 @inject SignInManager<User> signInManager
 @inject UserManager<User> userManager
@@ -195,6 +196,6 @@ else
                 </div>
             </div>
         </div>
-        <partial name="Partials/_AnonymousMessageModal" />
+        <partial name="Partials/_AnonymousMessageModal" model="new AnonymousSendMessageViewModel {ReceiverId = Model.User.Id}" />
     </div>
 }

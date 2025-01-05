@@ -1,17 +1,37 @@
-﻿<div id="message-container">
+﻿@using Web.Models.Message;
+
+@model AnonymousSendMessageViewModel
+
+
+@{
+	var notifyType = TempData["NotifyType"] as string;
+	var notifyMessage = TempData["NotifyMessage"] as string;
+
+	@if (!string.IsNullOrEmpty(notifyMessage) && !string.IsNullOrEmpty(notifyType))
+	{
+		<script>
+			notify({ type: "@notifyType", text: "@notifyMessage" });
+		</script>
+	}
+}
+
+<div id="message-container">
 	<div id="message-overlay">
 		<div id="message-modal">
 			<i id="message-modal-close" class="fa-solid fa-xmark"></i>
 			<h2>Send message</h2>
-			<form id="message-form">
+			<form id="message-form" asp-controller="Message" asp-action="SendAnonymous">
+				<input type="hidden" asp-for="@Model.ReceiverId" />
 				<div class="message-form-child">
-					<label>Name</label>
-					<input type="text" placeholder="John Doe" />
+					<label asp-for="Name">Name</label>
+					<input asp-for=Name type="text" placeholder="John Doe" />
 				</div>
+				<span class="form-error" asp-validation-for="Name"></span>
 				<div class="message-form-child">
-					<label>Message</label>
-					<textarea placeholder="Lorem ipsum..."></textarea>
+					<label asp-for="Text">Message</label>
+					<textarea asp-for="Text" placeholder="Lorem ipsum..."></textarea>
 				</div>
+				<span class="form-error" asp-validation-for="Text"></span>
 				<button type="submit">Send</button>
 			</form>
 		</div>

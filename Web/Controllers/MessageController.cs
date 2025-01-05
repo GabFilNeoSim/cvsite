@@ -33,7 +33,7 @@ public class MessageController : BaseController
 
         // Get users all messages, grouped by user.
         var userMessages = await _context.Messages
-            .Where(m => m.SenderId == loggedInUser.Id || m.ReceiverId == loggedInUser.Id)
+            .Where(m => m.SenderId != null && m.SenderId == loggedInUser.Id || m.SenderId != null && m.ReceiverId == loggedInUser.Id)
             .OrderByDescending(m => m.CreatedAt)
             .GroupBy(m => m.SenderId == loggedInUser.Id ? m.ReceiverId : m.SenderId)
             .Select(g => new UserMessagesViewModel
@@ -54,6 +54,29 @@ public class MessageController : BaseController
             })
             .OrderByDescending(um => um.LastMessageTime)
             .ToListAsync();
+
+        // Anonymous
+        //var anonymousMessages = await _context.Messages
+        //    .Where(m => m.SenderId == null && m.ReceiverId == loggedInUser.Id)
+        //    .OrderByDescending(m => m.CreatedAt)
+        //    .Select(g => new UserMessagesViewModel
+        //    {
+        //        User = _context.Users
+        //            .Where(u => u.Id == g.Key)
+        //            .Select(u => new UserViewModel
+        //            {
+        //                Id = u.Id,
+        //                FirstName = u.FirstName,
+        //                LastName = u.LastName,
+        //                AvatarUri = u.AvatarUri
+        //            })
+        //            .FirstOrDefault(),
+        //        LastMessage = g.OrderByDescending(m => m.CreatedAt).First().Text,
+        //        LastMessageTime = g.OrderByDescending(m => m.CreatedAt).First().CreatedAt,
+        //        UnreadCount = g.Count(m => !m.Read && m.ReceiverId == loggedInUser.Id)
+        //    })
+        //    .OrderByDescending(um => um.LastMessageTime)
+        //    .ToListAsync();
 
         return View(userMessages);
     }
@@ -143,7 +166,7 @@ public class MessageController : BaseController
         if (loggedInUser == null) return RedirectToAction("Login", "Auth");
 
         User? receivingUser = await _context.Users.FirstOrDefaultAsync(x => x.Id == model.ChatUserId);
-        if (receivingUser == null) return Content("Bad");
+        if (receivingUser == null) Error("Unknown Error", "An unexpected error happend");
 
         // Create message object.
         var message = new Message
@@ -158,5 +181,37 @@ public class MessageController : BaseController
         await _context.SaveChangesAsync();
 
         return RedirectToAction("Chat", new { id = model.ChatUserId });
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> SendAnonymous(AnonymousSendMessageViewModel model)
+    {
+        // Return if validation fails.
+        if (!ModelState.IsValid)
+        {
+            TempData["NotifyType"] = "error";
+            TempData["NotifyMessage"] = "Failed to send message";
+            return RedirectToAction("Index", "Profile", new { id = model.ReceiverId });
+        }
+
+        User? receivingUser = await _context.Users.FirstOrDefaultAsync(x => x.Id == model.ReceiverId);
+        if (receivingUser == null) Error("Unknown Error", "An unexpected error happend");
+
+        // Create message object.
+        var message = new Message
+        {
+            AnonymousName = model.Name,
+            Sender = null,
+            Receiver = receivingUser,
+            Text = model.Text,
+        };
+
+        // Add and save message to database
+        await _context.Messages.AddAsync(message);
+        await _context.SaveChangesAsync();
+
+        TempData["NotifyType"] = "success";
+        TempData["NotifyMessage"] = "Message sent successfully!";
+        return RedirectToAction("Index", "Profile", new { id = model.ReceiverId });
     }
 }

@@ -313,7 +313,7 @@ public class ProfileController : BaseController
         var user = await _userManager.FindByIdAsync(id);
         if (user == null)
         {
-            return Error("Unknown Error", "An unexcpected error happend");
+            return Error("Unknown Error", "An unexpected error happend");
         }
 
         if (!ModelState.IsValid)
@@ -356,7 +356,7 @@ public class ProfileController : BaseController
         var user = await _userManager.FindByIdAsync(id);
         if (user == null)
         {
-            return Error("Unknown Error", "An unexcpected error happend");
+            return Error("Unknown Error", "An unexpected error happend");
         }
 
         var qualification = await _context.Qualifications.FirstOrDefaultAsync(q => q.Id == qid);

@@ -203,3 +203,51 @@ h1{
         margin-top: 50px;
     }
 }
+
+
+
+
+
+/* Notify */
+#notify-wrapper {
+    position: fixed;
+    left: 0;
+    top: 100px;
+    right: 0;
+    bottom: 0;
+    opacity: 0.84;
+    pointer-events: none;
+    z-index: 10000000000000;
+}
+
+.notify-parent {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: -16.15vw;
+    top: 0;
+    margin: 0.8vw;
+}
+
+.notify-child {
+    display: flex;
+    flex-direction: row;
+    width: 10vw;
+    color: white;
+    padding: 0.8vw 1vw;
+    border-radius: 0.26vw;
+    font-weight: bold;
+    width: 13vw;
+    margin-bottom: 0.26vw;
+    user-select: none;
+}
+
+.notify-icon {
+    margin: auto 0.9vw auto 0;
+    font-size: 1vw;
+}
+
+.notify-text {
+    font-size: 0.90vw;
+    margin: auto 0;
+}

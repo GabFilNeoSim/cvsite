@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Web.Models.Message
+namespace Web.Models.Message;
+
+public class SendMessageViewModel
 {
-    public class SendMessageViewModel
-    {
-        [Required]
-        public string Text { get; set; }
-        public string ChatUserId { get; set; }
-    }
+    [Required]
+    public string Text { get; set; }
+    public string ChatUserId { get; set; }
 }
