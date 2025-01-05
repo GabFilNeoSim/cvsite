@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Web.Models;
 using Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Web.Controllers;
 
@@ -27,8 +28,19 @@ public class AuthController : Controller
     [HttpPost("auth/register")]
     public async Task<IActionResult> Register(RegisterViewModel model)
     {
+        if (!ModelState.IsValid) return View(model);
+         
+        if (model.Password == null) model.Password = string.Empty;
+        if (model.ConfirmPassword == null) model.ConfirmPassword = string.Empty;
+
+        if (await _userManager.FindByEmailAsync(model.Email) != null)
+        {
+            ModelState.AddModelError("User already exists", "This user already exists.");
+            return View(model);
+        }
+
         User newUser = new User
-        {   
+        {
             UserName = model.Email,
             FirstName = model.FirstName,
             LastName = model.LastName,
@@ -47,7 +59,7 @@ public class AuthController : Controller
             return View(model);
         }
 
-        await _signInManager.SignInAsync(newUser, isPersistent: true);
+        await _signInManager.SignInAsync(newUser, isPersistent: false);
 
         return RedirectToAction("Index", "Profile", new { id = newUser.Id });
     }
@@ -68,7 +80,7 @@ public class AuthController : Controller
         User? user = await _userManager.FindByEmailAsync(model.Email);
         if (user == null)
         {
-            ModelState.AddModelError(string.Empty, "Wrong email or password");
+            ModelState.AddModelError("Email", "Wrong email or password");
             return View(model);
         }
 
@@ -81,7 +93,7 @@ public class AuthController : Controller
 
         if (!result.Succeeded)
         {
-            ModelState.AddModelError(string.Empty, "Wrong email or password");
+            ModelState.AddModelError("Password", "Wrong email or password");
             return View(model);
         }
 

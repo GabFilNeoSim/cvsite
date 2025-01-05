@@ -19,12 +19,11 @@ public class RegisterViewModel
 
     [Required(ErrorMessage = "Password is required")]
     [DataType(DataType.Password)]
-    [Compare("ConfirmPassword")]
     public string Password { get; set; }
 
     [Required(ErrorMessage = "Passwords must match")]
     [DataType(DataType.Password)]
-    [Display(Name = "Confirm password")]
+    [Compare("Password")]
     public string ConfirmPassword { get; set; }
 
     [Required(ErrorMessage = "Address is required")]
