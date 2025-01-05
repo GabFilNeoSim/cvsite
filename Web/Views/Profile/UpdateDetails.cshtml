@@ -8,11 +8,10 @@
     var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 }
 
-<div>
-    @await Html.PartialAsync("_ProfileUpdateOptions")
-</div>
-
 <div class="form-container">
+    <div class="links">
+        @await Html.PartialAsync("_ProfileUpdateOptions")
+    </div>
     <div class="form-wrapper">
         <div class="form-header">
             <h2>Change profile information</h2>
