@@ -22,11 +22,15 @@
     }
 }
 
-
 @if (!signInManager.IsSignedIn(User) && Model.User.Private)
 {
-    <h1>This profile is private!</h1>
-    <a asp-controller="Auth" asp-action="Login">Login to access this users profile page.</a>
+    <div id="profile-private-container">
+        <div id="profile-private-wrapper">
+            <img src="~/assets/incognito.png" alt="Incognito">
+            <h1>This profile is private!</h1>
+            <a asp-controller="Auth" asp-action="Login">Login to access this users profile page.</a>
+        </div>
+    </div>
 }
 else
 {
