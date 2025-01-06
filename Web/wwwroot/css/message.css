@@ -14,7 +14,9 @@
 }
 
 .contacts-parent {
-/*    background-color: red;*/
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 .contacts-child {
@@ -38,6 +40,22 @@
     transition: all 0.3s;
 }
 
+.contacts-child.anonymous {
+    background: #7a9ade !important;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.contacts-child.new.anonymous {
+    background-color: #5289ff !important;
+}
+.contacts-child.new.anonymous:hover {
+    background-color: #5289ff !important;
+}
+.contacts-child.anonymous:hover {
+    background:  !important;
+    cursor: default !important;
+}
+
 .contacts-new {
     position: absolute;
     top: -10px;
@@ -58,6 +76,27 @@
     width: 30px;
     height: 30px;
     border-radius: 50%;
+}
+
+.contacts-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+.contacts-read-btn {
+    background: none;
+    outline: none;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    margin-left: 20px;
+    text-decoration: underline;
+}
+.contacts-read-btn:hover {
+    color: lightgray;
+    transition: all 0.3s;
+    cursor: pointer;
 }
 
 .message-header {

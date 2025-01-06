@@ -59,7 +59,8 @@ public class MessageController : BaseController
         var anonymousMessages = await _context.Messages
             .Where(m => m.SenderId == null && m.ReceiverId == loggedInUser.Id)
             .OrderByDescending(m => m.CreatedAt)
-            .Select(g => new AnonymousMessageViewModel{
+            .Select(g => new AnonymousMessageViewModel {
+                Id = g.Id,
                 Name = g.AnonymousName,
                 Text = g.Text,
                 MessageTime = g.CreatedAt,
@@ -208,5 +209,22 @@ public class MessageController : BaseController
         TempData["NotifyType"] = "success";
         TempData["NotifyMessage"] = "Message sent successfully!";
         return RedirectToAction("Index", "Profile", new { id = model.ReceiverId });
+    }
+
+    [HttpPost("{mid}")]
+    public async Task<IActionResult> MarkRead(int mid)
+    {
+        var message = await _context.Messages.SingleOrDefaultAsync(x => x.Id == mid);
+
+        if (message == null)
+        {
+            return Error("Unknown error", "Message not found.");
+        }
+
+        message.Read = true;
+
+        await _context.SaveChangesAsync();
+
+        return RedirectToAction("Index");
     }
 }

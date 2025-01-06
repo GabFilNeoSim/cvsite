@@ -53,7 +53,6 @@ function showConfirmModal(text) {
     $("#confirm-text").html(text);
 }
 
-
 function closeConfirmModal() {
     $("#confirm-wrapper").hide();
     currentConfirmationForm = "";
