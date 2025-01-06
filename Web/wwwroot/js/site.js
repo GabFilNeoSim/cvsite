@@ -5,7 +5,7 @@
     }
 }
 
-let currentProfileIndex = 1;
+let currentProfileIndex = 0;
 let profileMoveLength = 210;
 const profilecards = $(".card");
 
@@ -32,27 +32,33 @@ function updateProfileCardStyling() {
 window.onload = scrollToBottom;
 window.onload = updateProfileCardStyling;
 
+let currentConfirmationForm = "";
 
-$("#delete-qualification-btn").on("click", function (event) {
-    console.log("asd");
+$("#delete-work-btn, #delete-education-btn").on("click", function (event) {
+    event.preventDefault();
+    const text = $(this).data("text");
+    currentConfirmationForm = $(this).parent().attr("id");
+    showConfirmModal(text);
 });
 
-function showConfirmModal(text, formToSubmit) {
+
+$("#confirm-yes").on("click", function (event) {
+    event.preventDefault();
+    $(`#${currentConfirmationForm}`).submit();
+});
+
+
+function showConfirmModal(text) {
     $("#confirm-wrapper").show();
-    $("#confirm-text").html(text)
-
-    $('#confirm-btn').click(() => {
-        callback(); // Call the provided callback
-        closePopup(); // Close the popup
-    });
-
-    // Handle cancel
-    $('#confirm-modal-close').click(closePopup);
-
-    // Function to close the popup
-    function closePopup() {
-        $('#confirm-overlayl').fadeOut(() => {
-            $('#confirm-modal').empty(); // Remove popup from DOM
-        });
-    }
+    $("#confirm-text").html(text);
 }
+
+
+function closeConfirmModal() {
+    $("#confirm-wrapper").hide();
+    currentConfirmationForm = "";
+}
+
+$("#confirm-no, #confirm-modal-close").on("click", function () {
+    closeConfirmModal();
+});

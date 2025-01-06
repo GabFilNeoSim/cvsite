@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using System.Security.Claims
+@using Web.Models.Home
 
 @inject SignInManager<User> signInManager
 @inject UserManager<User> userManager
@@ -8,6 +9,8 @@
     ViewData["Title"] = "Home";
 }
 
+@model HomeViewModel
+
 <div class="carousel-container">
     <h1> Recommended profiles to visit </h1>
     <div class="controls">
@@ -15,94 +18,54 @@
         <button id="right"><i class="fa-solid fa-chevron-right" id="profile-right"></i></button>
     </div>
     <div class="carousel">
-        <div class="card" id="1">
-            <img src="~/avatars/default.png" />
-            <p>Simon Persson</p>
-            <p>Software Engineer</p>
-            <a href="">Visit profile</a>
-        </div>
-        <div class="card" id="2">
-            <img src="~/avatars/default.png" />
-            <p>Alice Smith</p>
-            <p>Software Engineer</p>
-            <a href="">Visit profile</a>
-        </div>
-        <div class="card" id="3">
-            <img src="~/avatars/default.png" />
-            <p>Bob Jones</p>
-            <p>Software Engineer</p>
-            <a href="">Visit profile</a>
-        </div>
-        <div class="card" id="4">
-            <img src="~/avatars/default.png" />
-            <p>Filip Siri</p>
-            <p>Software Engineer</p>
-            <a href="">Visit profile</a>
-        </div>
-        <div class="card" id="5">
-            <img src="~/avatars/default.png" />
-            <p>Gabriel Dolk</p>
-            <p>Software Engineer</p>
-            <a href="">Visit profile</a>
-        </div>
-        <div class="card" id="6">
-            <img src="~/avatars/default.png" />
-            <p>Neo Åhlander </p>
-            <p>Software Engineer</p>
-            <a href="">Visit profile</a>
-        </div>
+        @for (int i = 0; i < @Model.Users.Count; i++) {
+            var user = @Model.Users[i];
+
+            <div class="card" id=@i>
+                <img src="/avatars/@user.AvatarUri" />
+                <p>@user.FirstName @user.LastName</p>
+                <p>@user.Description</p>    
+                <a href="/profile/@user.Id">Visit profile</a>
+            </div>
+        }
     </div>
 </div>
 
 <div class="project-container">
     <h1>The most recent project</h1>
     <div class="project">
-        <img src="~/avatars/default.png" class="image" />
 
         <div class="text-container">
             <p class="title">
-                Projektets namn
+                @Model.LatestProject.Title
             </p>
-            <p class="description">
-                Verksamhetsutveckling i hälso- och sjukvården på medicinsk grund
-
-                Vi stärker hälso- och sjukvården med kliniskt gångbara, evidensbaserade åtgärder. Genom analys och medicinsk expertis hjälper vi er att utvecklas
-            </p>
+            <p class="description">@Model.LatestProject.Description</p>
             <div class="participants">
-
-                <div class="participant">
-                    <a href="">
-                        <img src="~/avatars/default.png" class="avatar" />
-                    </a>
-                    <i class="fa-solid fa-crown crown"></i>
-                    <p class="name">
-                        Simon Persson
-                    </p>
-                </div>
-                <div class="participant">
-                    <a href="">
-                        <img src="~/avatars/default.png" class="avatar" />
-                    </a>
-                    <p class="name">
-                        Alice Smith
-                    </p>
-                </div>
-                <div class="participant">
-                    <a href="">
-                        <img src="~/avatars/default.png" class="avatar" />
-                    </a>
-                    <p class="name">
-                        Bob Jones
-                    </p>
-                </div>
-                <div class="participant">
-                    <a href="">
-                        <img src="~/avatars/default.png" class="avatar" />
-                    </a>
-                    <p class="name">
-                         Gabriel Dolk
-                    </p>
-                </div>
+                @foreach(HomeProjectUserViewModel user in @Model.LatestProject.Users) {
+                    @if (!user.IsPrivate) {
+                        <div class="participant">
+                            <a href="/profile/@user.Id">
+                                <img src="/avatars/@user.AvatarUri" class="avatar" />
+                            </a>
+                            @if (user.IsOwner)
+                            {
+                                <i class="fa-solid fa-crown crown"></i>
+                            }
+                            <p class="name">@user.FirstName @user.LastName</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="participant">
+                            <a> <img src="/avatars/default.png" class="avatar" /></a>
+                            @if (user.IsOwner)
+                            {
+                                <i class="fa-solid fa-crown crown"></i>
+                            }
+                            <p class="name">Private user</p>
+                        </div>
+                    }
+                }
             </div>
         </div>
     </div>

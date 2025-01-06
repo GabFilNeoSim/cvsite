@@ -30,6 +30,7 @@ public class ProfileController : BaseController
             .Where(skill => !user.Skills.Any(userSkill => userSkill.SkillId == skill.Id))
             .Select(skill => new SkillViewModel
             {
+                Id = skill.Id,
                 Title = skill.Title
             }).ToList();
 
@@ -372,8 +373,8 @@ public class ProfileController : BaseController
     }
 
     [Authorize]
-    [HttpPost("{id}/skills/add")]
-    public async Task<IActionResult> AddSkill(string id, string title)
+    [HttpPost("{id}/skills/add/{sid}")]
+    public async Task<IActionResult> AddSkill(string id, int sid, AddSkillViewModel model)
     {
         if (!await IsProfileOwner(id))
         {
@@ -386,35 +387,21 @@ public class ProfileController : BaseController
             return Error("Unknown Error", "An unexpected error happened");
         }
 
-        // Check if skill already exists
-        var existingSkill = await _context.Skills.FirstOrDefaultAsync(s => s.Title == title);
-
-        if (existingSkill == null)
+        var skill = await _context.Skills.SingleOrDefaultAsync(x => x.Id == sid);
+        if (skill == null)
         {
-            // Create new skill if it doesn´t exist
-            existingSkill = new Skill
-            {
-                Title = title
-            };
-
-            _context.Skills.Add(existingSkill);
-            await _context.SaveChangesAsync();
+            return Error("Unknown Error", "An unexpected error happened");
         }
 
-        // Check if the owner already have claimed the skill
-        var userSkillExists = user.Skills.Any(us => us.SkillId == existingSkill.Id);
-        if (!userSkillExists)
+        var userSkill = new UserSkill
         {
-            user.Skills.Add(new UserSkill
-            {
-                UserId = user.Id,
-                SkillId = existingSkill.Id
-            });
+            User = user,
+            Skill = skill
+        };
 
-            await _context.SaveChangesAsync();
-        }
+        user.Skills.Add(userSkill);
+        await _context.SaveChangesAsync();
 
         return RedirectToAction("Index", new { id });
     }
-
 }

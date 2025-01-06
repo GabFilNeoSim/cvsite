@@ -10,10 +10,6 @@
     ViewData["Title"] = "Profile";
 }
 
-@section Scripts {
-    <script src="~/js/profile.js"></script>
-}
-
 @if (!signInManager.IsSignedIn(User) && Model.User.Private)
 {
     <h1>This profile is private!</h1>
@@ -106,8 +102,8 @@ else
                                             <a asp-controller="Profile" asp-action="UpdateQualification" asp-route-id="@Model.User.Id" asp-route-qid="@q.Id" class="roadmap-edit">
                                                 <i class="fa-solid fa-pen"></i>
                                             </a>
-                                            <form id="delete-qualification" asp-controller="Profile" asp-action="DeleteQualification" asp-route-id="@Model.User.Id" asp-route-qid="@q.Id" class="roadmap-delete">
-                                                <button data-confirmText="Are you sure you want to delete qualification?" id="delete-qualification-btn"><i class="fa-solid fa-trash"></i></button>
+                                            <form id="delete-work" asp-controller="Profile" asp-action="DeleteQualification" asp-route-id="@Model.User.Id" asp-route-qid="@q.Id" class="roadmap-delete">
+                                                <a data-text="Are you sure you want to delete qualification?" id="delete-work-btn"><i class="fa-solid fa-trash"></i></a>
                                             </form>
                                         }
                                     </div>
@@ -139,8 +135,8 @@ else
                                             <a asp-controller="Profile" asp-action="UpdateQualification" asp-route-id="@Model.User.Id" asp-route-qid="@qualification.Id" class="roadmap-edit">
                                                 <i class="fa-solid fa-pen"></i>
                                             </a>
-                                            <form asp-controller="Profile" asp-action="DeleteQualification" asp-route-id="@Model.User.Id" asp-route-qid="@qualification.Id" class="roadmap-delete">
-                                                <button type="submit"><i class="fa-solid fa-trash"></i></button>
+                                            <form id="delete-education" asp-controller="Profile" asp-action="DeleteQualification" asp-route-id="@Model.User.Id" asp-route-qid="@qualification.Id" class="roadmap-delete">
+                                                <a data-text="Are you sure you want to delete qualification?" id="delete-education-btn"><i class="fa-solid fa-trash"></i></a>
                                             </form>
                                         }
                                     </div>
@@ -184,7 +180,7 @@ else
                                     <div class="skills-add-drop-parent">
                                         @foreach (SkillViewModel skill in Model.UnusedSkills)
                                         {
-                                            <a>@skill.Title</a>
+                                            <partial name="Partials/_AddSkillForm" model="new AddSkillViewModel {Id = skill.Id, Title = skill.Title, UserId = @Model.User.Id}" />
                                         }
                                     </div>
                                 </div>

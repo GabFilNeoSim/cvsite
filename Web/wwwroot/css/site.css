@@ -134,8 +134,8 @@ body {
 
 .project {
     margin: 0 auto;
-    width: 90%; max-width: 1000px;
-    height: 300px;
+    width: 90%; max-width: 500px;
+    height: auto;
     display: flex;
     box-shadow: 0px 0px 16px 0px hsla(0, 0%, 3%, 0.1);
     border-radius: 32px;
@@ -146,15 +146,18 @@ body {
     padding: 2rem;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
 }
 
 .project .text-container .title{
     font-size: 1.5rem;
     font-weight: 600;
+    margin-bottom: 10px;
 }
 
 .project .participants {
-    margin-top: auto;
+    margin-top: 50px;
     display: flex;
     gap: 0.5rem;
 }
@@ -187,6 +190,7 @@ body {
     transition: opacity ease 200ms;
     display: inline-block;
     white-space: nowrap;
+    top: 30px;
 }
 
 .project .participant a:hover ~ .name{
@@ -198,11 +202,6 @@ body {
         flex-direction: column;
         height: auto;
         max-width: 500px;
-    }
-
-    .project .image{
-        max-height: 200px;
-        object-fit: contain;
     }
 
     .project .participants{
@@ -257,13 +256,11 @@ body {
     font-size: 0.90vw;
     margin: auto 0;
 }
-
-
 #confirm-wrapper {
     display: none;
 }
 #confirm-overlay {
-    position: absolute;
+    position: fixed;
     background: rgba(0,0,0,0.3);
     backdrop-filter: blur(4px);
     width: 100%;
@@ -273,7 +270,6 @@ body {
     z-index: 100;
     display: flex;
     justify-content: center;
-    align-items: center;    
 }
 #confirm-modal {
     height: max-content;
@@ -284,6 +280,7 @@ body {
     flex-direction: column;
     border-radius: 7px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    margin-top: 100px;
 }
 #confirm-modal-close {
     position: absolute;
@@ -303,6 +300,11 @@ body {
     padding: 4px 10px;
     border-radius: 4px;
     text-align: center;
+}
+#confirm-btns div:hover {
+    cursor: pointer;
+    filter: opacity(0.7);
+    transition: all 0.3s;
 }
 #confirm-yes {
     background: lightgreen;

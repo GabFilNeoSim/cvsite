@@ -236,9 +236,9 @@ public class AppDbContext : IdentityDbContext<User>
         );
 
         modelBuilder.Entity<Project>().HasData(
-            new Project { Id = 1, Title = "Project Alpha", Description = "A groundbreaking project.", Image = "image1.png", OwnerId = user1.Id },
-            new Project { Id = 2, Title = "Project Beta", Description = "Another amazing project.", Image = "image2.png", OwnerId = user2.Id },
-            new Project { Id = 3, Title = "Project Gamma", Description = "Innovative and creative.", Image = "image3.png", OwnerId = user3.Id }
+            new Project { Id = 1, Title = "Project Alpha", Description = "A groundbreaking project.", OwnerId = user1.Id, CreatedAt = new DateTime(2024, 12, 23) },
+            new Project { Id = 2, Title = "Project Beta", Description = "Another amazing project.", OwnerId = user2.Id, CreatedAt = new DateTime(2024, 12, 21) },
+            new Project { Id = 3, Title = "Project Gamma", Description = "Innovative and creative.", OwnerId = user3.Id, CreatedAt = new DateTime(2024, 12, 20) }
         );
 
         modelBuilder.Entity<UserProject>().HasData(

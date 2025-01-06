@@ -30,9 +30,7 @@
 }
 
 .error-body a {
+    margin-top: 0.5rem;
     text-decoration: none;
-}
-
-.error-body a:visited {
-    color: inherit;
+    color: #5289ff;
 }
