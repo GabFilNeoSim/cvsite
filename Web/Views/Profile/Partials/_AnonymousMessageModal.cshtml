@@ -2,19 +2,6 @@
 
 @model AnonymousSendMessageViewModel
 
-
-@{
-	var notifyType = TempData["NotifyType"] as string;
-	var notifyMessage = TempData["NotifyMessage"] as string;
-
-	@if (!string.IsNullOrEmpty(notifyMessage) && !string.IsNullOrEmpty(notifyType))
-	{
-		<script>
-			notify({ type: "@notifyType", text: "@notifyMessage" });
-		</script>
-	}
-}
-
 <div id="message-container">
 	<div id="message-overlay">
 		<div id="message-modal">

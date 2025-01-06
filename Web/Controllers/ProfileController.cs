@@ -122,6 +122,9 @@ public class ProfileController : BaseController
         user.AvatarUri = fileName;
         await _context.SaveChangesAsync();
 
+        TempData["NotifyType"] = "success";
+        TempData["NotifyMessage"] = "Successfully updated avatar";
+
         // If the upload succeed, refresh the website
         return RedirectToAction("Index", "Profile", new { id });
     }
@@ -164,6 +167,9 @@ public class ProfileController : BaseController
 
         await _context.SaveChangesAsync();
 
+        TempData["NotifyType"] = "success";
+        TempData["NotifyMessage"] = "Successfully edited details";
+
         return RedirectToAction("Index", new { id });
     }
 
@@ -196,6 +202,9 @@ public class ProfileController : BaseController
             ModelState.AddModelError("OldPassword", "The old password does not match.");
             return View(model);
         }
+
+        TempData["NotifyType"] = "success";
+        TempData["NotifyMessage"] = "Successfully edited password";
 
         return RedirectToAction("Index", new { id });
     }
@@ -277,6 +286,9 @@ public class ProfileController : BaseController
 
         await _context.SaveChangesAsync();
 
+        TempData["NotifyType"] = "success";
+        TempData["NotifyMessage"] = "Successfully edited qualification";
+
         return RedirectToAction("Index", new { id });
     }
 
@@ -342,6 +354,9 @@ public class ProfileController : BaseController
         _context.Qualifications.Add(qualification);
         await _context.SaveChangesAsync();
 
+        TempData["NotifyType"] = "success";
+        TempData["NotifyMessage"] = "Successfully added qualification";
+
         return RedirectToAction("Index", new { id });
     }
 
@@ -368,6 +383,9 @@ public class ProfileController : BaseController
 
         _context.Qualifications.Remove(qualification);
         await _context.SaveChangesAsync();
+
+        TempData["NotifyType"] = "success";
+        TempData["NotifyMessage"] = "Successfully deleted qualification";
 
         return RedirectToAction("Index", new { id });
     }
@@ -401,6 +419,9 @@ public class ProfileController : BaseController
 
         user.Skills.Add(userSkill);
         await _context.SaveChangesAsync();
+
+        TempData["NotifyType"] = "success";
+        TempData["NotifyMessage"] = "Successfully added skill";
 
         return RedirectToAction("Index", new { id });
     }

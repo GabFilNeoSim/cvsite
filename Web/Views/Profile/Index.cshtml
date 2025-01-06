@@ -10,6 +10,19 @@
     ViewData["Title"] = "Profile";
 }
 
+@{
+    var notifyType = TempData["NotifyType"] as string;
+    var notifyMessage = TempData["NotifyMessage"] as string;
+
+    @if (!string.IsNullOrEmpty(notifyMessage) && !string.IsNullOrEmpty(notifyType))
+    {
+        <script>
+            notify({ type: "@notifyType", text: "@notifyMessage" });
+        </script>
+    }
+}
+
+
 @if (!signInManager.IsSignedIn(User) && Model.User.Private)
 {
     <h1>This profile is private!</h1>
