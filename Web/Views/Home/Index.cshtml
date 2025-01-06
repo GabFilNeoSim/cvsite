@@ -41,30 +41,34 @@
             </p>
             <p class="description">@Model.LatestProject.Description</p>
             <div class="participants">
-                @foreach(HomeProjectUserViewModel user in @Model.LatestProject.Users) {
-                    @if (!user.IsPrivate) {
-                        <div class="participant">
+                @foreach (HomeProjectUserViewModel user in @Model.LatestProject.Users)
+                {
+                    bool isPrivate = user.IsPrivate;
+                    bool isSignedIn = signInManager.IsSignedIn(User);
+
+                    <div class="participant">
+                        @if (isPrivate && !isSignedIn)
+                        {
+                            <a><img src="/avatars/default.png" class="avatar"/></a>
+                        }
+                        else
+                        {
                             <a href="/profile/@user.Id">
                                 <img src="/avatars/@user.AvatarUri" class="avatar" />
                             </a>
-                            @if (user.IsOwner)
-                            {
-                                <i class="fa-solid fa-crown crown"></i>
-                            }
-                            <p class="name">@user.FirstName @user.LastName</p>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="participant">
-                            <a> <img src="/avatars/default.png" class="avatar" /></a>
-                            @if (user.IsOwner)
-                            {
-                                <i class="fa-solid fa-crown crown"></i>
-                            }
+                        }
+                        @if (user.IsOwner) 
+                        { 
+                            <i class="fa-solid fa-crown crown"></i> 
+                        }
+                        @if (isPrivate && !isSignedIn)
+                        {
                             <p class="name">Private user</p>
-                        </div>
-                    }
+                        }
+                        else {
+                            <p class="name">@user.FirstName @user.LastName</p>
+                        }
+                    </div>
                 }
             </div>
         </div>
