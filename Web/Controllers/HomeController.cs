@@ -16,13 +16,14 @@ public class HomeController : BaseController
     {
         var model = new HomeViewModel
         {
-            Users = await _context.Users.Where(x => !x.Private).Select(x => new UserViewModel
+            Users = await _context.Users.Select(x => new UserViewModel
             {
                 Id = x.Id,
                 AvatarUri = x.AvatarUri,
                 FirstName = x.FirstName,
                 LastName = x.LastName,
-                Description = x.Description
+                Description = x.Description,
+                Private = x.Private,
             }).ToListAsync(),
 
             LatestProject = await _context.Projects

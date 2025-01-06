@@ -17,16 +17,25 @@
         <button id="left"><i class="fa-solid fa-chevron-left" id="profile-left"></i></button>
         <button id="right"><i class="fa-solid fa-chevron-right" id="profile-right"></i></button>
     </div>
+    @{
+        int carouselIndex = 0;
+    }
     <div class="carousel">
-        @for (int i = 0; i < @Model.Users.Count; i++) {
-            var user = @Model.Users[i];
+        @foreach (var user in Model.Users)
+        {
+            bool isPrivate = user.Private;
+            bool isSignedIn = signInManager.IsSignedIn(User);
 
-            <div class="card" id=@i>
-                <img src="/avatars/@user.AvatarUri" />
-                <p>@user.FirstName @user.LastName</p>
-                <p>@user.Description</p>    
-                <a href="/profile/@user.Id">Visit profile</a>
-            </div>
+            if (isSignedIn || !isPrivate)
+            {
+                <div class="card" id="@carouselIndex">
+                    <img src="/avatars/@user.AvatarUri" alt="User Avatar" />
+                    <p>@user.FirstName @user.LastName</p>
+                    <p>@user.Description</p>
+                    <a href="/profile/@user.Id">Visit profile</a>
+                </div>
+                carouselIndex++;
+            }
         }
     </div>
 </div>
