@@ -16,15 +16,16 @@
     <link rel="stylesheet" href="~/css/form.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/header.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/message.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/error.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Web.styles.css" asp-append-version="true" />
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/notify.js" asp-append-version="true"></script>
-    <script src="~/js/search.js" asp-append-version="true"></script>
+
 </head>
 <body>
+    <partial name="_ConfirmModal"/>
     <div id="notify-wrapper">
         <div class="notify-parent"></div>
     </div>
@@ -88,7 +89,8 @@
         @RenderBody()
     </main>
 </div>
-
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/js/search.js" asp-append-version="true"></script>
 @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

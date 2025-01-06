@@ -56,29 +56,26 @@ public class MessageController : BaseController
             .ToListAsync();
 
         // Anonymous
-        //var anonymousMessages = await _context.Messages
-        //    .Where(m => m.SenderId == null && m.ReceiverId == loggedInUser.Id)
-        //    .OrderByDescending(m => m.CreatedAt)
-        //    .Select(g => new UserMessagesViewModel
-        //    {
-        //        User = _context.Users
-        //            .Where(u => u.Id == g.Key)
-        //            .Select(u => new UserViewModel
-        //            {
-        //                Id = u.Id,
-        //                FirstName = u.FirstName,
-        //                LastName = u.LastName,
-        //                AvatarUri = u.AvatarUri
-        //            })
-        //            .FirstOrDefault(),
-        //        LastMessage = g.OrderByDescending(m => m.CreatedAt).First().Text,
-        //        LastMessageTime = g.OrderByDescending(m => m.CreatedAt).First().CreatedAt,
-        //        UnreadCount = g.Count(m => !m.Read && m.ReceiverId == loggedInUser.Id)
-        //    })
-        //    .OrderByDescending(um => um.LastMessageTime)
-        //    .ToListAsync();
+        var anonymousMessages = await _context.Messages
+            .Where(m => m.SenderId == null && m.ReceiverId == loggedInUser.Id)
+            .OrderByDescending(m => m.CreatedAt)
+            .Select(g => new AnonymousMessageViewModel{
+                Name = g.AnonymousName,
+                Text = g.Text,
+                MessageTime = g.CreatedAt,
+                Read = g.Read
+            })
+            .OrderByDescending(u => u.MessageTime)
+            .ToListAsync();
 
-        return View(userMessages);
+
+        var messages = new MessagesViewModel
+        {
+            UserMessages = userMessages,
+            AnonymousMessages = anonymousMessages
+        };
+
+        return View(messages);
     }
 
 
@@ -101,7 +98,7 @@ public class MessageController : BaseController
                Id = u.Id,
                FirstName = u.FirstName,
                LastName = u.LastName,
-               AvatarUri = u.AvatarUri ?? "default.png"
+               AvatarUri = u.AvatarUri
            })
            .FirstOrDefaultAsync();
 
@@ -130,9 +127,7 @@ public class MessageController : BaseController
                    Text = m.Text,
                    Read = m.Read,
                    IsSentByCurrentUser = m.SenderId == loggedInUser.Id,
-                   Avatar = m.SenderId == loggedInUser.Id
-                        ? loggedInUser.AvatarUri ?? "default.png"
-                        : m.Sender.AvatarUri ?? "default.png",
+                   Avatar = m.SenderId == loggedInUser.Id ? loggedInUser.AvatarUri : m.Sender.AvatarUri,
                    CreatedAt = m.CreatedAt
                })
                .ToListAsync();

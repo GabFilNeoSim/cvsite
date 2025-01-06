@@ -9,8 +9,12 @@
     gap: 15px;
 }
 
-#contacts-parent {
-    background-color: red;
+.contacts-container h1 {
+    margin: 0;
+}
+
+.contacts-parent {
+/*    background-color: red;*/
 }
 
 .contacts-child {

@@ -106,8 +106,8 @@ else
                                             <a asp-controller="Profile" asp-action="UpdateQualification" asp-route-id="@Model.User.Id" asp-route-qid="@q.Id" class="roadmap-edit">
                                                 <i class="fa-solid fa-pen"></i>
                                             </a>
-                                            <form asp-controller="Profile" asp-action="DeleteQualification" asp-route-id="@Model.User.Id" asp-route-qid="@q.Id" class="roadmap-delete">
-                                                <button type="submit"><i class="fa-solid fa-trash"></i></button>
+                                            <form id="delete-qualification" asp-controller="Profile" asp-action="DeleteQualification" asp-route-id="@Model.User.Id" asp-route-qid="@q.Id" class="roadmap-delete">
+                                                <button data-confirmText="Are you sure you want to delete qualification?" id="delete-qualification-btn"><i class="fa-solid fa-trash"></i></button>
                                             </form>
                                         }
                                     </div>
@@ -175,6 +175,7 @@ else
                         }
                         @if (Model.IsProfileOwner)
                         {
+                        <form asp-controller="Profile" asp-action="AddSkill" asp-route-id="@Model.User.Id" method="post">
                             <div class="skills-child add">
                                 Add skill
                                 <i class="fa-solid fa-plus"></i>
@@ -188,6 +189,7 @@ else
                                     </div>
                                 </div>
                             </div>
+                        </form>
                         }
                     </div>
                 </div>

@@ -27,18 +27,15 @@ body {
     padding: 0;
 }
 
-h1{
-    text-align: center;
-    margin-top: 100px;
-    margin-bottom: 25px;
-    font-weight: 600;
-    font-size: 1.5rem;
-}
-
 .carousel-container{
     position: relative;
-    margin: 0 auto;
+    margin: 150px auto;
     max-width: 800px;
+}
+
+.carousel-container h1{
+    margin-bottom: 50px;
+    text-align: center;
 }
 
 .carousel {
@@ -62,8 +59,8 @@ h1{
     box-sizing: border-box;
     width: 100%;
     padding: 0 10px;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 65%;
+    transform: translateY(-65%);
     z-index: 2;
 }
 
@@ -80,7 +77,7 @@ h1{
     cursor: pointer;
 }
 
-.card{
+.carousel .card {
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -94,23 +91,23 @@ h1{
     transition: transform ease 500ms;
 }
 
-.card img{
+.carousel .card img{
     border-radius: 32px;
     width: 64px;
     height: 64px;
 }
 
-.card p{
+.carousel .card p{
     font-size: 1rem;
     font-weight: 300;
 }
 
-.card p:first-of-type{
+.carousel .card p:first-of-type{
     font-weight: 600;
     font-size: 1.3rem;
 }
 
-.card a{
+.carousel .card a{
     transition: background-color ease 300ms;
     margin-top: 15px;
     background-color: #5289ff;
@@ -121,9 +118,18 @@ h1{
     pointer-events: auto;
 }
 
-.card a:hover{
+.carousel .card a:hover{
     background-color: rgb(39, 67, 129);
     cursor: pointer;
+}
+
+.project-container{
+    margin-top: 150px;
+}
+
+.project-container h1{
+    margin-bottom: 50px;
+    text-align: center;
 }
 
 .project {
@@ -250,4 +256,57 @@ h1{
 .notify-text {
     font-size: 0.90vw;
     margin: auto 0;
+}
+
+
+#confirm-wrapper {
+    display: none;
+}
+#confirm-overlay {
+    position: absolute;
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(4px);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+}
+#confirm-modal {
+    height: max-content;
+    position: relative;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 7px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+#confirm-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+#confirm-modal-close:hover {
+    opacity: 0.5;
+    cursor: pointer;
+}
+#confirm-btns {
+    display: flex;
+    gap: 20px;
+}
+#confirm-btns div {
+    margin-top: 10px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    text-align: center;
+}
+#confirm-yes {
+    background: lightgreen;
+}
+#confirm-no {
+    background: lightcoral;
 }

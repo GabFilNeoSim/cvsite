@@ -4,16 +4,16 @@
 @inject SignInManager<User> signInManager
 @inject UserManager<User> userManager
 
-@model List<UserMessagesViewModel>
+@model MessagesViewModel
 
 @{
     ViewData["Title"] = "Messages";
 }
 
 <div class="contacts-container">
-    <h1>Messages</h1>
-    <div id="contacts-parent">
-        @foreach(UserMessagesViewModel message in @Model) {
+    <h1>CV-Site users</h1>
+    <div class="contacts-parent">
+        @foreach(UserMessagesViewModel message in @Model.UserMessages) {
             <a asp-controller="Message" asp-action="Chat" asp-route-id="@message.User.Id" class="contacts-child  @(message.UnreadCount > 0 ? "new" : "")">
                 @if (@message.UnreadCount > 0) {
                     <div class="contacts-new">
@@ -24,6 +24,26 @@
                 <div>
                     <h3>@message.User.FirstName @message.User.LastName</h3>
                     <p>@message.LastMessage</p>
+                </div>
+            </a>
+        }
+    </div>
+
+    <h1>Others</h1>
+    <div class="contacts-parent">
+        @foreach (AnonymousMessageViewModel message in @Model.AnonymousMessages)
+        {
+            <a class="contacts-child  @(message.Read == false ? "new" : "")">
+                @if (@message.Read == false)
+                {
+                    <div class="contacts-new">
+                        <p>1</p>
+                    </div>
+                }
+                <img src="/avatars/default.png">
+                <div>
+                    <h3>@message.Name</h3>
+                    <p>@message.Text</p>
                 </div>
             </a>
         }

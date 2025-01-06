@@ -141,7 +141,7 @@ public class ProfileController : BaseController
             Address = user.Address,
             IsPrivate = user.Private
         };
-        
+
         return View(model);
     }
 
@@ -370,4 +370,51 @@ public class ProfileController : BaseController
 
         return RedirectToAction("Index", new { id });
     }
+
+    [Authorize]
+    [HttpPost("{id}/skills/add")]
+    public async Task<IActionResult> AddSkill(string id, string title)
+    {
+        if (!await IsProfileOwner(id))
+        {
+            return RedirectToAction("Login", "Auth");
+        }
+
+        var user = await _userManager.FindByIdAsync(id);
+        if (user == null)
+        {
+            return Error("Unknown Error", "An unexpected error happened");
+        }
+
+        // Check if skill already exists
+        var existingSkill = await _context.Skills.FirstOrDefaultAsync(s => s.Title == title);
+
+        if (existingSkill == null)
+        {
+            // Create new skill if it doesn´t exist
+            existingSkill = new Skill
+            {
+                Title = title
+            };
+
+            _context.Skills.Add(existingSkill);
+            await _context.SaveChangesAsync();
+        }
+
+        // Check if the owner already have claimed the skill
+        var userSkillExists = user.Skills.Any(us => us.SkillId == existingSkill.Id);
+        if (!userSkillExists)
+        {
+            user.Skills.Add(new UserSkill
+            {
+                UserId = user.Id,
+                SkillId = existingSkill.Id
+            });
+
+            await _context.SaveChangesAsync();
+        }
+
+        return RedirectToAction("Index", new { id });
+    }
+
 }

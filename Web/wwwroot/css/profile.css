@@ -140,7 +140,7 @@
 #add-experience-btn {
     background: #5289ff;
     display: block;
-    margin: 50px 0 0 auto;
+    margin-left: auto;
     width: max-content;
     padding: 5px 15px;
     border-radius: 15px;
@@ -158,7 +158,25 @@
     display: flex;
     flex-direction: row;
     gap: 70px;
-    margin-bottom: 50px;
+    margin-bottom: 10px;
+    height: 450px;
+    overflow-y: auto;
+}
+
+#profile-experience-parent::-webkit-scrollbar {
+    width: 5px;
+}
+
+#profile-experience-parent::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+#profile-experience-parent::-webkit-scrollbar-thumb {
+    background: #5289ff;
+}
+
+#profile-experience-parent::-webkit-scrollbar-thumb:hover {
+    background: #2663e7;
 }
 
 .profile-experience-child {
