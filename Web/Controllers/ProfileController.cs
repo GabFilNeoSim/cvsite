@@ -49,7 +49,7 @@ public class ProfileController : BaseController
                 Private = user.Private,
             },
 
-            Work = user.Qualifications.Where(x => x.Type.Name == "Work").Select(y => new QualificationViewModel
+            Work = user.Qualifications.Where(x => x.Type.Name == "Work").OrderByDescending(x => x.StartDate).Select(y => new QualificationViewModel
             {
                 Id = y.Id,
                 Title = y.Title,
@@ -59,7 +59,7 @@ public class ProfileController : BaseController
                 EndDate = y.EndDate?.ToString("MMM yyyy")
             }).ToList(),
 
-            Education = user.Qualifications.Where(x => x.Type.Name == "Education").Select(y => new QualificationViewModel
+            Education = user.Qualifications.Where(x => x.Type.Name == "Education").OrderByDescending(x => x.StartDate).Select(y => new QualificationViewModel
             {
                 Id = y.Id,
                 Title = y.Title,
