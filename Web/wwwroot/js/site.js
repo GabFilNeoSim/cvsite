@@ -8,6 +8,9 @@
 let currentProfileIndex = 0;
 let profileMoveLength = 210;
 const profilecards = $(".card");
+const cardcarousel = $("#carousel");
+const visibleCardsCount = Math.floor(cardcarousel.width() / profileMoveLength) + 1;
+console.log(visibleCardsCount);
 
 $("#left").on('click', function (event) {
     moveProfileCarousel(-1);
@@ -17,16 +20,32 @@ $("#right").on('click', function (event) {
 });
 
 function moveProfileCarousel(direction) {
-    currentProfileIndex = (currentProfileIndex + direction) % profilecards.length;
+    currentProfileIndex = (currentProfileIndex + direction + profilecards.length) % profilecards.length;
     updateProfileCardStyling();
 }
 
 function updateProfileCardStyling() {
-    console.log(currentProfileIndex)
+    //Resets styling
     profilecards.each(function (index, item) {
-        const relativeIndex = Math.abs((item.id - currentProfileIndex) % profilecards.length);
-        item.style.transform = `translateX(${relativeIndex * profileMoveLength}px)`;
+        item.classList = "card";
+        item.style.transform = ""
     })
+    let lastCardInView = (currentProfileIndex + visibleCardsCount - 1) % profilecards.length;
+    const nextLeft = profilecards[(currentProfileIndex - 1 + profilecards.length) % profilecards.length];
+    const nextRight = profilecards[(lastCardInView + 1) % profilecards.length];
+    //Applies styling to next in view
+    nextLeft.classList.add("left");
+    nextLeft.style.transform = `translateX(${-1 * profileMoveLength}px`;
+
+    nextRight.classList.add("right");
+    nextRight.style.transform = `translateX(${visibleCardsCount * profileMoveLength}px`;
+
+    //Styles the cards in view
+    for (let i = currentProfileIndex; i < currentProfileIndex + visibleCardsCount; i++) {
+        const position = ((i - currentProfileIndex + profilecards.length) % profilecards.length) * profileMoveLength
+        profilecards[i % profilecards.length].style.transform = `translateX(${position}px)`;
+        profilecards[i % profilecards.length].classList.add("active");
+    }
 }
 
 window.onload = scrollToBottom;

@@ -9,7 +9,7 @@
     text-align: center;
 }
 
-.carousel {
+#carousel {
     box-sizing: border-box;
     margin: 0 auto;
     width: calc(100% - 100px);
@@ -48,7 +48,7 @@
     cursor: pointer;
 }
 
-.carousel .card {
+#carousel .card {
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -58,34 +58,38 @@
     overflow: hidden;
     width: 160px;
     text-align: center;
-    transition: transform ease 500ms;
-    padding: 16px 10px 0 10px;
+    transition: all ease 500ms;
+    padding-top: 16px;
+    opacity: 0;
 }
 
-.carousel .card .card-desc {
+#carousel .card.active{
+    opacity: 1;
+}
+
+#carousel .card .card-desc {
     width: 100%;
     overflow: hidden;
     white-space: nowrap;
-
 }
 
-.carousel .card img {
+#carousel .card img {
     border-radius: 32px;
     width: 64px;
     height: 64px;
 }
 
-.carousel .card p {
+#carousel .card p {
     font-size: 1rem;
     font-weight: 300;
 }
 
-.carousel .card .card-name {
+#carousel .card .card-name {
     font-weight: 600;
     font-size: 1.3rem;
 }
 
-.carousel .card a {
+#carousel .card a {
     transition: background-color ease 300ms;
     margin-top: 15px;
     background-color: #5289ff;
@@ -96,7 +100,7 @@
     pointer-events: auto;
 }
 
-.carousel .card a:hover {
+#carousel .card a:hover {
     background-color: rgb(39, 67, 129);
     cursor: pointer;
 }
@@ -105,10 +109,10 @@
     margin-top: 150px;
 }
 
-    .project-container h1 {
-        margin-bottom: 50px;
-        text-align: center;
-    }
+.project-container h1 {
+    margin-bottom: 50px;
+    text-align: center;
+}
 
 .project {
     margin: 0 auto;
@@ -183,7 +187,7 @@
         max-width: 500px;
     }
 
-        .project .participants {
-            margin-top: 50px;
-        }
+    .project .participants {
+        margin-top: 50px;
+    }
 }

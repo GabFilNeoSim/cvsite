@@ -20,7 +20,7 @@
     @{
         int carouselIndex = 0;
     }
-    <div class="carousel">
+    <div id="carousel">
         @foreach (var user in Model.Users)
         {
             bool isPrivate = user.Private;
