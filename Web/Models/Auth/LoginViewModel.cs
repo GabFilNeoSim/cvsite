@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Web.Models;
+namespace Web.Models.Auth;
 
 public class LoginViewModel
 {
-    [Required(ErrorMessage="Email is required.")]
+    [Required(ErrorMessage = "Email is required.")]
     [EmailAddress(ErrorMessage = "Invalid email address")]
     [DataType(DataType.EmailAddress)]
     public string Email { get; set; }

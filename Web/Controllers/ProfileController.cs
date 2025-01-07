@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Web.Models.Profile;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Web.Models.Profile.Skill;
 
 namespace Web.Controllers;
 
@@ -18,23 +19,23 @@ public class ProfileController : BaseController
     [HttpGet("{id}")]
     public async Task<IActionResult> Index(string id)
     {
+        bool isProfileOwner = await IsProfileOwner(id);
+
         var user = await _userManager.FindByIdAsync(id);
         if (user == null)
         {
             return Error("Unknown profile", "This profile does not exist, please try again.");
         }
 
-        var allSkills = await _context.Skills.ToListAsync();
+        var userSkillIds = user.Skills.Select(us => us.SkillId);
 
-        var unusedSkills = allSkills
-            .Where(skill => !user.Skills.Any(userSkill => userSkill.SkillId == skill.Id))
+        var unusedSkills = await _context.Skills
+            .Where(skill => !userSkillIds.Contains(skill.Id))
             .Select(skill => new SkillViewModel
             {
-                Id = skill.Id,
+                SkillId = skill.Id,
                 Title = skill.Title
-            }).ToList();
-
-        var isProfileOwner = await IsProfileOwner(user.Id);
+            }).ToListAsync();
 
         var profileViewModel = new ProfileViewModel
         {
@@ -43,6 +44,7 @@ public class ProfileController : BaseController
                 Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
+                Email = user.Email,
                 Address = user.Address,
                 AvatarUri = user.AvatarUri,
                 Description = user.Description,
@@ -70,9 +72,17 @@ public class ProfileController : BaseController
             }).ToList(),
 
 
-            Skills = user.Skills.Select(y => new SkillViewModel
+            Skills = user.Skills.Select(x => new SkillViewModel
             {
-                Title = y.Skill.Title,
+                SkillId = x.SkillId,
+                Title = x.Skill.Title,
+            }).ToList(),
+
+            Projects = user.Projects.Select(x => new ProfileProjectViewModel
+            {
+                Id = x.ProjectId,
+                Title = x.Project.Title,
+                Description = x.Project.Description
             }).ToList(),
 
             UnusedSkills = unusedSkills,
@@ -143,6 +153,7 @@ public class ProfileController : BaseController
             FirstName = user.FirstName,
             LastName = user.LastName,
             Address = user.Address,
+            Description = user.Description,
             IsPrivate = user.Private
         };
 
@@ -163,6 +174,7 @@ public class ProfileController : BaseController
         if (user.FirstName != model.FirstName) user.FirstName = model.FirstName;
         if (user.LastName != model.LastName) user.LastName = model.LastName;
         if (user.Address != model.Address) user.Address = model.Address;
+        if (user.Description != model.Description) user.Description = model.Description;
         if (user.Private != model.IsPrivate) user.Private = model.IsPrivate;
 
         await _context.SaveChangesAsync();
@@ -422,6 +434,36 @@ public class ProfileController : BaseController
 
         TempData["NotifyType"] = "success";
         TempData["NotifyMessage"] = "Successfully added skill";
+
+        return RedirectToAction("Index", new { id });
+    }
+
+    [Authorize]
+    [HttpPost("{id}/skills/delete/{sid}")]
+    public async Task<IActionResult> DeleteSkill(string id, int sid)
+    {
+        if (!await IsProfileOwner(id))
+        {
+            return RedirectToAction("Login", "Auth");
+        }
+
+        var user = await _userManager.FindByIdAsync(id);
+        if (user == null)
+        {
+            return Error("Unknown Error", "An unexpected error happened");
+        }
+
+        var skill = await _context.UserSkills.SingleOrDefaultAsync(x => x.SkillId == sid && x.UserId == user.Id);
+        if (skill == null)
+        {
+            return Error("Unknown Error", "An unexpected error happened");
+        }
+
+        user.Skills.Remove(skill);
+        await _context.SaveChangesAsync();
+
+        TempData["NotifyType"] = "success";
+        TempData["NotifyMessage"] = "Successfully removed skill";
 
         return RedirectToAction("Index", new { id });
     }

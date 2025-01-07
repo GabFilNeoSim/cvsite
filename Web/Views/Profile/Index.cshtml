@@ -1,5 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using Web.Models.Message
+@using Web.Models.Profile
+@using Web.Models.Profile.Skill
 
 @inject SignInManager<User> signInManager
 @inject UserManager<User> userManager
@@ -36,11 +38,14 @@ else
 {
     <div id="profile-container">
         <div id="profile-header">
-            <div id="profile-avatar-parent">
+            <div id="profile-avatar-wrapper">
                 @if (Model.IsProfileOwner)
                 {
                     <form id="profile-change-avatar" asp-controller="Profile" asp-action="UpdateAvatar" asp-route-id="@Model.User.Id" method="post" enctype="multipart/form-data">
                         <input id="profile-change-avatar-input" type="file" name="avatar" hidden>
+                        <div id="profile-change-avatar-edit">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </div>
                         <img id="profile-avatar" src="/avatars/@Model.User.AvatarUri" alt="Profile Avatar">
                     </form>
                 }
@@ -48,7 +53,6 @@ else
                 {
                     <img id="profile-avatar" src="/avatars/@Model.User.AvatarUri" alt="Profile Avatar">
                 }
-                <!-- <i class="fa-solid fa-pen"></i> -->
             </div>
             <div id="profile-content">
                 <div id="profile-info">
@@ -75,7 +79,10 @@ else
                             }
                         }
                     </div>
-                    <p id="profile-desc">@Model.User.Description</p>
+                    <div id="profile-info-about">
+                        <p id="profile-info-email">@Model.User.Email</p>
+                        <p id="profile-info-desc">@Model.User.Description</p>
+                    </div>
                 </div>
                 <div id="profile-stats">
                     <div class="profile-stats-child">
@@ -182,13 +189,14 @@ else
                                 @skill.Title
                                 @if (Model.IsProfileOwner)
                                 {
-                                    <a class="skill-delete"><i class="fa-solid fa-xmark"></i></a>
+                                    <form asp-controller="Profile" asp-action="DeleteSkill" asp-route-id="@Model.User.Id" asp-route-sid="@skill.SkillId" method="post">
+                                        <button type="submit" class="skill-delete"><i class="fa-solid fa-xmark"></i></button>
+                                    </form>
                                 }
                             </div>
                         }
-                        @if (Model.IsProfileOwner)
+                        @if (Model.IsProfileOwner && Model.UnusedSkills.Count > 0)
                         {
-                        <form asp-controller="Profile" asp-action="AddSkill" asp-route-id="@Model.User.Id" method="post">
                             <div class="skills-child add">
                                 Add skill
                                 <i class="fa-solid fa-plus"></i>
@@ -197,17 +205,25 @@ else
                                     <div class="skills-add-drop-parent">
                                         @foreach (SkillViewModel skill in Model.UnusedSkills)
                                         {
-                                            <partial name="Partials/_AddSkillForm" model="new AddSkillViewModel {Id = skill.Id, Title = skill.Title, UserId = @Model.User.Id}" />
+                                            <partial name="Partials/_AddSkillForm" model="new AddSkillViewModel {SkillId = skill.SkillId, Title = skill.Title, UserId = @Model.User.Id}" />
                                         }
                                     </div>
                                 </div>
                             </div>
-                        </form>
                         }
                     </div>
                 </div>
                 <div class="misc-child">
-                    <h2 class="content-title">Project</h2>
+                    <h2 class="content-title">Projects</h2>
+                    <div class="profile-project-parent">
+                        @foreach(ProfileProjectViewModel project in Model.Projects)
+                        {
+                            <a class="profile-project-child">
+                                <p class="profile-project-child-title">@project.Title</p>
+                                <p>@project.Description</p>
+                            </a>
+                        }
+                    </div>
                 </div>
             </div>
         </div>

@@ -4,7 +4,7 @@
 @inject SignInManager<User> signInManager
 
 @{
-    ViewData["Title"] = "Projects";
+    ViewData["Title"] = "My projects";
 }
 
 @model List<ProjectViewModel>
@@ -25,25 +25,13 @@
                 <div class="project-card-users-parent">
                     @foreach (ProjectUserViewModel user in project.Collaborators)
                     {
-                        bool isPrivate = user.Private;
-                        bool isSignedIn = signInManager.IsSignedIn(User);
-                        string? avatar = isPrivate && !isSignedIn ? "default.png" : user.AvatarUri;
-
-                        <a class="project-card-user" href="/profile/@user.Id">
+                        <a class="project-card-user" href="/profile/@user.AvatarUri">
                             @if (user.IsOwner)
                             {
                                 <i class="fa-solid fa-crown crown"></i>
                             }
-                            <img src="/avatars/@avatar" />
-
-                            @if (isPrivate && !isSignedIn)
-                            {
-                                <div class="project-card-name">Private user</div>
-                            }
-                            else
-                            {
-                                <div class="project-card-name">@user.FirstName @user.LastName</div>
-                            }
+                            <img src="/avatars/@user.AvatarUri" />
+                            <div class="project-card-name">@user.FirstName @user.LastName</div>
                         </a>
                     }
                 </div>

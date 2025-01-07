@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Web.Models;
+namespace Web.Models.Auth;
 
 public class RegisterViewModel
-{   
+{
     [Required(ErrorMessage = "First name is required")]
     [RegularExpression("^[a-zA-ZåäöÅÄÖ]+$", ErrorMessage = "Only letters are allowed, no special characters.")]
     public string FirstName { get; set; }

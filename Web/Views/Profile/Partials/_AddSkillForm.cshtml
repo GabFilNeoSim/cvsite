@@ -1,5 +1,7 @@
-﻿@model AddSkillViewModel
+﻿@using Web.Models.Profile.Skill
 
-<form asp-controller="Profile" asp-action="AddSkill" asp-route-id="@Model.UserId" asp-route-sid="@Model.Id" method="post">
+@model AddSkillViewModel
+
+<form asp-controller="Profile" asp-action="AddSkill" asp-route-id="@Model.UserId" asp-route-sid="@Model.SkillId" method="post">
     <button type="submit">@Model.Title</button>
 </form>

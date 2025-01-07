@@ -93,6 +93,15 @@
     width: 100%;
 }
 
+.form-child-input textarea {
+    resize: none;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border: none;
+    outline: none;
+    height: 100px;
+}
+
 .form-checkbox {
     display: flex;
     gap: 0.75rem;

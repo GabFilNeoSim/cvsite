@@ -61,12 +61,12 @@ public class Program
 
         app.UseAuthorization();
 
-        app.UseStatusCodePagesWithRedirects("/error404");
+        //app.UseStatusCodePagesWithRedirects("/error404");
 
-        app.MapControllerRoute(
-            name: "error404",
-            pattern: "Error404",
-            defaults: new { controller = "Base", action = "Error404" });
+        //app.MapControllerRoute(
+        //    name: "error404",
+        //    pattern: "Error404",
+        //    defaults: new { controller = "Base", action = "Error404" });
 
         app.MapControllerRoute(
             name: "default",

@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
-using Web.Models;
 using Models;
+using Web.Models.Auth;
 
 namespace Web.Controllers;
 

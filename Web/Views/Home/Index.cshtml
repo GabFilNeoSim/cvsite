@@ -30,8 +30,10 @@
             {
                 <div class="card" id="@carouselIndex">
                     <img src="/avatars/@user.AvatarUri" alt="User Avatar" />
-                    <p>@user.FirstName @user.LastName</p>
-                    <p>@user.Description</p>
+                    <p class="card-name">@user.FirstName @user.LastName</p>
+                    @* <div class="card-desc"> *@
+                    @*     <p>@user.Description</p> *@
+                    @* </div> *@
                     <a href="/profile/@user.Id">Visit profile</a>
                 </div>
                 carouselIndex++;
@@ -54,18 +56,10 @@
                 {
                     bool isPrivate = user.IsPrivate;
                     bool isSignedIn = signInManager.IsSignedIn(User);
+                    string? avatar = isPrivate && !isSignedIn ? "default.png" : user.AvatarUri;
 
                     <div class="participant">
-                        @if (isPrivate && !isSignedIn)
-                        {
-                            <a><img src="/avatars/default.png" class="avatar"/></a>
-                        }
-                        else
-                        {
-                            <a href="/profile/@user.Id">
-                                <img src="/avatars/@user.AvatarUri" class="avatar" />
-                            </a>
-                        }
+                        <a href="/profile/@user.Id"><img src="/avatars/@avatar" class="avatar"/></a>
                         @if (user.IsOwner) 
                         { 
                             <i class="fa-solid fa-crown crown"></i> 

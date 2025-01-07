@@ -27,192 +27,6 @@ body {
     padding: 0;
 }
 
-.carousel-container{
-    position: relative;
-    margin: 150px auto;
-    max-width: 800px;
-}
-
-.carousel-container h1{
-    margin-bottom: 50px;
-    text-align: center;
-}
-
-.carousel {
-    box-sizing: border-box;
-    margin: 0 auto;
-    width: calc(100% - 100px);
-    height: 200px;
-    display: flex;
-    gap: 25px;
-    overflow: hidden;
-    position: relative;
-    pointer-events: none;
-    mask-image: linear-gradient(to right, black 70%, transparent);
-    -webkit-mask-image: linear-gradient(to right, black 70%, transparent);
-}
-
-.controls{
-    position: absolute;
-    display: flex;
-    justify-content: space-between;
-    box-sizing: border-box;
-    width: 100%;
-    padding: 0 10px;
-    top: 65%;
-    transform: translateY(-65%);
-    z-index: 2;
-}
-
-.controls button{
-    transition: all ease 300ms;
-    border: none;
-    background-color: transparent;
-    font-size: 1.3rem;
-    padding: 5px;
-}
-
-.controls button:hover{
-    font-size: 1.45rem;
-    cursor: pointer;
-}
-
-.carousel .card {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 16px;
-    background-color: hsl(0, 0%, 97%);
-    border-radius: 16px;
-    overflow: hidden;
-    min-width: 160px;
-    text-align: center;
-    transition: transform ease 500ms;
-}
-
-.carousel .card img{
-    border-radius: 32px;
-    width: 64px;
-    height: 64px;
-}
-
-.carousel .card p{
-    font-size: 1rem;
-    font-weight: 300;
-}
-
-.carousel .card p:first-of-type{
-    font-weight: 600;
-    font-size: 1.3rem;
-}
-
-.carousel .card a{
-    transition: background-color ease 300ms;
-    margin-top: 15px;
-    background-color: #5289ff;
-    width: 100%;
-    padding: 8px 0;
-    color: hsl(0, 0%, 97%);
-    text-decoration: none;
-    pointer-events: auto;
-}
-
-.carousel .card a:hover{
-    background-color: rgb(39, 67, 129);
-    cursor: pointer;
-}
-
-.project-container{
-    margin-top: 150px;
-}
-
-.project-container h1{
-    margin-bottom: 50px;
-    text-align: center;
-}
-
-.project {
-    margin: 0 auto;
-    width: 90%; max-width: 500px;
-    height: auto;
-    display: flex;
-    box-shadow: 0px 0px 16px 0px hsla(0, 0%, 3%, 0.1);
-    border-radius: 32px;
-    overflow: hidden;
-}
-
-.project .text-container {
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 auto;
-}
-
-.project .text-container .title{
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 10px;
-}
-
-.project .participants {
-    margin-top: 50px;
-    display: flex;
-    gap: 0.5rem;
-}
-
-.project .participant {
-    position: relative;
-}
-
-.project .participant a .avatar {
-    overflow: hidden;
-    border-radius: 15px;
-    width: 30px;
-    height: 30px;
-    object-fit: cover;
-}
-
-.project .participant .crown {
-    position: absolute;
-    font-size: 1rem;
-    color: rgb(137, 137, 40);
-    left: 50%;
-    top: -17.5px;
-    transform: translateX(-50%);
-    z-index: 2;
-}
-
-.project .participant .name{
-    position: absolute;
-    opacity: 0;
-    transition: opacity ease 200ms;
-    display: inline-block;
-    white-space: nowrap;
-    top: 30px;
-}
-
-.project .participant a:hover ~ .name{
-    opacity: 1;
-}
-
-@media (max-width: 900px){
-    .project{
-        flex-direction: column;
-        height: auto;
-        max-width: 500px;
-    }
-
-    .project .participants{
-        margin-top: 50px;
-    }
-}
-
-
-
-
-
 /* Notify */
 #notify-wrapper {
     position: fixed;
@@ -232,30 +46,30 @@ body {
     right: -16.15vw;
     top: 0;
     margin: 0.8vw;
+    gap: 10px;
 }
 
 .notify-child {
     display: flex;
     flex-direction: row;
-    width: 10vw;
     color: white;
-    padding: 0.8vw 1vw;
+    padding: 10px 20px;
     border-radius: 0.26vw;
     font-weight: bold;
-    width: 13vw;
-    margin-bottom: 0.26vw;
+    min-width: 300px;
     user-select: none;
 }
 
 .notify-icon {
-    margin: auto 0.9vw auto 0;
-    font-size: 1vw;
+    margin: auto 20px auto 0;
+    font-size: 20px;
 }
 
 .notify-text {
-    font-size: 0.90vw;
+    font-size: 16px;
     margin: auto 0;
 }
+
 #confirm-wrapper {
     display: none;
 }

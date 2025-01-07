@@ -16,5 +16,7 @@ public class UpdateDetailsViewModel
     [RegularExpression("^[a-zA-ZåäöÅÄÖ0-9\\s\\-,]+$", ErrorMessage = "Address can only contain letters, numbers, spaces, commas, and hyphens.")]
     public string Address { get; set; }
 
+    public string Description { get; set; }
+
     public bool IsPrivate { get; set; }
 }
