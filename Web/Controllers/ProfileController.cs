@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using Web.Models.Profile;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Web.Models.Profile.Skill;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
+using System.IO;
 
 namespace Web.Controllers;
 
@@ -99,12 +102,18 @@ public class ProfileController : BaseController
     {
         string[] allowedExtensions = [".jpg", ".jpeg", ".png"];
 
-        if (avatar == null || avatar.Length == 0) return RedirectToAction("Index", "Profile", new { id });
+        if (avatar == null || avatar.Length == 0)
+        {
+            TempData["NotifyType"] = "error";
+            TempData["NotifyMessage"] = "No image selected";
+            return RedirectToAction("Index", "Profile", new { id });
+        }
 
         string extension = Path.GetExtension(avatar.FileName).ToLower();
         if (!allowedExtensions.Contains(extension))
         {
-            ModelState.AddModelError(string.Empty, "Invalid file type.");
+            TempData["NotifyType"] = "error";
+            TempData["NotifyMessage"] = "Invalid file type";
             return RedirectToAction("Index", "Profile", new { id });
         }
 
@@ -119,10 +128,19 @@ public class ProfileController : BaseController
         string fileName = Guid.NewGuid().ToString() + extension;
         string filePath = Path.Combine(uploadDirectory, fileName);
 
+        // Resize
+        using var image = await Image.LoadAsync(avatar.OpenReadStream());
+
+        image.Mutate(x => x.Resize(new ResizeOptions
+        {
+            Size = new Size(400, 400),
+            Mode = ResizeMode.Crop
+        }));
+
         // Save file
         using (var fileStream = new FileStream(filePath, FileMode.Create))
         {
-            await avatar.CopyToAsync(fileStream);
+            await image.SaveAsJpegAsync(fileStream);
         }
 
         // Update the avatar of the user in the database

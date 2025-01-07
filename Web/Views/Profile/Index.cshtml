@@ -42,7 +42,7 @@ else
                 @if (Model.IsProfileOwner)
                 {
                     <form id="profile-change-avatar" asp-controller="Profile" asp-action="UpdateAvatar" asp-route-id="@Model.User.Id" method="post" enctype="multipart/form-data">
-                        <input id="profile-change-avatar-input" type="file" name="avatar" hidden>
+                        <input id="profile-change-avatar-input" type="file" name="avatar" hidden accept=".jpg, .jpeg, .png">
                         <div id="profile-change-avatar-edit">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </div>
@@ -216,12 +216,19 @@ else
                 <div class="misc-child">
                     <h2 class="content-title">Projects</h2>
                     <div class="profile-project-parent">
-                        @foreach(ProfileProjectViewModel project in Model.Projects)
+                        @if (Model.Projects.Count > 0) 
                         {
-                            <a class="profile-project-child">
-                                <p class="profile-project-child-title">@project.Title</p>
-                                <p>@project.Description</p>
-                            </a>
+                            @foreach(ProfileProjectViewModel project in Model.Projects)
+                            {
+                                <a class="profile-project-child">
+                                    <p class="profile-project-child-title">@project.Title</p>
+                                    <p>@project.Description</p>
+                                </a>
+                            }
+                        }
+                        else 
+                        {
+                            <p>User is not part of any projects.</p>
                         }
                     </div>
                 </div>
