@@ -10,7 +10,6 @@ let profileMoveLength = 210;
 const profilecards = $(".card");
 const cardcarousel = $("#carousel");
 const visibleCardsCount = Math.floor(cardcarousel.width() / profileMoveLength) + 1;
-console.log(visibleCardsCount);
 
 $("#left").on('click', function (event) {
     moveProfileCarousel(-1);

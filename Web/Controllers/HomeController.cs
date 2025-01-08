@@ -58,6 +58,7 @@ public class HomeController : BaseController
 
         var users = _context.Users
             .Where(u => (u.FirstName + " " + u.LastName).ToLower().Contains(query.ToLower()))
+            .Where(u => User.Identity.IsAuthenticated || !u.Private)
             .Select(u => new SearchUserViewModel
             {
                 Id = u.Id,
