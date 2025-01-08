@@ -21,7 +21,6 @@ public class MessageController : BaseController
     /// <summary>
     /// Message page endpoint
     /// </summary>
-    /// <returns>Messages view</returns>
     [Authorize]
     [HttpGet]
     public async Task<ActionResult> Index()
@@ -55,7 +54,7 @@ public class MessageController : BaseController
             .OrderByDescending(um => um.LastMessageTime)
             .ToListAsync();
 
-        // Anonymous
+        // Get anonymous messages
         var anonymousMessages = await _context.Messages
             .Where(m => m.SenderId == null && m.ReceiverId == loggedInUser.Id)
             .OrderByDescending(m => m.CreatedAt)
@@ -69,7 +68,7 @@ public class MessageController : BaseController
             .OrderByDescending(u => u.MessageTime)
             .ToListAsync();
 
-
+        // Create messages view model
         var messages = new MessagesViewModel
         {
             UserMessages = userMessages,
@@ -83,8 +82,6 @@ public class MessageController : BaseController
     /// <summary>
     /// Chat view endpoint.
     /// </summary>
-    /// <param name="id">User id</param>
-    /// <returns>View of chat with user</returns>
     [HttpGet("chat/{id}")]
     public async Task<ActionResult> Chat(string id)
     {
@@ -146,8 +143,6 @@ public class MessageController : BaseController
     /// <summary>
     /// Send message endpoint
     /// </summary>
-    /// <param name="model">The viewmodel for the chat message to be sent</param>
-    /// <returns>Redirection to same chat.</returns>
     [HttpPost]
     public async Task<ActionResult> Send(SendMessageViewModel model)
     {
@@ -179,6 +174,9 @@ public class MessageController : BaseController
         return RedirectToAction("Chat", new { id = model.ChatUserId });
     }
 
+    /// <summary>
+    /// Send anonymously messages endpoint
+    /// </summary>
     [HttpPost]
     public async Task<ActionResult> SendAnonymous(AnonymousSendMessageViewModel model)
     {
@@ -211,6 +209,9 @@ public class MessageController : BaseController
         return RedirectToAction("Index", "Profile", new { id = model.ReceiverId });
     }
 
+    /// <summary>
+    /// Mark messages as read
+    /// </summary>
     [HttpPost("{mid}")]
     public async Task<IActionResult> MarkRead(int mid)
     {

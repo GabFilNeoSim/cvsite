@@ -22,6 +22,8 @@ public class User : IdentityUser
 
     public bool Private { get; set; } = false;
 
+    public int VisitCount { get; set; } = 0;
+
     // Navigation
     public virtual ICollection<UserSkill> Skills { get; set; } = [];
 

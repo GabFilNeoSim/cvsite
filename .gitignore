@@ -22,5 +22,3 @@ Desktop.ini
 
 # Other
 Data/Migrations/*
-Web/wwwroot/avatars/*
-!Web/wwwroot/avatars/default.png

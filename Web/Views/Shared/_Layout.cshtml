@@ -35,10 +35,10 @@
         <nav>
             <a id="home" asp-controller="Home" asp-action="Index"> CV-Site </a>
             <div id="searchbar">
-                    <i class="fa-solid fa-arrow-left back"></i>
-                    <i class="fa-solid fa-magnifying-glass icon"></i>
-                    <input id="searchinput" type="text" placeholder="Search" autocomplete="off"/>
-                    <div id="search-result"></div>
+                <i class="fa-solid fa-arrow-left back"></i>
+                <i class="fa-solid fa-magnifying-glass icon"></i>
+                <input id="searchinput" type="text" placeholder="Search" autocomplete="off"/>
+                <div id="search-result"></div>
             </div>
             @if (signInManager.IsSignedIn(User))
             {
@@ -50,7 +50,7 @@
                             User? user = await userManager.GetUserAsync(User);
                             int? unreadMessages = user?.ReceivedMessages.Where(rm => !rm.Read).Count();
                             <p>@unreadMessages</p>
-                         }
+                        }
                     </div>
                 </a>
             }
@@ -64,19 +64,17 @@
                 User? user = await userManager.GetUserAsync(User);
                 <details class="profile">
                     <summary>
-                    @{
-                        string directory = "~/avatars/";
-                        string defaultAvatar = "default.png";
-
-                        string avatar = user?.AvatarUri != defaultAvatar
-                            ? Url.Content(directory + user?.AvatarUri)
-                            : Url.Content(directory + defaultAvatar);
-                    }
-                    <img src="@avatar" class="avatar" />
+                        @{
+                            string avatar = user?.AvatarUri ?? "default.png";
+                        }
+                        <img src="/assets/avatars/@avatar" class="avatar" />
                     </summary>
                     <div id="options">
                         <a asp-controller="Profile" asp-action="Index" asp-route-id="@user?.Id" class="profile">
                             <p>Profile</p>
+                        </a>
+                        <a asp-controller="Profile" asp-action="UpdateDetails" asp-route-id="@user?.Id" class="settings">
+                            <p>Settings</p>
                         </a>
                         <form asp-controller="Auth" asp-action="Logout">
                             <button type="submit">Logout</button>

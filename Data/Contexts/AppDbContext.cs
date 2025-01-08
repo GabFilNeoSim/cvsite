@@ -36,7 +36,7 @@ public class AppDbContext : IdentityDbContext<User>
             .HasOne(up => up.Project)
             .WithMany(p => p.Users)
             .HasForeignKey(up => up.ProjectId)
-            .OnDelete(DeleteBehavior.NoAction);
+            .OnDelete(DeleteBehavior.Cascade);
 
         // User-Skill relationship (Many-to-Many)
         modelBuilder.Entity<UserSkill>()
@@ -78,7 +78,7 @@ public class AppDbContext : IdentityDbContext<User>
             .HasForeignKey(m => m.ReceiverId)
             .OnDelete(DeleteBehavior.NoAction);
 
-
+        //Testdata Emails
         string user1Email = "alice.smith@example.com";
         string user2Email = "bob.jones@example.com";
         string user3Email = "carla.davis@example.com";
@@ -86,7 +86,8 @@ public class AppDbContext : IdentityDbContext<User>
         string user5Email = "emily.white@example.com";
         string user6Email = "frank.hall@example.com";
 
-        var user1 = new User
+		//Testdata User
+		var user1 = new User
         {
             Id = "bb29d713-9414-43fa-9c8e-65fa6ee39243",
             FirstName = "Alice",

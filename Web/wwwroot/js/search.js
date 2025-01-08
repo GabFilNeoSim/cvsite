@@ -55,7 +55,7 @@ function listUsers(users) {
     users.forEach(function (user) {
         let html = `
             <a href="/profile/${user.id}" class="search-result-child">
-                <img src="/avatars/${user.avatar}" />
+                <img src="/assets/avatars/${user.avatar}" />
                 <p>${user.name}</p>
                 </a>
         `;

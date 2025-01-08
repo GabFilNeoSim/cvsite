@@ -5,9 +5,6 @@
 @model AddQualificationViewModel
 
 <div class="form-container">
-
-    <div asp-validation-summary="All"></div>
-
     <div class="form-wrapper">
         <div class="form-header">
             <h2>Add qualification</h2>
@@ -24,6 +21,7 @@
                         <div><i class="fa-solid fa-heading"></i></div>
                         <input asp-for="Title" type="text" placeholder="Write title here">
                     </div>
+                    <span class="form-error" asp-validation-for="Title"></span>
                 </div>
                 <div class="form-child">
                     <label asp-for="Location">Location</label>
@@ -31,6 +29,7 @@
                         <div><i class="fa-solid fa-location-dot"></i></div>
                         <input type="text" placeholder="Stockholm" asp-for="Location">
                     </div>
+                    <span class="form-error" asp-validation-for="Location"></span>
                 </div>
                 <div class="form-child">
                     <label asp-for="Description">Description</label>
@@ -38,20 +37,22 @@
                         <div><i class="fa-solid fa-quote-left"></i></div>
                         <input type="text" placeholder="Lorem ipsum" asp-for="Description">
                     </div>
+                    <span class="form-error" asp-validation-for="Description"></span>
                 </div>
                 <div class="form-row">
                     <div class="form-child">
                         <label asp-for="StartDate">Start date</label>
                         <div class="form-child-input">
                             <div><i class="fa-solid fa-calendar-days"></i></div>
-                            <input type="date" placeholder="2024-01-01" asp-for="StartDate">
+                            <input type="date" asp-for="StartDate" value="@Model.StartDate.ToString("YYYY-MM-DD")">
                         </div>
+                        <span class="form-error" asp-validation-for="StartDate"></span>
                     </div>
                     <div class="form-child">
                         <label asp-for="EndDate">End date</label>
                         <div class="form-child-input">
                             <div><i class="fa-solid fa-calendar-days"></i></div>
-                            <input type="date" placeholder="2025-01-01" asp-for="EndDate">
+                            <input type="date" asp-for="EndDate" value="DateTime.Now.ToDateOnly().ToString("YYYY-MM-DD")">
                         </div>
                     </div>
                 </div>

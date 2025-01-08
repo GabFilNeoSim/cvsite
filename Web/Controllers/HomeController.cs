@@ -10,7 +10,8 @@ namespace Web.Controllers;
 
 public class HomeController : BaseController
 {
-    public HomeController(AppDbContext context, UserManager<User> userManager) : base(context, userManager) { }
+	// Constructor injecting the database context and user manager, and passing them to the base controller.
+	public HomeController(AppDbContext context, UserManager<User> userManager) : base(context, userManager) { }
 
     public async Task<IActionResult> Index()
     {

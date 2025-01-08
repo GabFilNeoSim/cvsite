@@ -10,7 +10,6 @@
             <h2>Change qualification</h2>
         </div>
         <div class="form-content">
-            <div class="form-error" asp-validation-summary="All"></div>
             <form class="form" asp-controller="Profile" asp-action="UpdateQualification" asp-route-id="@Model.UserId" asp-route-qid="@Model.QualId" method="post">
                 <input type="hidden" asp-for="UserId"/>
                 <input type="hidden" asp-for="QualId"/>
@@ -22,6 +21,7 @@
                         <div><i class="fa-solid fa-heading"></i></div>
                         <input type="text" placeholder="Write title here" asp-for="Title">
                     </div>
+                    <span class="form-error" asp-validation-for="Title"></span>
                 </div>
                 <div class="form-child">
                     <label asp-for="Location">Location</label>
@@ -29,6 +29,7 @@
                         <div><i class="fa-solid fa-location-dot"></i></div>
                         <input type="text" placeholder="Stockholm" asp-for="Location">
                     </div>
+                    <span class="form-error" asp-validation-for="Location"></span>
                 </div>
                 <div class="form-child">
                     <label asp-for="Description">Description</label>
@@ -36,6 +37,7 @@
                         <div><i class="fa-solid fa-quote-left"></i></div>
                         <input type="text" placeholder="Lorem ipsum" asp-for="Description">
                     </div>
+                    <span class="form-error" asp-validation-for="Description"></span>
                 </div>
                 <div class="form-row">
                     <div class="form-child">
@@ -44,6 +46,7 @@
                             <div><i class="fa-solid fa-calendar-days"></i></div>
                             <input type="date" placeholder="2024-01-01" asp-for="StartDate">
                         </div>
+                        <span class="form-error" asp-validation-for="StartDate"></span>
                     </div>
                     <div class="form-child">
                         <label asp-for="EndDate">End date</label>

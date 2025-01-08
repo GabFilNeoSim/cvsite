@@ -7,17 +7,30 @@
     ViewData["Title"] = "My projects";
 }
 
-@model List<ProjectViewModel>
+@{
+    var notifyType = TempData["NotifyType"] as string;
+    var notifyMessage = TempData["NotifyMessage"] as string;
+
+    @if (!string.IsNullOrEmpty(notifyMessage) && !string.IsNullOrEmpty(notifyType))
+    {
+        <script>
+            notify({ type: "@notifyType", text: "@notifyMessage" });
+        </script>
+    }
+}
+
+@model MyProjectsViewModel
 
 <header id="project-header">
     <ul>
         <li><a asp-controller="Project" asp-action="Index">All</a></li>
-        <li><a asp-controller="Project" asp-action="MyProjects">My projects</a></li>
+        <li><a asp-controller="Project" asp-action="MyProjects" class="selected">My projects</a></li>
     </ul>
 </header>
 <div class="project-content-wrapper">
+    <h1>Owning</h1>
     <div class="project-card-parent">
-        @foreach (ProjectViewModel project in Model)
+        @foreach (ProjectViewModel project in Model.OwnedProjects)
         {
             <div class="project-card">
                 <h3>@project.Title</h3>
@@ -25,17 +38,63 @@
                 <div class="project-card-users-parent">
                     @foreach (ProjectUserViewModel user in project.Collaborators)
                     {
-                        <a class="project-card-user" href="/profile/@user.AvatarUri">
+                        <a class="project-card-user" href="/profile/@user.Id">
                             @if (user.IsOwner)
                             {
                                 <i class="fa-solid fa-crown crown"></i>
                             }
-                            <img src="/avatars/@user.AvatarUri" />
+                            <img src="/assets/avatars/@user.AvatarUri" />
                             <div class="project-card-name">@user.FirstName @user.LastName</div>
                         </a>
                     }
                 </div>
+                <div class="project-card-btns">
+                    <a asp-controller="Project" asp-action="UpdateProject" asp-route-pid="@project.ProjectId" class="project-card-btn">Edit</a>
+
+                    <form class="delete-project-form" data-fid="@project.ProjectId" asp-controller="Project" asp-action="DeleteProject" asp-route-pid="@project.ProjectId">
+                        <button data-text="Are you sure you want to delete project?" id="delete-project-btn" class="project-card-btn remove">Delete</button>
+                    </form>
+                </div>
+
             </div>
+        }
+        <a asp-controller="Project" asp-action="CreateProject" class="project-card add">
+            <div class="project-add">
+                <i class="fa-solid fa-plus"></i>
+            </div>
+        </a>
+    </div>
+
+    <h1>Collaborating</h1>
+    <div class="project-card-parent">
+        @if (Model.CollaboratingProjects.Count > 0) {
+            @foreach (ProjectViewModel project in Model.CollaboratingProjects)
+            {
+                <div class="project-card">
+                    <h3>@project.Title</h3>
+                    <p>@project.Description</p>
+                    <div class="project-card-users-parent">
+                        @foreach (ProjectUserViewModel user in project.Collaborators)
+                        {
+                            <a class="project-card-user" href="/profile/@user.Id">
+                                @if (user.IsOwner)
+                                {
+                                    <i class="fa-solid fa-crown crown"></i>
+                                }
+                                <img src="/assets/avatars/@user.AvatarUri" />
+                                <div class="project-card-name">@user.FirstName @user.LastName</div>
+                            </a>
+                        }
+                    </div>
+                    <form asp-controller="Project" asp-action="LeaveProject" asp-route-pid="@project.ProjectId" method="post">
+                        <button type="submit" class="project-card-btn">Leave</button>
+                    </form>
+                </div>
+            }
+        }
+        else
+        {
+            <i>No projects collaborating.</i>
         }
     </div>
 </div>

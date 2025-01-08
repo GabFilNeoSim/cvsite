@@ -51,18 +51,21 @@ window.onload = scrollToBottom;
 window.onload = updateProfileCardStyling;
 
 let currentConfirmationForm = "";
+let currentFormDataId = 0;
 
-$("#delete-work-btn, #delete-education-btn").on("click", function (event) {
+$("#delete-work-btn, #delete-education-btn, #delete-project-btn").on("click", function (event) {
     event.preventDefault();
     const text = $(this).data("text");
-    currentConfirmationForm = $(this).parent().attr("id");
+    currentConfirmationForm = $(this).parent().attr("class");
+    currentFormDataId = $(this).parent().data("fid");
+
     showConfirmModal(text);
 });
 
-
 $("#confirm-yes").on("click", function (event) {
     event.preventDefault();
-    $(`#${currentConfirmationForm}`).submit();
+    console.log($(`.${currentConfirmationForm}[data-fid="${currentFormDataId}"]`));
+    $(`.${currentConfirmationForm}[data-fid="${currentFormDataId}"]`).submit();
 });
 
 

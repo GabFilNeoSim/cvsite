@@ -1,11 +1,11 @@
 ﻿.carousel-container {
     position: relative;
-    margin: 150px auto;
+    margin: 100px auto 0 auto;
     max-width: 800px;
 }
 
 .carousel-container h1 {
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     text-align: center;
 }
 
@@ -106,11 +106,11 @@
 }
 
 .project-container {
-    margin-top: 150px;
+    margin-top: 50px;
 }
 
 .project-container h1 {
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     text-align: center;
 }
 
@@ -121,7 +121,7 @@
     height: auto;
     display: flex;
     box-shadow: 0px 0px 16px 0px hsla(0, 0%, 3%, 0.1);
-    border-radius: 32px;
+    border-radius: 4px;
     overflow: hidden;
 }
 
@@ -160,7 +160,7 @@
 .project .participant .crown {
     position: absolute;
     font-size: 1rem;
-    color: rgb(137, 137, 40);
+    color: #FDDC5C;
     left: 50%;
     top: -17.5px;
     transform: translateX(-50%);
@@ -174,6 +174,7 @@
     display: inline-block;
     white-space: nowrap;
     top: 30px;
+    left: 0px;
 }
 
 .project .participant a:hover ~ .name {

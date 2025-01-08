@@ -29,11 +29,8 @@
             if (isSignedIn || !isPrivate)
             {
                 <div class="card" id="@carouselIndex">
-                    <img src="/avatars/@user.AvatarUri" alt="User Avatar" />
+                    <img src="/assets/avatars/@user.AvatarUri" alt="User Avatar" />
                     <p class="card-name">@user.FirstName @user.LastName</p>
-                    @* <div class="card-desc"> *@
-                    @*     <p>@user.Description</p> *@
-                    @* </div> *@
                     <a href="/profile/@user.Id">Visit profile</a>
                 </div>
                 carouselIndex++;
@@ -59,7 +56,7 @@
                     string? avatar = isPrivate && !isSignedIn ? "default.png" : user.AvatarUri;
 
                     <div class="participant">
-                        <a href="/profile/@user.Id"><img src="/avatars/@avatar" class="avatar"/></a>
+                        <a href="/profile/@user.Id"><img src="/assets/avatars/@avatar" class="avatar"/></a>
                         @if (user.IsOwner) 
                         { 
                             <i class="fa-solid fa-crown crown"></i> 

@@ -41,17 +41,17 @@ else
             <div id="profile-avatar-wrapper">
                 @if (Model.IsProfileOwner)
                 {
-                    <form id="profile-change-avatar" asp-controller="Profile" asp-action="UpdateAvatar" asp-route-id="@Model.User.Id" method="post" enctype="multipart/form-data">
+                    <form id="profile-change-avatar" class="change-avatar" asp-controller="Profile" asp-action="UpdateAvatar" asp-route-id="@Model.User.Id" method="post" enctype="multipart/form-data">
                         <input id="profile-change-avatar-input" type="file" name="avatar" hidden accept=".jpg, .jpeg, .png">
                         <div id="profile-change-avatar-edit">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </div>
-                        <img id="profile-avatar" src="/avatars/@Model.User.AvatarUri" alt="Profile Avatar">
+                        <img id="profile-avatar" src="/assets/avatars/@Model.User.AvatarUri" alt="Profile Avatar">
                     </form>
                 }
                 else
                 {
-                    <img id="profile-avatar" src="/avatars/@Model.User.AvatarUri" alt="Profile Avatar">
+                    <img id="profile-avatar" src="/assets/avatars/@Model.User.AvatarUri" alt="Profile Avatar">
                 }
             </div>
             <div id="profile-content">
@@ -60,8 +60,12 @@ else
                         <div>
                             <h2>@Model.User.FirstName @Model.User.LastName</h2>
                             <div id="profile-location">
-                                <img src="~/assets/point.png">
+                                <i class="fa-solid fa-location-dot"></i>
                                 <p>@Model.User.Address</p>
+                            </div>
+                            <div id="profile-email">
+                                <i class="fa-solid fa-envelope"></i>
+                                <p id="profile-info-email">@Model.User.Email</p>
                             </div>
                         </div>
                         @if (Model.IsProfileOwner)
@@ -80,25 +84,34 @@ else
                         }
                     </div>
                     <div id="profile-info-about">
-                        <p id="profile-info-email">@Model.User.Email</p>
+
                         <p id="profile-info-desc">@Model.User.Description</p>
                     </div>
                 </div>
                 <div id="profile-stats">
                     <div class="profile-stats-child">
-                        <img src="~/assets/work.png">
+                        <i class="fa-solid fa-briefcase"></i>
                         <div class="profile-stats-child-text">
                             <p class="profile-stats-child-amount">@Model.WorkCount</p>
-                            <p class="profile-stats-child-title">Workings</p>
+                            <p class="profile-stats-child-title">Work experiences</p>
                         </div>
                     </div>
                     <div class="profile-stats-child">
-                        <img src="~/assets/education.png">
+                        <i class="fa-solid fa-graduation-cap"></i>
                         <div class="profile-stats-child-text">
                             <p class="profile-stats-child-amount">@Model.EducationCount</p>
                             <p class="profile-stats-child-title">Educations</p>
                         </div>
                     </div>
+                    @if (@Model.IsProfileOwner) {
+                        <div class="profile-stats-child">
+                            <i class="fa-solid fa-eye"></i>
+                            <div class="profile-stats-child-text">
+                                <p class="profile-stats-child-amount">@Model.ProfileVisits</p>
+                                <p class="profile-stats-child-title">Profile visits</p>
+                            </div>
+                        </div>
+                    }
                 </div>
 
             </div>
@@ -126,8 +139,8 @@ else
                                             <a asp-controller="Profile" asp-action="UpdateQualification" asp-route-id="@Model.User.Id" asp-route-qid="@q.Id" class="roadmap-edit">
                                                 <i class="fa-solid fa-pen"></i>
                                             </a>
-                                            <form id="delete-work" asp-controller="Profile" asp-action="DeleteQualification" asp-route-id="@Model.User.Id" asp-route-qid="@q.Id" class="roadmap-delete">
-                                                <a data-text="Are you sure you want to delete qualification?" id="delete-work-btn"><i class="fa-solid fa-trash"></i></a>
+                                            <form class="roadmap-delete" data-fid="@q.Id" asp-controller="Profile" asp-action="DeleteQualification" asp-route-id="@Model.User.Id" asp-route-qid="@q.Id">
+                                                <button data-text="Are you sure you want to delete qualification?" id="delete-work-btn"><i class="fa-solid fa-trash"></i></button>
                                             </form>
                                         }
                                     </div>
@@ -159,8 +172,8 @@ else
                                             <a asp-controller="Profile" asp-action="UpdateQualification" asp-route-id="@Model.User.Id" asp-route-qid="@qualification.Id" class="roadmap-edit">
                                                 <i class="fa-solid fa-pen"></i>
                                             </a>
-                                            <form id="delete-education" asp-controller="Profile" asp-action="DeleteQualification" asp-route-id="@Model.User.Id" asp-route-qid="@qualification.Id" class="roadmap-delete">
-                                                <a data-text="Are you sure you want to delete qualification?" id="delete-education-btn"><i class="fa-solid fa-trash"></i></a>
+                                            <form class="roadmap-delete" data-fid="@qualification.Id" asp-controller="Profile" asp-action="DeleteQualification" asp-route-id="@Model.User.Id" asp-route-qid="@qualification.Id">
+                                                <button data-text="Are you sure you want to delete qualification?" id="delete-education-btn"><i class="fa-solid fa-trash"></i></button>
                                             </form>
                                         }
                                     </div>
@@ -183,18 +196,28 @@ else
                 <div class="misc-child">
                     <h2 class="content-title">Skills</h2>
                     <div id="skills-parent">
-                        @foreach (SkillViewModel skill in Model.Skills)
+                        @if (@Model.Skills.Count > 0)
                         {
-                            <div class="skills-child">
-                                @skill.Title
-                                @if (Model.IsProfileOwner)
-                                {
-                                    <form asp-controller="Profile" asp-action="DeleteSkill" asp-route-id="@Model.User.Id" asp-route-sid="@skill.SkillId" method="post">
-                                        <button type="submit" class="skill-delete"><i class="fa-solid fa-xmark"></i></button>
-                                    </form>
-                                }
-                            </div>
+                            @foreach (SkillViewModel skill in Model.Skills)
+                            {
+                                <div class="skills-child">
+                                    @skill.Title
+                                    @if (Model.IsProfileOwner)
+                                    {
+                                        <form asp-controller="Profile" asp-action="DeleteSkill" asp-route-id="@Model.User.Id" asp-route-sid="@skill.SkillId" method="post">
+                                            <button type="submit" class="skill-delete"><i class="fa-solid fa-xmark"></i></button>
+                                        </form>
+                                    }
+                                </div>
+                            }
                         }
+                        else
+                        {
+                            @if (!Model.IsProfileOwner) {
+                                <p>User doesn't have any skills.</p>
+                            }
+                        }
+
                         @if (Model.IsProfileOwner && Model.UnusedSkills.Count > 0)
                         {
                             <div class="skills-child add">

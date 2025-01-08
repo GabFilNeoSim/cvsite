@@ -19,4 +19,5 @@ public class UpdateDetailsViewModel
     public string Description { get; set; }
 
     public bool IsPrivate { get; set; }
+
 }

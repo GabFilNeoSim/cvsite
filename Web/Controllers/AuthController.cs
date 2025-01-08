@@ -11,7 +11,8 @@ public class AuthController : Controller
     private readonly UserManager<User> _userManager;
     private readonly SignInManager<User> _signInManager;
 
-    public AuthController
+	// Constructor for dependency injection of UserManager and SignInManager.
+	public AuthController
     (
         UserManager<User> userManager,
         SignInManager<User> signInManager
@@ -21,24 +22,29 @@ public class AuthController : Controller
         _signInManager = signInManager;
     }
 
-    [HttpGet("auth/register")]
+	// Displays the registration view.
+	[HttpGet("auth/register")]
     public IActionResult Register() => View(new RegisterViewModel());
 
-    [HttpPost("auth/register")]
+	// Handles user registration.
+	[HttpPost("auth/register")]
     public async Task<IActionResult> Register(RegisterViewModel model)
     {
         if (!ModelState.IsValid) return View(model);
-         
-        if (model.Password == null) model.Password = string.Empty;
+
+		// Ensure password fields are not null.
+		if (model.Password == null) model.Password = string.Empty;
         if (model.ConfirmPassword == null) model.ConfirmPassword = string.Empty;
 
-        if (await _userManager.FindByEmailAsync(model.Email) != null)
+		// Check if a user with the same email already exists.
+		if (await _userManager.FindByEmailAsync(model.Email) != null)
         {
             ModelState.AddModelError("User already exists", "This user already exists.");
             return View(model);
         }
 
-        User newUser = new User
+		// Create a new user object.
+		User newUser = new User
         {
             UserName = model.Email,
             FirstName = model.FirstName,
@@ -47,9 +53,11 @@ public class AuthController : Controller
             Address = model.Address
         };
 
-        var result = await _userManager.CreateAsync(newUser, model.Password);
+		// Attempt to create the user in the database.
+		var result = await _userManager.CreateAsync(newUser, model.Password);
 
-        if (!result.Succeeded)
+		// Handle any errors during user creation.
+		if (!result.Succeeded)
         {
             foreach (var error in result.Errors)
             {
@@ -58,48 +66,58 @@ public class AuthController : Controller
             return View(model);
         }
 
-        await _signInManager.SignInAsync(newUser, isPersistent: false);
+		// Sign the user in after successful registration.
+		await _signInManager.SignInAsync(newUser, isPersistent: false);
 
-        return RedirectToAction("Index", "Profile", new { id = newUser.Id });
+		// Redirect to the profile page of the new user.
+		return RedirectToAction("Index", "Profile", new { id = newUser.Id });
     }
 
-    [HttpGet("auth/login")]
+	// Displays the login view.
+	[HttpGet("auth/login")]
     public IActionResult Login() => View(new LoginViewModel());
 
-    [HttpPost]
+	// Handles user login.
+	[HttpPost]
     public async Task<IActionResult> Login(LoginViewModel model)
     {
         if (!ModelState.IsValid) return View(model);
-        
-        if (model.Password == null)
+
+		// Ensure the password field is not null.
+		if (model.Password == null)
         {
             model.Password = string.Empty;
         }
 
-        User? user = await _userManager.FindByEmailAsync(model.Email);
+		// Check if a user with the provided email exists.
+		User? user = await _userManager.FindByEmailAsync(model.Email);
         if (user == null)
         {
             ModelState.AddModelError("Email", "Wrong email or password");
             return View(model);
         }
 
-        var result = await _signInManager.PasswordSignInAsync(
+		// Attempt to sign the user in with the provided credentials.
+		var result = await _signInManager.PasswordSignInAsync(
             user,
             model.Password,
             isPersistent: model.RememberMe,
             lockoutOnFailure: false
         );
 
-        if (!result.Succeeded)
+		// Handle unsuccessful sign-in attempts.
+		if (!result.Succeeded)
         {
             ModelState.AddModelError("Password", "Wrong email or password");
             return View(model);
         }
 
-        return RedirectToAction("Index", "Profile", new { id = user.Id });
+		// Redirect to the profile page of the logged-in user.
+		return RedirectToAction("Index", "Profile", new { id = user.Id });
     }
 
-    [HttpPost("auth/logout")]
+	// Handles user logout and sign the user out.
+	[HttpPost("auth/logout")]
     public async Task<IActionResult> Logout()
     {
         await _signInManager.SignOutAsync();

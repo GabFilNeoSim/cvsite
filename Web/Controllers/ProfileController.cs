@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Web.Models.Profile.Skill;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
-using System.IO;
 
 namespace Web.Controllers;
 
@@ -30,8 +29,15 @@ public class ProfileController : BaseController
             return Error("Unknown profile", "This profile does not exist, please try again.");
         }
 
+        if (!isProfileOwner)
+        {
+            user.VisitCount += 1;
+            await _context.SaveChangesAsync();
+        }
+
         var userSkillIds = user.Skills.Select(us => us.SkillId);
 
+        //Get skills which the current user does not inherit
         var unusedSkills = await _context.Skills
             .Where(skill => !userSkillIds.Contains(skill.Id))
             .Select(skill => new SkillViewModel
@@ -40,6 +46,7 @@ public class ProfileController : BaseController
                 Title = skill.Title
             }).ToListAsync();
 
+        //Create viewmodel with profile data and passes it to view
         var profileViewModel = new ProfileViewModel
         {
             User = new UserViewModel
@@ -90,7 +97,9 @@ public class ProfileController : BaseController
 
             UnusedSkills = unusedSkills,
 
-            IsProfileOwner = isProfileOwner
+            IsProfileOwner = isProfileOwner,
+
+            ProfileVisits = user.VisitCount
         };
 
         return View(profileViewModel);
@@ -158,7 +167,7 @@ public class ProfileController : BaseController
     }
 
     [Authorize]
-    [HttpGet("{id}/edit/details")]
+    [HttpGet("{id}/settings/details")]
     public async Task<IActionResult> UpdateDetails(string id)
     {
         if (!await IsProfileOwner(id)) return RedirectToAction("Login", "Auth");
@@ -179,7 +188,7 @@ public class ProfileController : BaseController
     }
 
     [Authorize]
-    [HttpPost("{id}/edit/details")]
+    [HttpPost("{id}/settings/details")]
     public async Task<IActionResult> UpdateDetails(string id, UpdateDetailsViewModel model)
     {
         if (!await IsProfileOwner(id)) return RedirectToAction("Login", "Auth");
@@ -189,6 +198,7 @@ public class ProfileController : BaseController
         User? user = await _context.Users.FindAsync(id);
         if (user == null) return Error("Unknown error", "An unexpected error happend!");
 
+        //If input fields are not altered fall back to original value
         if (user.FirstName != model.FirstName) user.FirstName = model.FirstName;
         if (user.LastName != model.LastName) user.LastName = model.LastName;
         if (user.Address != model.Address) user.Address = model.Address;
@@ -204,7 +214,7 @@ public class ProfileController : BaseController
     }
 
     [Authorize]
-    [HttpGet("{id}/edit/password")]
+    [HttpGet("{id}/settings/password")]
     public async Task<IActionResult> UpdatePassword(string id)
     {
         if (!await IsProfileOwner(id)) return RedirectToAction("Login", "Auth");
@@ -216,7 +226,7 @@ public class ProfileController : BaseController
     }
 
     [Authorize]
-    [HttpPost("{id}/edit/password")]
+    [HttpPost("{id}/settings/password")]
     public async Task<IActionResult> UpdatePassword(string id, UpdatePasswordViewModel model)
     {
         if (!await IsProfileOwner(id)) return RedirectToAction("Login", "Auth");

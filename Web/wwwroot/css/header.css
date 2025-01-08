@@ -134,6 +134,7 @@ header .profile{
     gap: 0.5rem;
     align-items: center;
     position: relative;
+    height: max-content;
 }
 
 header .profile summary {
@@ -146,24 +147,27 @@ header .profile #options{
     right: 0px;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
     gap: 4px;
-    padding: 12px;
-    background-color: hsl(0,0%,95%);
+    padding: 12px 24px;
+    background-color: #5289ff;
     border-bottom-right-radius: 12px; border-bottom-left-radius: 12px; border-top-left-radius: 12px;
     z-index: 100;
-    top: 40px;
+    top: 50px;
 }
 
 header .profile #options form{
-    display: inline-block;
+    display: inline-block; 
+}
+
+header .profile #options form button, header .profile #options a{
+    color: white;
 }
 
 header .avatar {
     object-fit: cover;
     overflow: hidden;
-    border-radius: 30px;
-    width: 30px; height: 30px;  
+    border-radius: 45px;
+    width: 45px; height: 45px;  
 }
 header button {
     background-color: transparent;

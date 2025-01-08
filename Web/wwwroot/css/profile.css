@@ -28,7 +28,6 @@
     width: auto;
 }
 
-
 #profile-private-wrapper {
     display: flex;
     flex-direction: column;
@@ -51,8 +50,12 @@
 #profile-change-avatar {
     position: relative;
     height: 130px;
+    width: max-content;
 }
 
+.change-avatar{
+    margin-bottom: 50px;
+}
 
 #profile-change-avatar-edit {
     position: absolute;
@@ -102,12 +105,24 @@
 
 #profile-location {
     display: flex;
-    margin: 4px 0 10px 0;
+    margin-top: 4px;
 }
 
-#profile-location img {
+#profile-location i {
     width: 20px;
-    align-self: center;
+    color: #5289ff;
+    line-height: 1.4;
+}
+
+#profile-email {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 10px;
+}
+
+#profile-email i {
+    color: #5289ff;
 }
 
 .profile-btn {
@@ -150,10 +165,13 @@
 .profile-stats-child {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    gap: 10px;
 }
 
-.profile-stats-child img {
-    align-self: center;
+.profile-stats-child i {
+    font-size: 26px;
+    color: #5289ff;
 }
 
 .profile-stats-child-text {
@@ -249,7 +267,12 @@
     position: absolute;
     top: 5px;
     right: 5px;
-    color: black;
+    color: #5289ff;
+}
+
+.roadmap-edit:hover {
+    color: #4172da;
+    cursor: pointer;
 }
 
 .roadmap-delete {
@@ -259,27 +282,21 @@
     right: 5px;
 }
 
-.roadmap-delete a i {
-    color: lightcoral;
-    font-size: 16px;
-}
-
-.roadmap-delete a {
+.roadmap-delete button {
     background: none;
     border: none;
     outline: none;
 }
 
-.roadmap-edit:hover {
-    color: royalblue;
-    cursor: pointer;
+.roadmap-delete button i {
+    color: lightcoral;
+    font-size: 16px;
 }
 
 .roadmap-delete button i:hover {
     color: red;
     cursor: pointer;
 }
-
 
 .roadmap-progress {
     background-color: black;
@@ -512,7 +529,7 @@
 }
 
 
-@media only screen and (max-width: 950px) {
+@media only screen and (max-width: 1200px) {
     #profile-info {
         width: 100%;
         border-right: none;
@@ -532,7 +549,7 @@
     }
 }
 
-@media only screen and (max-width: 550px) {
+@media only screen and (max-width: 670px) {
     #profile-stats {
         flex-direction: column;
         gap: 0;

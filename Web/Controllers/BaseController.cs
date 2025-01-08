@@ -11,30 +11,38 @@ public class BaseController : Controller
     protected readonly AppDbContext _context;
     protected readonly UserManager<User> _userManager;
 
-    public BaseController(AppDbContext context, UserManager<User> userManager)
+	// Constructor for injecting the database context and UserManager.
+	public BaseController(AppDbContext context, UserManager<User> userManager)
     {
         _context = context;
         _userManager = userManager;
     }
 
-    public IActionResult Error404() => Error("404 - Page not found", "The specified page was not found.");
+	// Action method for displaying a custom 404 error page.
+	public IActionResult Error404() => Error("404 - Page not found", "The specified page was not found.");
 
     public override void OnActionExecuting(ActionExecutingContext context)
     {
-        if (User.Identity.IsAuthenticated)
+		// Check if the user is authenticated and store the authenticated user's ID in ViewData.
+		if (User.Identity.IsAuthenticated)
         {
             ViewData["UserId"] = User.FindFirstValue(ClaimTypes.NameIdentifier); ;
         }
 
         base.OnActionExecuting(context);
     }
-
-    protected async Task<bool> IsProfileOwner(string endpointUserId)
+	// Determines if the currently signed-in user owns the profile.
+	protected async Task<bool> IsProfileOwner(string endpointUserId)
     {
-        User? signedInUser = await _userManager.GetUserAsync(User);
+		// Retrieve the currently signed-in user and compare it with the specified endpoint user ID.
+		User? signedInUser = await _userManager.GetUserAsync(User);
         return signedInUser?.Id == endpointUserId;
     }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    protected IActionResult Error(string title, string message) => View("Error", new ErrorViewModel { Title = title, Message = message });
+	// Retrieves the authenticated user's ID from their claims.
+	protected string? GetUserIdFromClaim() => User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+	// Displays a custom error page with a given title and message.
+	[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)] // Prevents caching of the error page.
+	protected IActionResult Error(string title, string message) => View("Error", new ErrorViewModel { Title = title, Message = message });
 }

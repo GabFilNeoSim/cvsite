@@ -19,4 +19,6 @@ public class ProfileViewModel
     public List<ProfileProjectViewModel> Projects { get; set; }
 
     public bool IsProfileOwner { get; set; }
+
+    public int ProfileVisits { get; set; }
 }

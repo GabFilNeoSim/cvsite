@@ -7,11 +7,23 @@
     ViewData["Title"] = "Projects";
 }
 
+@{
+    var notifyType = TempData["NotifyType"] as string;
+    var notifyMessage = TempData["NotifyMessage"] as string;
+
+    @if (!string.IsNullOrEmpty(notifyMessage) && !string.IsNullOrEmpty(notifyType))
+    {
+        <script>
+            notify({ type: "@notifyType", text: "@notifyMessage" });
+        </script>
+    }
+}
+
 @model List<ProjectViewModel>
 
 <header id="project-header">
     <ul>
-        <li><a asp-controller="Project" asp-action="Index">All</a></li>
+        <li><a asp-controller="Project" asp-action="Index" class="selected">All</a></li>
         <li><a asp-controller="Project" asp-action="MyProjects">My projects</a></li>
     </ul>
 </header>
@@ -34,7 +46,7 @@
                             {
                                 <i class="fa-solid fa-crown crown"></i>
                             }
-                            <img src="/avatars/@avatar" />
+                            <img src="/assets/avatars/@avatar" />
 
                             @if (isPrivate && !isSignedIn)
                             {
@@ -47,6 +59,11 @@
                         </a>
                     }
                 </div>
+                @if (signInManager.IsSignedIn(User)) {
+                    <form asp-controller="Project" asp-action="JoinProject" asp-route-pid="@project.ProjectId" method="post">
+                        <button class="project-card-btn">Join</button>
+                    </form>
+                }
             </div>
         }
     </div>

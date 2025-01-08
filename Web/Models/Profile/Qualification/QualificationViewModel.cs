@@ -1,7 +1,10 @@
-﻿namespace Web.Models;
+﻿using System.Xml.Serialization;
+
+namespace Web.Models;
 
 public class QualificationViewModel
 {
+    [XmlIgnore]
     public int Id { get; set; }
 
     public string Title { get; set; }

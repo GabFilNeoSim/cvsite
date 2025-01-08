@@ -1,8 +1,12 @@
-﻿namespace Web.Models;
+﻿using System.Xml.Serialization;
+
+namespace Web.Models;
 
 public class UserViewModel
-{   
+{
+    [XmlIgnore]
     public string Id { get; set; }
+
     public string FirstName { get; set; }
 
     public string LastName { get; set; }
@@ -11,6 +15,7 @@ public class UserViewModel
 
     public string Email { get; set; }
 
+    [XmlIgnore]
     public string? AvatarUri { get; set; }
 
     public string? Description { get; set; }
