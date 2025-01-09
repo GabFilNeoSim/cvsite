@@ -64,7 +64,7 @@
                     bool isPrivate = user.IsPrivate;
                     bool isSignedIn = signInManager.IsSignedIn(User);
                     bool isDeactivated = user.IsDeactivated;
-                    string? avatar = isPrivate && !isSignedIn ? "default.png" : user.AvatarUri;
+                    string? avatar = (isPrivate && !isSignedIn) || isDeactivated ? "default.png" : user.AvatarUri;
 
                     <div class="participant">
                         <a href="/profile/@user.Id"><img src="/assets/avatars/@avatar" class="avatar"/></a>

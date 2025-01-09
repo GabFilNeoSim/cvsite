@@ -5,6 +5,7 @@ using Models;
 using Web.Models.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Data.Contexts;
+using Microsoft.AspNetCore.Hosting.Server;
 
 namespace Web.Controllers;
 
@@ -115,8 +116,16 @@ public class AuthController : BaseController
             return View(model);
         }
 
-		// Redirect to the profile page of the logged-in user.
-		return RedirectToAction("Index", "Profile", new { id = user.Id });
+        var unreadMessages = user.ReceivedMessages.Where(x => !x.Read).Count();
+
+        if (unreadMessages > 0)
+        {
+            TempData["NotifyType"] = "success";
+            TempData["NotifyMessage"] =  $"You've got {unreadMessages} new messages";
+        }
+
+        // Redirect to the profile page of the logged-in user.
+        return RedirectToAction("Index", "Profile", new { id = user.Id });
     }
 
 	// Handles user logout and sign the user out.

@@ -40,9 +40,8 @@
                     {
                         bool isDeactivated = user.IsDeactivated;
                         string? avatar = isDeactivated ? "default.png" : user.AvatarUri;
-                        string? href = isDeactivated ? "" : $"/profile/{user.Id}";
-
-                        <a class="project-card-user" href="@href">
+                        
+                        <a class="project-card-user" href="/profile/@user.Id">
                             @if (user.IsOwner)
                             {
                                 <i class="fa-solid fa-crown crown"></i>
@@ -89,9 +88,8 @@
                         {
                             bool isDeactivated = user.IsDeactivated;
                             string? avatar = isDeactivated ? "default.png" : user.AvatarUri;
-                            string? href = isDeactivated ? "" : $"/profile/{user.Id}";
 
-                            <a class="project-card-user" href="@href">
+                            <a class="project-card-user" href="/profile/@user.Id">
                                 @if (user.IsOwner)
                                 {
                                     <i class="fa-solid fa-crown crown"></i>

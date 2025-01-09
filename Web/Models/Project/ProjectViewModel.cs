@@ -8,5 +8,4 @@ public class ProjectViewModel
     public UserViewModel? Owner { get; set; }
     public DateTime CreatedAt { get; set; }
     public List<ProjectUserViewModel> Collaborators { get; set; }
-    public bool IsCollaborator { get; set; }
 }

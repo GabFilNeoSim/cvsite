@@ -8,7 +8,7 @@
 
     var notifyType = TempData["NotifyType"] as string;
     var notifyMessage = TempData["NotifyMessage"] as string;
-
+        
     @if (!string.IsNullOrEmpty(notifyMessage) && !string.IsNullOrEmpty(notifyType))
     {
         <script>
@@ -39,9 +39,8 @@
                         bool isSignedIn = signInManager.IsSignedIn(User);
                         bool isDeactivated = user.IsDeactivated;
                         string? avatar = (isPrivate && !isSignedIn) || isDeactivated ? "default.png" : user.AvatarUri;
-                        string? href = isDeactivated ? "" : $"/profile/{user.Id}";
 
-                        <a class="project-card-user" href=@href>
+                        <a class="project-card-user" href="/profile/@user.Id">
                             @if (user.IsOwner)
                             {
                                 <i class="fa-solid fa-crown crown"></i>

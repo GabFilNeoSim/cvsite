@@ -122,9 +122,9 @@
 .message-parent {
     display: flex;
     flex-direction: column;
-    gap: 20px;
     height: 460px;
     overflow-y: scroll;
+    padding-top: 15px;
 }
 
 .message-parent::-webkit-scrollbar {
@@ -147,6 +147,42 @@
     display: flex;
     gap: 10px;
     align-items: center;
+    padding: 10px;
+    position: relative;
+}
+
+.message-child:hover {
+    background: rgba(0,0,0,0.04);
+}
+
+.delete-message-form {
+    display: none;
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    background: red;
+    width: max-content;
+}
+
+.message-child.self .delete-message-form {
+    right: unset !important;
+    left: 10px !important;
+}
+
+.message-child:hover .delete-message-form {
+    display: block;
+}
+
+.delete-message-form button {
+    border: none;
+    outline: none;
+    color: lightcoral;
+    font-size: 20px;
+}
+
+.delete-message-form button:hover {
+    color: red;
+    cursor: pointer;
 }
 
 .message-child.self {
@@ -216,16 +252,5 @@
 
 .message-send-btn:hover {
     background-color: #4576e0;
-    cursor: pointer;
-}
-
-.delete-message-form button {
-    border: none;
-    outline: none;
-    color: lightcoral;
-}
-
-.delete-message-form button:hover {
-    color: red;
     cursor: pointer;
 }

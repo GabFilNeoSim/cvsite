@@ -135,7 +135,7 @@ public class ProfileController : BaseController
         }
 
         // Create upload folder
-        string uploadDirectory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "avatars");
+        string uploadDirectory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "assets/avatars");
         if (!Directory.Exists(uploadDirectory))
         {
             Directory.CreateDirectory(uploadDirectory);

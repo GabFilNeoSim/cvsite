@@ -48,7 +48,9 @@ public class MessageController : BaseController
                         AvatarUri = u.AvatarUri
                     })
                     .FirstOrDefault(),
-                LastMessage = g.OrderByDescending(m => m.CreatedAt).First().Text,
+                LastMessage = g.OrderByDescending(m => m.CreatedAt)
+                       .Select(m => m.Text.Length > 20 ? m.Text.Substring(0, 80) + "..." : m.Text)
+                       .First(),
                 LastMessageTime = g.OrderByDescending(m => m.CreatedAt).First().CreatedAt,
                 UnreadCount = g.Count(m => !m.Read && m.ReceiverId == loggedInUser.Id)
             })
@@ -170,7 +172,7 @@ public class MessageController : BaseController
         };
 
         // Add and save message to database
-        await _context.Messages.AddAsync(message);
+        _context.Messages.Add(message);
         await _context.SaveChangesAsync();
 
         return RedirectToAction("Chat", new { id = model.ChatUserId });
@@ -232,7 +234,7 @@ public class MessageController : BaseController
     }
 
     [HttpPost("{mid}/delete")]
-    public async Task<IActionResult> DeleteMessage(int mid)
+    public async Task<IActionResult> DeleteMessage(int mid, string userId)
     {
         var message = await _context.Messages.SingleOrDefaultAsync(x => x.Id == mid);
         if (message == null)
@@ -244,6 +246,6 @@ public class MessageController : BaseController
 
         await _context.SaveChangesAsync();
 
-        return RedirectToAction("Index");
+        return RedirectToAction("Chat", new { id = userId });
     }
 }

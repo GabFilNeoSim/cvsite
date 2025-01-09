@@ -1,9 +1,4 @@
-﻿function scrollToBottom() {
-    const messageParent = document.querySelector('.message-parent');
-    if (messageParent) {
-        messageParent.scrollTop = messageParent.scrollHeight;
-    }
-}
+﻿
 
 let currentProfileIndex = 0;
 let profileMoveLength = 210;
@@ -47,8 +42,19 @@ function updateProfileCardStyling() {
     }
 }
 
-window.onload = scrollToBottom;
-window.onload = updateProfileCardStyling;
+$(function () {
+    scrollToBottom();
+    updateProfileCardStyling();
+})
+
+function scrollToBottom() {
+    console.log("asd");
+    const messageParent = document.querySelector('.message-parent');
+    if (messageParent) {
+        messageParent.scrollTop = messageParent.scrollHeight;
+        console.log("asd");
+    }
+}
 
 let currentConfirmationForm = "";
 let currentFormDataId = 0;
