@@ -251,7 +251,7 @@ public class ProjectController : BaseController
     }
 
     [Authorize]
-    [HttpGet]
+    [HttpGet("create")]
     public async Task<IActionResult> CreateProject()
     {
         var model = new CreateProjectViewModel();
@@ -260,7 +260,7 @@ public class ProjectController : BaseController
     }
 
     [Authorize]
-    [HttpPost]
+    [HttpPost("create")]
     public async Task<IActionResult> CreateProject(CreateProjectViewModel model)
     {
         string? userId = GetUserIdFromClaim();
