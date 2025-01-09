@@ -20,10 +20,12 @@ public class ExportController : BaseController
         xmlSerializer = new XmlSerializer(typeof(ExportProfileModel));
     }
 
-    [HttpGet("download/{userId}")]
+	// Action to generate and download a user's profile data as an XML file.
+	[HttpGet("download/{userId}")]
     public async Task<IActionResult> Download(string userId)
     {
-        User? user = await _userManager.FindByIdAsync(userId);
+		// Fetch the user by ID.
+		User? user = await _userManager.FindByIdAsync(userId);
         if (user == null)
         {
             return Error("Internal error", "Unknown user");
@@ -41,7 +43,8 @@ public class ExportController : BaseController
                 Private = user.Private,
             },
 
-            WorkExperience = user.Qualifications.Where(x => x.Type.Name == "Work").OrderByDescending(x => x.StartDate).Select(y => new QualificationViewModel
+			// Extract and format work experience qualifications.
+			WorkExperience = user.Qualifications.Where(x => x.Type.Name == "Work").OrderByDescending(x => x.StartDate).Select(y => new QualificationViewModel
             {
                 Title = y.Title,
                 Description = y.Description,
@@ -50,7 +53,8 @@ public class ExportController : BaseController
                 EndDate = y.EndDate?.ToString("MMM yyyy")
             }).ToList(),
 
-            Education = user.Qualifications.Where(x => x.Type.Name == "Education").OrderByDescending(x => x.StartDate).Select(y => new QualificationViewModel
+			// Extract and format education qualifications.
+			Education = user.Qualifications.Where(x => x.Type.Name == "Education").OrderByDescending(x => x.StartDate).Select(y => new QualificationViewModel
             {
                 Title = y.Title,
                 Description = y.Description,
@@ -59,18 +63,21 @@ public class ExportController : BaseController
                 EndDate = y.EndDate?.ToString("MMM yyyy")
             }).ToList(),
 
-            Skills = user.Skills.Select(x => new SkillViewModel
+			// Extract the user's skills.
+			Skills = user.Skills.Select(x => new SkillViewModel
             {
                 Title = x.Skill.Title,
             }).ToList(),
 
-            CollaboratingProjects = user.Projects.Select(x => new ProfileProjectViewModel
+			// Extract the user's collaborating projects.
+			CollaboratingProjects = user.Projects.Select(x => new ProfileProjectViewModel
             {
                 Title = x.Project.Title,
                 Description = x.Project.Description
             }).ToList(),
 
-            OwnedProjects = await _context.Projects.Where(x => x.OwnerId == user.Id).Select(p => new ProfileProjectViewModel
+			// Extract the user's owned projects.
+			OwnedProjects = await _context.Projects.Where(x => x.OwnerId == user.Id).Select(p => new ProfileProjectViewModel
             {
                 Id = p.Id,
                 Title = p.Title,

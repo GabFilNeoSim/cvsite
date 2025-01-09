@@ -8,4 +8,5 @@ public class HomeProjectUserViewModel
     public string LastName { get; set; }
     public bool IsOwner { get; set; }
     public bool IsPrivate { get; set; }
+    public bool IsDeactivated { get; set; }
 }

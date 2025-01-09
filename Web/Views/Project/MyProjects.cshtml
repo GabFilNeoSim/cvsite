@@ -38,13 +38,24 @@
                 <div class="project-card-users-parent">
                     @foreach (ProjectUserViewModel user in project.Collaborators)
                     {
-                        <a class="project-card-user" href="/profile/@user.Id">
+                        bool isDeactivated = user.IsDeactivated;
+                        string? avatar = isDeactivated ? "default.png" : user.AvatarUri;
+                        string? href = isDeactivated ? "" : $"/profile/{user.Id}";
+
+                        <a class="project-card-user" href="@href">
                             @if (user.IsOwner)
                             {
                                 <i class="fa-solid fa-crown crown"></i>
                             }
-                            <img src="/assets/avatars/@user.AvatarUri" />
+                            <img src="/assets/avatars/@avatar" />
+                            @if (isDeactivated)
+                            {
+                                <div class="project-card-name">Deactivated user</div>
+                            }
+                            else
+                            {
                             <div class="project-card-name">@user.FirstName @user.LastName</div>
+                            }
                         </a>
                     }
                 </div>
@@ -76,13 +87,24 @@
                     <div class="project-card-users-parent">
                         @foreach (ProjectUserViewModel user in project.Collaborators)
                         {
-                            <a class="project-card-user" href="/profile/@user.Id">
+                            bool isDeactivated = user.IsDeactivated;
+                            string? avatar = isDeactivated ? "default.png" : user.AvatarUri;
+                            string? href = isDeactivated ? "" : $"/profile/{user.Id}";
+
+                            <a class="project-card-user" href="@href">
                                 @if (user.IsOwner)
                                 {
                                     <i class="fa-solid fa-crown crown"></i>
                                 }
-                                <img src="/assets/avatars/@user.AvatarUri" />
-                                <div class="project-card-name">@user.FirstName @user.LastName</div>
+                                <img src="/assets/avatars/@avatar" />
+                                @if (isDeactivated)
+                                {
+                                    <div class="project-card-name">Deactivated user</div>
+                                }
+                                else
+                                {
+                                    <div class="project-card-name">@user.FirstName @user.LastName</div>
+                                }
                             </a>
                         }
                     </div>

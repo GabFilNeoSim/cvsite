@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Models;
-using System.Security.Claims;
 using Web.Models;
 using Web.Models.Project;
 
@@ -32,14 +31,15 @@ public class ProjectController : BaseController
                 Private = um.Private
             }).SingleOrDefault(),
             CreatedAt = p.CreatedAt,
-            Collaborators = _context.UserProjects.Where(up => up.ProjectId == p.Id && !up.User.IsDeactivated).Select(u => new ProjectUserViewModel
+            Collaborators = _context.UserProjects.Where(up => up.ProjectId == p.Id).Select(u => new ProjectUserViewModel
             {
                 Id = u.User.Id,
                 AvatarUri = u.User.AvatarUri,
                 FirstName = u.User.FirstName,
                 LastName = u.User.LastName,
                 IsOwner = u.User.Id == p.OwnerId,
-                Private = u.User.Private
+                Private = u.User.Private,
+                IsDeactivated = u.User.IsDeactivated
             }).ToList()
         }).ToListAsync();
         return View(projects);
@@ -69,14 +69,15 @@ public class ProjectController : BaseController
                 Private = um.Private
             }).Single(),
             CreatedAt = p.CreatedAt,
-            Collaborators = _context.UserProjects.Where(up => up.ProjectId == p.Id && !up.User.IsDeactivated).Select(u => new ProjectUserViewModel
+            Collaborators = _context.UserProjects.Where(up => up.ProjectId == p.Id).Select(u => new ProjectUserViewModel
             {
                 Id = u.User.Id,
                 AvatarUri = u.User.AvatarUri,
                 FirstName = u.User.FirstName,
                 LastName = u.User.LastName,
                 IsOwner = u.User.Id == p.OwnerId,
-                Private = u.User.Private
+                Private = u.User.Private,
+                IsDeactivated = u.User.IsDeactivated
             }).ToList()
         }).ToListAsync();
 
@@ -94,14 +95,15 @@ public class ProjectController : BaseController
                 Private = um.Private
             }).Single(),
             CreatedAt = p.Project.CreatedAt,
-            Collaborators = p.Project.Users.Where(up => !up.User.IsDeactivated).Select(u => new ProjectUserViewModel
+            Collaborators = p.Project.Users.Select(u => new ProjectUserViewModel
             {
                 Id = u.User.Id,
                 AvatarUri = u.User.AvatarUri,
                 FirstName = u.User.FirstName,
                 LastName = u.User.LastName,
                 IsOwner = u.User.Id == u.Project.OwnerId,
-                Private = u.User.Private
+                Private = u.User.Private,
+                IsDeactivated = u.User.IsDeactivated
             }).ToList()
         }).ToListAsync();
 

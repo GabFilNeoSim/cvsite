@@ -21,4 +21,7 @@ public class UserViewModel
     public string? Description { get; set; }
 
     public bool Private { get; set; }
+
+    [XmlIgnore]
+    public bool IsDeactivated { get; set; }
 }

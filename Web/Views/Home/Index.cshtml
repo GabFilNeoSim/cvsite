@@ -7,6 +7,16 @@
 
 @{
     ViewData["Title"] = "Home";
+
+    var notifyType = TempData["NotifyType"] as string;
+    var notifyMessage = TempData["NotifyMessage"] as string;
+
+    @if (!string.IsNullOrEmpty(notifyMessage) && !string.IsNullOrEmpty(notifyType))
+    {
+        <script>
+            notify({ type: "@notifyType", text: "@notifyMessage" });
+        </script>
+    }
 }
 
 @model HomeViewModel
@@ -53,6 +63,7 @@
                 {
                     bool isPrivate = user.IsPrivate;
                     bool isSignedIn = signInManager.IsSignedIn(User);
+                    bool isDeactivated = user.IsDeactivated;
                     string? avatar = isPrivate && !isSignedIn ? "default.png" : user.AvatarUri;
 
                     <div class="participant">
@@ -61,7 +72,11 @@
                         { 
                             <i class="fa-solid fa-crown crown"></i> 
                         }
-                        @if (isPrivate && !isSignedIn)
+                        @if (isDeactivated)
+                        {
+                            <p class="name">Deactivated user</p>
+                        }
+                        else if (isPrivate && !isSignedIn)
                         {
                             <p class="name">Private user</p>
                         }

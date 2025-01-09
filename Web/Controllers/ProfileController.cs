@@ -20,14 +20,21 @@ public class ProfileController : BaseController
 
     [HttpGet("{id}")]
     public async Task<IActionResult> Index(string id)
-    {
-        bool isProfileOwner = await IsProfileOwner(id);
-
+    {   
         var user = await _userManager.FindByIdAsync(id);
         if (user == null)
         {
             return Error("Unknown profile", "This profile does not exist, please try again.");
         }
+
+        if (user.IsDeactivated)
+        {
+            TempData["NotifyType"] = "error";
+            TempData["NotifyMessage"] = "This user is deactivated";
+            return RedirectToAction("Index", "Home");
+        }
+
+        bool isProfileOwner = await IsProfileOwner(id);
 
         if (!isProfileOwner)
         {
@@ -59,6 +66,7 @@ public class ProfileController : BaseController
                 AvatarUri = user.AvatarUri,
                 Description = user.Description,
                 Private = user.Private,
+                IsDeactivated = user.IsDeactivated
             },
 
             Work = user.Qualifications.Where(x => x.Type.Name == "Work").OrderByDescending(x => x.StartDate).Select(y => new QualificationViewModel

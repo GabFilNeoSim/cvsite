@@ -26,7 +26,7 @@ public class HomeController : BaseController
                 FirstName = x.FirstName,
                 LastName = x.LastName,
                 Description = x.Description,
-                Private = x.Private,
+                Private = x.Private
             }).ToListAsync(),
 
 			// Fetching the latest project based on the CreatedAt timestamp and ordering by most recent first.
@@ -37,14 +37,15 @@ public class HomeController : BaseController
                     Title = p.Title,
                     Description = p.Description,
 					// Fetching associated users for the project
-					Users = _context.UserProjects.Where(up => up.ProjectId == p.Id && !up.User.IsDeactivated).Select(u => new HomeProjectUserViewModel
+					Users = _context.UserProjects.Where(up => up.ProjectId == p.Id).Select(u => new HomeProjectUserViewModel
                     {
                         Id = u.User.Id,
                         AvatarUri = u.User.AvatarUri,
                         FirstName = u.User.FirstName,
                         LastName = u.User.LastName,
                         IsOwner = u.User.Id == p.OwnerId,
-                        IsPrivate = u.User.Private
+                        IsPrivate = u.User.Private,
+                        IsDeactivated = u.User.IsDeactivated
                     }).ToList()
                 })
                 .FirstAsync()
