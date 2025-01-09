@@ -3,27 +3,23 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Models;
 using Web.Models.Auth;
+using Microsoft.AspNetCore.Authorization;
+using Data.Contexts;
 
 namespace Web.Controllers;
 
-public class AuthController : Controller
+public class AuthController : BaseController
 {
-    private readonly UserManager<User> _userManager;
     private readonly SignInManager<User> _signInManager;
 
-	// Constructor for dependency injection of UserManager and SignInManager.
-	public AuthController
-    (
-        UserManager<User> userManager,
-        SignInManager<User> signInManager
-    )
+    // Constructor for dependency injection of UserManager and SignInManager.
+    public AuthController(AppDbContext context, UserManager<User> userManager, SignInManager<User> signInManager) : base(context, userManager)
     {
-        _userManager = userManager;
         _signInManager = signInManager;
     }
 
-	// Displays the registration view.
-	[HttpGet("auth/register")]
+    // Displays the registration view.
+    [HttpGet("auth/register")]
     public IActionResult Register() => View(new RegisterViewModel());
 
 	// Handles user registration.
@@ -36,7 +32,7 @@ public class AuthController : Controller
 		if (model.Password == null) model.Password = string.Empty;
         if (model.ConfirmPassword == null) model.ConfirmPassword = string.Empty;
 
-		// Check if a user with the same email already exists.
+		// Check if email already exists.
 		if (await _userManager.FindByEmailAsync(model.Email) != null)
         {
             ModelState.AddModelError("User already exists", "This user already exists.");
@@ -53,7 +49,7 @@ public class AuthController : Controller
             Address = model.Address
         };
 
-		// Attempt to create the user in the database.
+		// Attempt to create the user.
 		var result = await _userManager.CreateAsync(newUser, model.Password);
 
 		// Handle any errors during user creation.
@@ -78,7 +74,7 @@ public class AuthController : Controller
     public IActionResult Login() => View(new LoginViewModel());
 
 	// Handles user login.
-	[HttpPost]
+	[HttpPost("auth/login")]
     public async Task<IActionResult> Login(LoginViewModel model)
     {
         if (!ModelState.IsValid) return View(model);
@@ -97,8 +93,15 @@ public class AuthController : Controller
             return View(model);
         }
 
-		// Attempt to sign the user in with the provided credentials.
-		var result = await _signInManager.PasswordSignInAsync(
+        if (user.IsDeactivated)
+        {
+            TempData["NotifyType"] = "error";
+            TempData["NotifyMessage"] = "You're account is deactivated.";
+            return View(model);
+        }
+
+        // Attempt to sign the user.
+        var result = await _signInManager.PasswordSignInAsync(
             user,
             model.Password,
             isPersistent: model.RememberMe,
@@ -121,6 +124,37 @@ public class AuthController : Controller
     public async Task<IActionResult> Logout()
     {
         await _signInManager.SignOutAsync();
+        return RedirectToAction("Index", "Home");
+    }
+
+    [Authorize]
+    [HttpPost("auth/deactivate")]
+    public async Task<IActionResult> Deactivate()
+    {
+		// Retrieves the currently logged-in user's ID
+		string? userId = GetUserIdFromClaim();
+        if (userId == null)
+        {
+            return Error("User not logged in", "The user is not logged in");
+        }
+
+		// Attempts to find the user in the database using the ID.
+		User? user = await _userManager.FindByIdAsync(userId);
+        if (user == null)
+        {
+            return Error("Internal error", "The user was not found");
+        }
+
+        user.IsDeactivated = true;
+
+        // Updates and signs out user.
+        _context.Update(user);
+        await _context.SaveChangesAsync();
+        await _signInManager.SignOutAsync();
+
+        TempData["NotifyType"] = "success";
+        TempData["NotifyMessage"] = "Successfully deactivated account";
+
         return RedirectToAction("Index", "Home");
     }
 }

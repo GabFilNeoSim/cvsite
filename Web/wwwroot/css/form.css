@@ -56,6 +56,26 @@
     gap: 1rem;
 }
 
+.deactivate-account-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    gap: 4px;
+}
+
+.deactivate-account-form button{
+    background-color: #d90b23;
+}
+
+.deactivate-account-form button:hover {
+    background-color: #ba091e;
+    transition: all 0.3s;
+}
+
+.form.btns {
+    gap: 4px;
+}
+
 .form-row {
     display: flex;
     gap: 20px;

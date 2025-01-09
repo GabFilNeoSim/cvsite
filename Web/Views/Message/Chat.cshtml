@@ -25,10 +25,13 @@
                     <p class="message-child-time">@message.CreatedAt.ToString("g")</p>
                     <p>@message.Text</p>
                 </div>
+                @if (!@message.IsSentByCurrentUser) {
+                    <form class="delete-message-form" data-fid="@message.Id" asp-controller="Message" asp-action="DeleteMessage" asp-route-mid="@message.Id" method="post">
+                        <button data-text="Are you sure you want to delete message?" id="delete-message-btn" type="submit"><i class="fa-solid fa-trash"></i></button>
+                    </form>
+                }
             </div>
         }
     </div>
-
     <partial name="Partials/_SendMessage" model="new SendMessageViewModel {ChatUserId = Model.ChatUser.Id}"/>
-
 </div>

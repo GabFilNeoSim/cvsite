@@ -218,3 +218,14 @@
     background-color: #4576e0;
     cursor: pointer;
 }
+
+.delete-message-form button {
+    border: none;
+    outline: none;
+    color: lightcoral;
+}
+
+.delete-message-form button:hover {
+    color: red;
+    cursor: pointer;
+}

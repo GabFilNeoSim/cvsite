@@ -53,7 +53,7 @@ window.onload = updateProfileCardStyling;
 let currentConfirmationForm = "";
 let currentFormDataId = 0;
 
-$("#delete-work-btn, #delete-education-btn, #delete-project-btn").on("click", function (event) {
+$("#delete-work-btn, #delete-education-btn, #delete-project-btn, #deactivate-account-btn, #delete-message-btn").on("click", function (event) {
     event.preventDefault();
     const text = $(this).data("text");
     currentConfirmationForm = $(this).parent().attr("class");
@@ -64,7 +64,8 @@ $("#delete-work-btn, #delete-education-btn, #delete-project-btn").on("click", fu
 
 $("#confirm-yes").on("click", function (event) {
     event.preventDefault();
-    console.log($(`.${currentConfirmationForm}[data-fid="${currentFormDataId}"]`));
+    //console.log($(`.${currentConfirmationForm}[data-fid="${currentFormDataId}"]`));
+
     $(`.${currentConfirmationForm}[data-fid="${currentFormDataId}"]`).submit();
 });
 

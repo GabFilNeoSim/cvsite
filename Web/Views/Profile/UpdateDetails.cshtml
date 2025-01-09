@@ -62,12 +62,19 @@
             </form>
         </div>
         <div class="form-header">
-            <h2>Export information</h2>
+            <h2>Other</h2>
         </div>
         <div class="form-content">
-            <form class="form" asp-controller="Export" asp-action="Download" asp-route-id="@userId" method="get">
-                <button type="submit" class="submit">Download XML</button>
-            </form>
+            <div class="form-row">
+                <form class="form btns" asp-controller="Export" asp-action="Download" asp-route-id="@userId" method="get">
+                    <p>Export data</p>
+                    <button type="submit" class="submit">Download XML</button>
+                </form>
+                <form class="deactivate-account-form" data-fid="@userId" asp-controller="Auth" asp-action="Deactivate" method="post">
+                    <p>Account status</p>
+                    <button type="submit" data-text="Are you sure you want to deactivate your account?" id="deactivate-account-btn" class="submit">Deactivate account</button>
+                </form> 
+            </div>
         </div>
     </div>
 </div>

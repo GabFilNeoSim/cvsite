@@ -33,6 +33,7 @@ public class MessageController : BaseController
         // Get users all messages, grouped by user.
         var userMessages = await _context.Messages
             .Where(m => m.SenderId != null && m.SenderId == loggedInUser.Id || m.SenderId != null && m.ReceiverId == loggedInUser.Id)
+            .Where(m => !m.Sender.IsDeactivated && !m.Receiver.IsDeactivated)
             .OrderByDescending(m => m.CreatedAt)
             .GroupBy(m => m.SenderId == loggedInUser.Id ? m.ReceiverId : m.SenderId)
             .Select(g => new UserMessagesViewModel
@@ -122,6 +123,7 @@ public class MessageController : BaseController
                .OrderBy(m => m.CreatedAt)
                .Select(m => new ChatMessageViewModel
                {
+                   Id = m.Id,
                    Text = m.Text,
                    Read = m.Read,
                    IsSentByCurrentUser = m.SenderId == loggedInUser.Id,
@@ -219,10 +221,26 @@ public class MessageController : BaseController
 
         if (message == null)
         {
-            return Error("Unknown error", "Message not found.");
+            return Error("Internal error", "Message not found.");
         }
 
         message.Read = true;
+
+        await _context.SaveChangesAsync();
+
+        return RedirectToAction("Index");
+    }
+
+    [HttpPost("{mid}/delete")]
+    public async Task<IActionResult> DeleteMessage(int mid)
+    {
+        var message = await _context.Messages.SingleOrDefaultAsync(x => x.Id == mid);
+        if (message == null)
+        {
+            return Error("Internal error", "Message not found.");
+        }
+
+        _context.Messages.Remove(message);
 
         await _context.SaveChangesAsync();
 

@@ -30,9 +30,9 @@ public class ProjectController : BaseController
                 FirstName = um.FirstName,
                 LastName = um.LastName,
                 Private = um.Private
-            }).Single(),
+            }).SingleOrDefault(),
             CreatedAt = p.CreatedAt,
-            Collaborators = _context.UserProjects.Where(up => up.ProjectId == p.Id).Select(u => new ProjectUserViewModel
+            Collaborators = _context.UserProjects.Where(up => up.ProjectId == p.Id && !up.User.IsDeactivated).Select(u => new ProjectUserViewModel
             {
                 Id = u.User.Id,
                 AvatarUri = u.User.AvatarUri,
@@ -69,7 +69,7 @@ public class ProjectController : BaseController
                 Private = um.Private
             }).Single(),
             CreatedAt = p.CreatedAt,
-            Collaborators = _context.UserProjects.Where(up => up.ProjectId == p.Id).Select(u => new ProjectUserViewModel
+            Collaborators = _context.UserProjects.Where(up => up.ProjectId == p.Id && !up.User.IsDeactivated).Select(u => new ProjectUserViewModel
             {
                 Id = u.User.Id,
                 AvatarUri = u.User.AvatarUri,
@@ -94,7 +94,7 @@ public class ProjectController : BaseController
                 Private = um.Private
             }).Single(),
             CreatedAt = p.Project.CreatedAt,
-            Collaborators = p.Project.Users.Select(u => new ProjectUserViewModel
+            Collaborators = p.Project.Users.Where(up => !up.User.IsDeactivated).Select(u => new ProjectUserViewModel
             {
                 Id = u.User.Id,
                 AvatarUri = u.User.AvatarUri,
