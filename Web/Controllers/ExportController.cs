@@ -29,13 +29,6 @@ public class ExportController : BaseController
             return Error("Internal error", "Unknown user");
         }
 
-        var ownedProjects = await _context.UserProjects.Where(up => up.Project.OwnerId == user.Id).Select(p => new ProfileProjectViewModel
-        {
-            Id = p.ProjectId,
-            Title = p.Project.Title,
-            Description = p.Project.Description
-        }).ToListAsync();
-
         var exportData = new ExportProfileModel
         {
             User = new UserViewModel
@@ -77,7 +70,12 @@ public class ExportController : BaseController
                 Description = x.Project.Description
             }).ToList(),
 
-            OwnedProjects = ownedProjects
+            OwnedProjects = await _context.Projects.Where(x => x.OwnerId == user.Id).Select(p => new ProfileProjectViewModel
+            {
+                Id = p.Id,
+                Title = p.Title,
+                Description = p.Description
+            }).ToListAsync(),
         };
 
         var stream = new MemoryStream();
