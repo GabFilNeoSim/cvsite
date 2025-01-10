@@ -14,6 +14,7 @@ public class ProjectController : BaseController
 {
     public ProjectController(AppDbContext context, UserManager<User> userManager) : base(context, userManager) { }
 
+    // Displays all projects with their details including owners and collaborators.
     [HttpGet("all")]
     public async Task<IActionResult> Index()
     {
@@ -45,6 +46,7 @@ public class ProjectController : BaseController
         return View(projects);
     }
 
+    // Displays the current user's owned and collaborating projects.
     [Authorize]
     [HttpGet("my-projects")]
     public async Task<IActionResult> MyProjects()
@@ -55,6 +57,7 @@ public class ProjectController : BaseController
             return Error("Unknown profile", "This profile does not exist, please try again.");
         }
 
+        // Fetch owned projects
         List<ProjectViewModel> ownedProjects = await _context.Projects.Where(p => p.OwnerId == userId).Select(p => new ProjectViewModel
         {
             ProjectId = p.Id,
@@ -81,7 +84,8 @@ public class ProjectController : BaseController
             }).ToList()
         }).ToListAsync();
 
-        List <ProjectViewModel> collaboratingProjects = await _context.UserProjects.Where(p => p.User.Id == userId && p.Project.Owner.Id != userId).Select(p => new ProjectViewModel
+        // Fetch collaborating projects
+        List<ProjectViewModel> collaboratingProjects = await _context.UserProjects.Where(p => p.User.Id == userId && p.Project.Owner.Id != userId).Select(p => new ProjectViewModel
         {
             ProjectId = p.Project.Id,
             Title = p.Project.Title,
@@ -116,6 +120,7 @@ public class ProjectController : BaseController
         return View(model);
     }
 
+    // Allows a user to join a project.
     [Authorize]
     [HttpPost("join/{pid}")]
     public async Task<IActionResult> JoinProject(int pid)
@@ -126,12 +131,14 @@ public class ProjectController : BaseController
             return Error("Unknown profile", "This profile does not exist, please try again.");
         }
 
+        // Check if project exists
         int? projectId = await _context.Projects.Where(p => p.Id == pid).Select(p => p.Id).SingleOrDefaultAsync();
         if (projectId == null)
         {
             return Error("Project not found", "This project does not exist, please try again.");
         }
 
+        // Check if user is already a collaborator
         bool isInProject = await _context.UserProjects.AnyAsync(p => p.User.Id == userId && p.Project.Id == projectId);
         if (isInProject)
         {
@@ -140,6 +147,7 @@ public class ProjectController : BaseController
             return RedirectToAction("Index");
         }
 
+        // Add user to the project
         var userProject = new UserProject
         {
             ProjectId = (int)projectId,
@@ -155,6 +163,7 @@ public class ProjectController : BaseController
         return RedirectToAction("Index");   
     }
 
+    // Allows a user to leave a project.
     [Authorize]
     [HttpPost("leave/{pid}")]
     public async Task<IActionResult> LeaveProject(int pid)
@@ -165,18 +174,21 @@ public class ProjectController : BaseController
             return Error("Unknown profile", "This profile does not exist, please try again.");
         }
 
+        // Check if project exists
         int? projectId = await _context.Projects.Where(p => p.Id == pid).Select(p => p.Id).SingleOrDefaultAsync();
         if (projectId == null)
         {
             return Error("Project not found", "This project does not exist, please try again.");
         }
 
+        // Check if user is part of the project
         bool isInProject = await _context.UserProjects.AnyAsync(p => p.User.Id == userId && p.Project.Id == projectId);
         if (!isInProject)
         {
             return Error("User not in project", "User not in the project");
         }
 
+        // Remove user from project
         var userProject = new UserProject
         {
             ProjectId = (int)projectId,
@@ -192,6 +204,7 @@ public class ProjectController : BaseController
         return RedirectToAction("MyProjects");
     }
 
+    // Displays the form to update project details.
     [Authorize]
     [HttpGet("edit/{pid}")]
     public async Task<IActionResult> UpdateProject(int pid)
@@ -202,6 +215,7 @@ public class ProjectController : BaseController
             return Error("Unknown profile", "This profile does not exist, please try again.");
         }
 
+        // Fetch project to be updated
         var project = await _context.Projects.FirstOrDefaultAsync(p => p.Id == pid);
         if (project == null)
         {
@@ -218,6 +232,7 @@ public class ProjectController : BaseController
         return View(model);
     }
 
+    // view and return update projekt form
     [Authorize]
     [HttpPost("edit/{pid}")]
     public async Task<IActionResult> UpdateProject(int pid, UpdateProjectViewModel model)
@@ -233,6 +248,7 @@ public class ProjectController : BaseController
             return View(model);
         }
 
+        // Fetch the project and update fields
         var project = await _context.Projects.FirstOrDefaultAsync(p => p.Id == pid);
         if (project == null)
         {
@@ -249,7 +265,7 @@ public class ProjectController : BaseController
 
         return RedirectToAction("MyProjects", "Project");
     }
-
+    // view and return create form
     [Authorize]
     [HttpGet("create")]
     public async Task<IActionResult> CreateProject()
@@ -259,6 +275,7 @@ public class ProjectController : BaseController
         return View(model);
     }
 
+    // Handles the creation of a new project.
     [Authorize]
     [HttpPost("create")]
     public async Task<IActionResult> CreateProject(CreateProjectViewModel model)
@@ -274,6 +291,7 @@ public class ProjectController : BaseController
             return View(model);
         }
 
+        // Create new project and associate it with the current user as the owner
         var project = new Project
         {
             Title = model.Title,
@@ -301,6 +319,7 @@ public class ProjectController : BaseController
         return RedirectToAction("MyProjects", "Project");
     }
 
+    // delete projket from database
     [Authorize]
     [HttpPost("delete/{pid}")]
     public async Task<IActionResult> DeleteProject(int pid)
@@ -311,6 +330,7 @@ public class ProjectController : BaseController
             return Error("Unknown profile", "This profile does not exist, please try again.");
         }
 
+        // Retrieves and removes projekt from database
         var project = await _context.Projects.SingleOrDefaultAsync(p => p.Id == pid);
         if (project == null)
         {

@@ -2,6 +2,7 @@
 
 namespace Models;
 
+// Data fields that allow controlled access for getting and setting values
 public class Message
 {
     public int Id { get; set; }

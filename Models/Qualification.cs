@@ -2,6 +2,7 @@
 
 namespace Models;
 
+// Data fields that allow controlled access for getting and setting values
 public class Qualification
 {   
     public int Id { get; set; }

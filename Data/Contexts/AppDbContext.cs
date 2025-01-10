@@ -232,16 +232,19 @@ public class AppDbContext : IdentityDbContext<User>
             AccessFailedCount = 0
         };
 
+        // Gives user its data
         modelBuilder.Entity<User>().HasData(
             user1, user2, user3, user4, user5, user6
         );
 
+        // Gives projekt its data
         modelBuilder.Entity<Project>().HasData(
             new Project { Id = 1, Title = "Project Alpha", Description = "A groundbreaking project.", OwnerId = user1.Id, CreatedAt = new DateTime(2024, 12, 23) },
             new Project { Id = 2, Title = "Project Beta", Description = "Another amazing project.", OwnerId = user2.Id, CreatedAt = new DateTime(2024, 12, 21) },
             new Project { Id = 3, Title = "Project Gamma", Description = "Innovative and creative.", OwnerId = user3.Id, CreatedAt = new DateTime(2024, 12, 20) }
         );
 
+        // Gives user and projekt its relation
         modelBuilder.Entity<UserProject>().HasData(
             new { UserId = user1.Id, ProjectId = 1 },
             new { UserId = user2.Id, ProjectId = 2 },
@@ -253,6 +256,7 @@ public class AppDbContext : IdentityDbContext<User>
             new { UserId = user4.Id, ProjectId = 2 }
         );
 
+        // Gives skill its data
         modelBuilder.Entity<Skill>().HasData(
             new Skill { Id = 1, Title = "C#" },
             new Skill { Id = 2, Title = "JavaScript" },
@@ -271,6 +275,7 @@ public class AppDbContext : IdentityDbContext<User>
             new Skill { Id = 15, Title = "Kubernetes" }
         );
 
+        // Gives user and skill its relation
         modelBuilder.Entity<UserSkill>().HasData(
             new UserSkill { UserId = user1.Id, SkillId = 1 },
             new UserSkill { UserId = user1.Id, SkillId = 2 },
@@ -298,11 +303,13 @@ public class AppDbContext : IdentityDbContext<User>
             new UserSkill { UserId = user6.Id, SkillId = 15 }
         );
 
+        // Gives qualificationtype its data
         modelBuilder.Entity<QualificationType>().HasData(
             new QualificationType { Id = 1, Name = "Education" },
             new QualificationType { Id = 2, Name = "Work" }
         );
 
+        // Gives qualification its data
         modelBuilder.Entity<Qualification>().HasData(
             new Qualification { Id = 1, Title = "Kandidat inom systemutveckling", Description = "3 årig kandidatexamen inom systemuveckling", Location = "Örebro Universitet", StartDate = new DateOnly(2015, 9, 1), EndDate = new DateOnly(2019, 6, 30), UserId = user1.Id, TypeId = 1 },
             new Qualification { Id = 2, Title = "MSc Software Engineering", Description = "2-year degree", StartDate = new DateOnly(2020, 9, 1), Location = "Seoul Food market", EndDate = new DateOnly(2022, 6, 30), UserId = user1.Id, TypeId = 1 },
@@ -315,6 +322,7 @@ public class AppDbContext : IdentityDbContext<User>
             new Qualification { Id = 9, Title = "Data Analyst Internship", Description = "Internship focusing on data cleaning, visualization, and analysis. Filip luktar kiss", Location = "Google", StartDate = new DateOnly(2022, 5, 1), EndDate = new DateOnly(2022, 8, 31), UserId = user2.Id, TypeId = 2 }
         );
 
+        // Gives message its data
         modelBuilder.Entity<Message>().HasData(
             new Message { Id = 1, SenderId = user1.Id, ReceiverId = user2.Id, Text = "Hello Bob!", Read = false, CreatedAt = new DateTime(2024, 12, 23) },
             new Message { Id = 2, SenderId = user2.Id, ReceiverId = user3.Id, Text = "Hi Carla!", Read = false, CreatedAt = new DateTime(2024, 12, 24) }

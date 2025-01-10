@@ -69,6 +69,7 @@ public class ProfileController : BaseController
                 IsDeactivated = user.IsDeactivated
             },
 
+            // Retrieve work and education qualifications
             Work = user.Qualifications.Where(x => x.Type.Name == "Work").OrderByDescending(x => x.StartDate).Select(y => new QualificationViewModel
             {
                 Id = y.Id,
@@ -89,7 +90,7 @@ public class ProfileController : BaseController
                 EndDate = y.EndDate?.ToString("MMM yyyy")
             }).ToList(),
 
-
+            // Get user's skills and projects
             Skills = user.Skills.Select(x => new SkillViewModel
             {
                 SkillId = x.SkillId,
@@ -113,12 +114,14 @@ public class ProfileController : BaseController
         return View(profileViewModel);
     }
 
+    // Update avatar action
     [Authorize]
     [HttpPost("{id}")]
     public async Task<IActionResult> UpdateAvatar(string id, IFormFile avatar)
     {
         string[] allowedExtensions = [".jpg", ".jpeg", ".png"];
 
+        // Handle no avatar selected
         if (avatar == null || avatar.Length == 0)
         {
             TempData["NotifyType"] = "error";
@@ -126,6 +129,7 @@ public class ProfileController : BaseController
             return RedirectToAction("Index", "Profile", new { id });
         }
 
+        // Check for valid file extension
         string extension = Path.GetExtension(avatar.FileName).ToLower();
         if (!allowedExtensions.Contains(extension))
         {
@@ -154,13 +158,13 @@ public class ProfileController : BaseController
             Mode = ResizeMode.Crop
         }));
 
-        // Save file
+        // Save image to file
         using (var fileStream = new FileStream(filePath, FileMode.Create))
         {
             await image.SaveAsJpegAsync(fileStream);
         }
 
-        // Update the avatar of the user in the database
+        // Update the avatar URI in the database
         var user = await _userManager.FindByIdAsync(id);
         if (user == null) return RedirectToAction("Index", "Profile", new { id });
 
@@ -170,19 +174,22 @@ public class ProfileController : BaseController
         TempData["NotifyType"] = "success";
         TempData["NotifyMessage"] = "Successfully updated avatar";
 
-        // If the upload succeed, refresh the website
+        // Notify success and refresh the page
         return RedirectToAction("Index", "Profile", new { id });
     }
 
+    // view and return details form
     [Authorize]
     [HttpGet("{id}/settings/details")]
     public async Task<IActionResult> UpdateDetails(string id)
     {
+        // Retrieves the user from the database if it's owner
         if (!await IsProfileOwner(id)) return RedirectToAction("Login", "Auth");
 
         User? user = await _userManager.FindByIdAsync(id);
         if (user == null) return Error("Unknown error", "An unexpected error happend!");
 
+        // Populates the view model for editing and returns populated model
         var model = new UpdateDetailsViewModel
         {
             FirstName = user.FirstName,
@@ -195,10 +202,12 @@ public class ProfileController : BaseController
         return View(model);
     }
 
+    // Save updated details to database
     [Authorize]
     [HttpPost("{id}/settings/details")]
     public async Task<IActionResult> UpdateDetails(string id, UpdateDetailsViewModel model)
     {
+        // Check and retrives the current use if correct
         if (!await IsProfileOwner(id)) return RedirectToAction("Login", "Auth");
 
         if (!ModelState.IsValid) return View(model);
@@ -206,7 +215,7 @@ public class ProfileController : BaseController
         User? user = await _context.Users.FindAsync(id);
         if (user == null) return Error("Unknown error", "An unexpected error happend!");
 
-        //If input fields are not altered fall back to original value
+        // Only updates fields that have changed
         if (user.FirstName != model.FirstName) user.FirstName = model.FirstName;
         if (user.LastName != model.LastName) user.LastName = model.LastName;
         if (user.Address != model.Address) user.Address = model.Address;
@@ -221,6 +230,7 @@ public class ProfileController : BaseController
         return RedirectToAction("Index", new { id });
     }
 
+    // view and return password form
     [Authorize]
     [HttpGet("{id}/settings/password")]
     public async Task<IActionResult> UpdatePassword(string id)
@@ -233,10 +243,12 @@ public class ProfileController : BaseController
         return View(new UpdatePasswordViewModel());
     }
 
+    // Save updated password to database
     [Authorize]
     [HttpPost("{id}/settings/password")]
     public async Task<IActionResult> UpdatePassword(string id, UpdatePasswordViewModel model)
     {
+        // Check if correct owner
         if (!await IsProfileOwner(id)) return RedirectToAction("Login", "Auth");
 
         if (!ModelState.IsValid) return View(model);
@@ -244,6 +256,7 @@ public class ProfileController : BaseController
         User? user = await _context.Users.FindAsync(id);
         if (user == null) return Error("Unknown error", "An unexpected error happend!");
 
+        // Attempts to change the user's password
         IdentityResult result = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
         if (!result.Succeeded)
         {
@@ -257,6 +270,7 @@ public class ProfileController : BaseController
         return RedirectToAction("Index", new { id });
     }
 
+    // Retrieves and returns user
     [Authorize]
     [HttpGet("{id}/edit/projects/{pid}")]
     public async Task<IActionResult> Projects(string id, string pid)
@@ -270,18 +284,21 @@ public class ProfileController : BaseController
         return View(user);
     }
 
+    // view and return qualifications form
     [Authorize]
     [HttpGet("{id}/edit/qualifications/{qid}")]
     public async Task<IActionResult> UpdateQualification(string id, int qid)
     {
         if (!await IsProfileOwner(id)) return RedirectToAction("Login", "Auth");
 
+        // Retrieves the qualification to update
         var qualification = await _context.Qualifications.FirstOrDefaultAsync(q => q.Id == qid);
         if (qualification == null)
         {
             return Error("Unknown qualification", "Qualification not found!");
         }
 
+        // Populates qualification details and list selection for editing
         var model = new UpdateQualificationViewModel
         {
             QualId = qualification.Id,
@@ -302,10 +319,12 @@ public class ProfileController : BaseController
         return View(model);
     }
 
+    // Save updated qualifications to database
     [Authorize]
     [HttpPost("{id}/edit/qualifications/{qid}")]
     public async Task<IActionResult> UpdateQualification(string id, int qid, UpdateQualificationViewModel model)
     {
+        // check if owner and model is correct
         if (!await IsProfileOwner(id)) return RedirectToAction("Login", "Auth");
 
         if (!ModelState.IsValid)
@@ -319,12 +338,14 @@ public class ProfileController : BaseController
             return View(model);
         }
 
+        // Retrieves the qualification to be updated
         var qualification = await _context.Qualifications.FirstOrDefaultAsync(x => x.Id == qid);
         if (qualification == null)
         {
             return Error(string.Empty, "Qualification was not found!");
         }
 
+        // Updates the qualification fields if changed
         if (qualification.Title != model.Title) qualification.Title = model.Title;
         if (qualification.Description != model.Description) qualification.Description = model.Description;
         if (qualification.StartDate != model.StartDate) qualification.StartDate = model.StartDate;
@@ -340,15 +361,18 @@ public class ProfileController : BaseController
         return RedirectToAction("Index", new { id });
     }
 
+    // view and return qualifications add form
     [Authorize]
     [HttpGet("{id}/qualifications/add")]
     public async Task<IActionResult> AddQualification(string id)
     {
+        // Check if owner is correct
         if (!await IsProfileOwner(id))
         {
             return RedirectToAction("Login", "Auth");
         }
 
+        // Populates the model with a list of qualification types
         var model = new AddQualificationViewModel
         {
             UserId = id,
@@ -362,10 +386,12 @@ public class ProfileController : BaseController
         return View(model);
     }
 
+    // Save updated qualification to profile in database
     [Authorize]
     [HttpPost("{id}/qualifications/add")]
     public async Task<IActionResult> AddQualification(string id, AddQualificationViewModel model)
     {
+        // Check if owner and model is correct
         if (!await IsProfileOwner(id))
         {
             return RedirectToAction("Login", "Auth");
@@ -388,6 +414,7 @@ public class ProfileController : BaseController
             return View(model);
         }
 
+        // Creates new qualification based on the submitted model
         var qualification = new Qualification
         {
             Title = model.Title,
@@ -399,6 +426,7 @@ public class ProfileController : BaseController
             UserId = user.Id
         };
 
+        // Add to database
         _context.Qualifications.Add(qualification);
         await _context.SaveChangesAsync();
 
@@ -408,10 +436,12 @@ public class ProfileController : BaseController
         return RedirectToAction("Index", new { id });
     }
 
+    // delete qualifications from database
     [Authorize]
     [HttpPost("{id}/qualifications/delete/{qid}")]
     public async Task<IActionResult> DeleteQualification(string id, int qid)
     {
+        //Check if owner is correct
         if (!await IsProfileOwner(id))
         {
             return RedirectToAction("Login", "Auth");
@@ -423,6 +453,7 @@ public class ProfileController : BaseController
             return Error("Unknown Error", "An unexpected error happend");
         }
 
+        // Retrieves and removes qualification from database
         var qualification = await _context.Qualifications.FirstOrDefaultAsync(q => q.Id == qid);
         if (qualification == null)
         {
@@ -438,10 +469,12 @@ public class ProfileController : BaseController
         return RedirectToAction("Index", new { id });
     }
 
+    // add skills to profile in database
     [Authorize]
     [HttpPost("{id}/skills/add/{sid}")]
     public async Task<IActionResult> AddSkill(string id, int sid, AddSkillViewModel model)
     {
+        // Check if owner is correct
         if (!await IsProfileOwner(id))
         {
             return RedirectToAction("Login", "Auth");
@@ -453,6 +486,7 @@ public class ProfileController : BaseController
             return Error("Unknown Error", "An unexpected error happened");
         }
 
+        // Retrieves the skill to be added
         var skill = await _context.Skills.SingleOrDefaultAsync(x => x.Id == sid);
         if (skill == null)
         {
@@ -465,6 +499,7 @@ public class ProfileController : BaseController
             Skill = skill
         };
 
+        // Adds the skill to the user's profile
         user.Skills.Add(userSkill);
         await _context.SaveChangesAsync();
 
@@ -474,10 +509,12 @@ public class ProfileController : BaseController
         return RedirectToAction("Index", new { id });
     }
 
+    // delete skills from database
     [Authorize]
     [HttpPost("{id}/skills/delete/{sid}")]
     public async Task<IActionResult> DeleteSkill(string id, int sid)
     {
+        // Checks if user is correct
         if (!await IsProfileOwner(id))
         {
             return RedirectToAction("Login", "Auth");
@@ -489,12 +526,14 @@ public class ProfileController : BaseController
             return Error("Unknown Error", "An unexpected error happened");
         }
 
+        // Retrieves skill to delete
         var skill = await _context.UserSkills.SingleOrDefaultAsync(x => x.SkillId == sid && x.UserId == user.Id);
         if (skill == null)
         {
             return Error("Unknown Error", "An unexpected error happened");
         }
 
+        // Removes the skill from the user's profile
         user.Skills.Remove(skill);
         await _context.SaveChangesAsync();
 

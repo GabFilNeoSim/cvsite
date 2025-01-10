@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Web.Controllers;
 
+// Controller to handle data export functionalities, specifically exporting user profile data as XML.
 [Route("export")]
 public class ExportController : BaseController
 {
@@ -20,7 +21,7 @@ public class ExportController : BaseController
         xmlSerializer = new XmlSerializer(typeof(ExportProfileModel));
     }
 
-	// Action to generate and download a user's profile data as an XML file.
+	// Action to generate and download a user's profile data.
 	[HttpGet("download/{userId}")]
     public async Task<IActionResult> Download(string userId)
     {
@@ -30,7 +31,7 @@ public class ExportController : BaseController
         {
             return Error("Internal error", "Unknown user");
         }
-
+        // Prepare the data for export by populating the ExportProfileModel.
         var exportData = new ExportProfileModel
         {
             User = new UserViewModel
@@ -43,8 +44,8 @@ public class ExportController : BaseController
                 Private = user.Private,
             },
 
-			// Extract and format work experience qualifications.
-			WorkExperience = user.Qualifications.Where(x => x.Type.Name == "Work").OrderByDescending(x => x.StartDate).Select(y => new QualificationViewModel
+            // Filter and format work experience qualifications.
+            WorkExperience = user.Qualifications.Where(x => x.Type.Name == "Work").OrderByDescending(x => x.StartDate).Select(y => new QualificationViewModel
             {
                 Title = y.Title,
                 Description = y.Description,
@@ -53,8 +54,8 @@ public class ExportController : BaseController
                 EndDate = y.EndDate?.ToString("MMM yyyy")
             }).ToList(),
 
-			// Extract and format education qualifications.
-			Education = user.Qualifications.Where(x => x.Type.Name == "Education").OrderByDescending(x => x.StartDate).Select(y => new QualificationViewModel
+            // Filter and format education qualifications.
+            Education = user.Qualifications.Where(x => x.Type.Name == "Education").OrderByDescending(x => x.StartDate).Select(y => new QualificationViewModel
             {
                 Title = y.Title,
                 Description = y.Description,
@@ -85,6 +86,7 @@ public class ExportController : BaseController
             }).ToListAsync(),
         };
 
+        // Serialize the export data into an XML format and return as a downloadable file.
         var stream = new MemoryStream();
         try
         {
