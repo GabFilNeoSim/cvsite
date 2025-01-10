@@ -7,7 +7,7 @@ public class AddSkillViewModel
     public int SkillId { get; set; }
 
     [Required]
-    [MaxLength(100)]
+    [StringLength(100)]
     public string Title { get; set; }
     public string UserId { get; set; }
 }

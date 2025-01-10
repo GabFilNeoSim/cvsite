@@ -9,12 +9,16 @@
     <ItemGroup>
       <Compile Remove="Migrations\**" />
       <Compile Remove="ViewModels\**" />
+      <Compile Remove="wwwroot\avatars\**" />
       <Content Remove="Migrations\**" />
       <Content Remove="ViewModels\**" />
+      <Content Remove="wwwroot\avatars\**" />
       <EmbeddedResource Remove="Migrations\**" />
       <EmbeddedResource Remove="ViewModels\**" />
+      <EmbeddedResource Remove="wwwroot\avatars\**" />
       <None Remove="Migrations\**" />
       <None Remove="ViewModels\**" />
+      <None Remove="wwwroot\avatars\**" />
     </ItemGroup>
 
     <ItemGroup>
