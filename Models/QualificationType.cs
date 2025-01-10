@@ -1,10 +1,13 @@
-﻿namespace Models;
+﻿using System.ComponentModel.DataAnnotations;
 
-// Data fields that allow controlled access for getting and setting values
+namespace Models;
+
 public class QualificationType
 {
     public int Id { get; set; }
 
+    [Required]
+    [MaxLength(100)]
     public string Name { get; set; }
 
     public virtual ICollection<Qualification> Qualifications { get; set; } = [];

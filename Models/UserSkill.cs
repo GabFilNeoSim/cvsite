@@ -1,6 +1,5 @@
 ﻿namespace Models;
 
-// Data fields that allow controlled access for getting and setting values
 public class UserSkill
 {
     public string UserId { get; set; }

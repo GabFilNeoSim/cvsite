@@ -1,18 +1,22 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Models;
 
-// Data fields that allow controlled access for getting and setting values
 public class Message
 {
     public int Id { get; set; }
 
+    [Required]
+    [MaxLength(2000)]
     public string Text{ get; set; }
 
+    [Required]
     public bool Read { get; set; } = false;
 
+    [Required]
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
+    [MaxLength(100)]
     public string? AnonymousName { get; set; }
 
     public string? SenderId { get; set; }

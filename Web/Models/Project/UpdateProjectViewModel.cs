@@ -1,9 +1,16 @@
-﻿namespace Web.Models.Project
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Web.Models.Project;
+
+public class UpdateProjectViewModel
 {
-    public class UpdateProjectViewModel
-    {
-        public int ProjectId { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-    }
+    public int ProjectId { get; set; }
+
+    [Required]
+    [MaxLength(100)]
+    public string Title { get; set; }
+
+    [Required]
+    [MaxLength(1000)]
+    public string Description { get; set; }
 }

@@ -3,25 +3,25 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Models;
 
-// Data fields that allow controlled access for getting and setting values
 public class User : IdentityUser
 {
     [Required]
-    [MaxLength(50)]
+    [MaxLength(100)]
     public string FirstName { get; set; }
 
     [Required]
-    [MaxLength(50)]
+    [MaxLength(100)]
     public string LastName { get; set; }
 
     [Required]
-    [MaxLength(100)]
+    [MaxLength(150)]
     public string Address { get; set; }
 
     [Required]
-    [MaxLength(255)]
+    [MaxLength(50)]
     public string AvatarUri { get; set; } = "default.png";
 
+    [MaxLength(1000)]
     public string? Description { get; set; }
 
     [Required]

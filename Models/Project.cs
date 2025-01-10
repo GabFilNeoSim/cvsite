@@ -1,16 +1,21 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Models;
 
-// Data fields that allow controlled access for getting and setting values
 public class Project
 {
     public int Id { get; set; }
 
+    [Required]
+    [MaxLength(100)]
     public string Title { get; set; }
 
+    [Required]
+    [MaxLength(1000)]
     public string Description { get; set; }
 
+    [Required]
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public string OwnerId { get; set; }

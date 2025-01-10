@@ -4,14 +4,17 @@ using System.ComponentModel.DataAnnotations;
 namespace Web.Models;
 
 public class UpdateQualificationViewModel
-{
+{   
     [Required(ErrorMessage = "Title is required")]
+    [MaxLength(150)]
     public string Title { get; set; }
 
     [Required(ErrorMessage = "Description is required")]
+    [MaxLength(1000)]
     public string? Description { get; set; }
 
     [Required(ErrorMessage = "Location is required")]
+    [MaxLength(150)]
     public string Location { get; set; }
 
     [Required(ErrorMessage = "Start date is required")]

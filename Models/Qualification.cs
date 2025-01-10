@@ -1,18 +1,23 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Models;
 
-// Data fields that allow controlled access for getting and setting values
 public class Qualification
 {   
     public int Id { get; set; }
 
+    [Required]
+    [MaxLength(150)]
     public string Title { get; set; }
 
+    [MaxLength(1000)]
     public string? Description { get; set; }
 
+    [Required]
+    [MaxLength(150)]
     public string Location { get; set; }
 
+    [Required]
     public DateOnly StartDate { get; set; }
 
     public DateOnly? EndDate { get; set; }

@@ -4,15 +4,18 @@ using System.ComponentModel.DataAnnotations;
 namespace Web.Models;
 
 public class AddQualificationViewModel
-{
+{   
     [Required(ErrorMessage = "Title is required")]
+    [MaxLength(150)]
     public string Title { get; set; }
 
     [Required(ErrorMessage = "Description is required")]
+    [MaxLength(1000)]
     public string? Description { get; set; }
 
     [Required(ErrorMessage = "Location is required")]
     public string Location { get; set; }
+    [MaxLength(150)]
 
     [Required(ErrorMessage = "Start date is required")]
     public DateOnly StartDate { get; set; } = new DateOnly();

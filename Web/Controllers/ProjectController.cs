@@ -319,7 +319,7 @@ public class ProjectController : BaseController
         return RedirectToAction("MyProjects", "Project");
     }
 
-    // delete projket from database
+    // delete project from database
     [Authorize]
     [HttpPost("delete/{pid}")]
     public async Task<IActionResult> DeleteProject(int pid)
@@ -330,7 +330,7 @@ public class ProjectController : BaseController
             return Error("Unknown profile", "This profile does not exist, please try again.");
         }
 
-        // Retrieves and removes projekt from database
+        // Retrieves and removes project from database
         var project = await _context.Projects.SingleOrDefaultAsync(p => p.Id == pid);
         if (project == null)
         {

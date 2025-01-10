@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Models;
 
-namespace Models;
-
-// Data fields that allow controlled access for getting and setting values
 public class UserProject
 {
     public string UserId { get; set; }

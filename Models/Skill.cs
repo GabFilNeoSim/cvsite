@@ -1,10 +1,14 @@
-﻿namespace Models;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
-// Data fields that allow controlled access for getting and setting values
+namespace Models;
+
 public class Skill
 {
     public int Id { get; set; }
 
+    [Required]
+    [MaxLength(100)]
     public string Title { get; set; }
 
     public virtual ICollection<UserSkill> Users { get; set; } = [];

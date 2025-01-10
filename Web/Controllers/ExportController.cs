@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Web.Controllers;
 
-// Controller to handle data export functionalities, specifically exporting user profile data as XML.
+// Controller to handle data export functionalities.
 [Route("export")]
 public class ExportController : BaseController
 {
@@ -21,7 +21,7 @@ public class ExportController : BaseController
         xmlSerializer = new XmlSerializer(typeof(ExportProfileModel));
     }
 
-	// Action to generate and download a user's profile data.
+	// Endpoint to serialize and download a user's profile data.
 	[HttpGet("download/{userId}")]
     public async Task<IActionResult> Download(string userId)
     {
@@ -31,6 +31,7 @@ public class ExportController : BaseController
         {
             return Error("Internal error", "Unknown user");
         }
+
         // Prepare the data for export by populating the ExportProfileModel.
         var exportData = new ExportProfileModel
         {
@@ -44,7 +45,7 @@ public class ExportController : BaseController
                 Private = user.Private,
             },
 
-            // Filter and format work experience qualifications.
+            // Get work experience qualifications.
             WorkExperience = user.Qualifications.Where(x => x.Type.Name == "Work").OrderByDescending(x => x.StartDate).Select(y => new QualificationViewModel
             {
                 Title = y.Title,
@@ -54,7 +55,7 @@ public class ExportController : BaseController
                 EndDate = y.EndDate?.ToString("MMM yyyy")
             }).ToList(),
 
-            // Filter and format education qualifications.
+            // Get education qualifications.
             Education = user.Qualifications.Where(x => x.Type.Name == "Education").OrderByDescending(x => x.StartDate).Select(y => new QualificationViewModel
             {
                 Title = y.Title,
@@ -64,20 +65,20 @@ public class ExportController : BaseController
                 EndDate = y.EndDate?.ToString("MMM yyyy")
             }).ToList(),
 
-			// Extract the user's skills.
+			// Get the user's skills.
 			Skills = user.Skills.Select(x => new SkillViewModel
             {
                 Title = x.Skill.Title,
             }).ToList(),
 
-			// Extract the user's collaborating projects.
+			// Get the user's collaborating projects.
 			CollaboratingProjects = user.Projects.Select(x => new ProfileProjectViewModel
             {
                 Title = x.Project.Title,
                 Description = x.Project.Description
             }).ToList(),
 
-			// Extract the user's owned projects.
+			// Get the user's owned projects.
 			OwnedProjects = await _context.Projects.Where(x => x.OwnerId == user.Id).Select(p => new ProfileProjectViewModel
             {
                 Id = p.Id,
@@ -97,9 +98,9 @@ public class ExportController : BaseController
 
             return File(stream, "application/xml", fileName);
         }
-        catch(Exception ex)
+        catch(Exception)
         {
-            return Error("Internal error", ex.Message);
+            return Error("Internal error", "Profile export failed");
         }
     }
 }

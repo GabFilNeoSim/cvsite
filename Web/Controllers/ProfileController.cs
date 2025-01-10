@@ -44,7 +44,6 @@ public class ProfileController : BaseController
 
         var userSkillIds = user.Skills.Select(us => us.SkillId);
 
-        //Get skills which the current user does not inherit
         var unusedSkills = await _context.Skills
             .Where(skill => !userSkillIds.Contains(skill.Id))
             .Select(skill => new SkillViewModel
@@ -53,7 +52,6 @@ public class ProfileController : BaseController
                 Title = skill.Title
             }).ToListAsync();
 
-        //Create viewmodel with profile data and passes it to view
         var profileViewModel = new ProfileViewModel
         {
             User = new UserViewModel
@@ -114,7 +112,7 @@ public class ProfileController : BaseController
         return View(profileViewModel);
     }
 
-    // Update avatar action
+    // Update avatar endpoint
     [Authorize]
     [HttpPost("{id}")]
     public async Task<IActionResult> UpdateAvatar(string id, IFormFile avatar)
@@ -183,7 +181,7 @@ public class ProfileController : BaseController
     [HttpGet("{id}/settings/details")]
     public async Task<IActionResult> UpdateDetails(string id)
     {
-        // Retrieves the user from the database if it's owner
+        // Redirect if the user is not the profile owner
         if (!await IsProfileOwner(id)) return RedirectToAction("Login", "Auth");
 
         User? user = await _userManager.FindByIdAsync(id);
@@ -207,7 +205,7 @@ public class ProfileController : BaseController
     [HttpPost("{id}/settings/details")]
     public async Task<IActionResult> UpdateDetails(string id, UpdateDetailsViewModel model)
     {
-        // Check and retrives the current use if correct
+        // Redirect if the user is not the profile owner
         if (!await IsProfileOwner(id)) return RedirectToAction("Login", "Auth");
 
         if (!ModelState.IsValid) return View(model);
@@ -248,7 +246,7 @@ public class ProfileController : BaseController
     [HttpPost("{id}/settings/password")]
     public async Task<IActionResult> UpdatePassword(string id, UpdatePasswordViewModel model)
     {
-        // Check if correct owner
+        // Redirect if the user is not the profile owner
         if (!await IsProfileOwner(id)) return RedirectToAction("Login", "Auth");
 
         if (!ModelState.IsValid) return View(model);
@@ -289,6 +287,7 @@ public class ProfileController : BaseController
     [HttpGet("{id}/edit/qualifications/{qid}")]
     public async Task<IActionResult> UpdateQualification(string id, int qid)
     {
+        // Redirect if the user is not the profile owner
         if (!await IsProfileOwner(id)) return RedirectToAction("Login", "Auth");
 
         // Retrieves the qualification to update
@@ -324,7 +323,7 @@ public class ProfileController : BaseController
     [HttpPost("{id}/edit/qualifications/{qid}")]
     public async Task<IActionResult> UpdateQualification(string id, int qid, UpdateQualificationViewModel model)
     {
-        // check if owner and model is correct
+        // Redirect if the user is not the profile owner
         if (!await IsProfileOwner(id)) return RedirectToAction("Login", "Auth");
 
         if (!ModelState.IsValid)
@@ -366,7 +365,7 @@ public class ProfileController : BaseController
     [HttpGet("{id}/qualifications/add")]
     public async Task<IActionResult> AddQualification(string id)
     {
-        // Check if owner is correct
+        // Redirect if the user is not the profile owner
         if (!await IsProfileOwner(id))
         {
             return RedirectToAction("Login", "Auth");
@@ -391,7 +390,7 @@ public class ProfileController : BaseController
     [HttpPost("{id}/qualifications/add")]
     public async Task<IActionResult> AddQualification(string id, AddQualificationViewModel model)
     {
-        // Check if owner and model is correct
+        // Redirect if the user is not the profile owner
         if (!await IsProfileOwner(id))
         {
             return RedirectToAction("Login", "Auth");
@@ -441,7 +440,7 @@ public class ProfileController : BaseController
     [HttpPost("{id}/qualifications/delete/{qid}")]
     public async Task<IActionResult> DeleteQualification(string id, int qid)
     {
-        //Check if owner is correct
+        // Redirect if the user is not the profile owner
         if (!await IsProfileOwner(id))
         {
             return RedirectToAction("Login", "Auth");
@@ -474,7 +473,7 @@ public class ProfileController : BaseController
     [HttpPost("{id}/skills/add/{sid}")]
     public async Task<IActionResult> AddSkill(string id, int sid, AddSkillViewModel model)
     {
-        // Check if owner is correct
+        // Redirect if the user is not the profile owner
         if (!await IsProfileOwner(id))
         {
             return RedirectToAction("Login", "Auth");
@@ -514,7 +513,7 @@ public class ProfileController : BaseController
     [HttpPost("{id}/skills/delete/{sid}")]
     public async Task<IActionResult> DeleteSkill(string id, int sid)
     {
-        // Checks if user is correct
+        // Redirect if the user is not the profile owner
         if (!await IsProfileOwner(id))
         {
             return RedirectToAction("Login", "Auth");
