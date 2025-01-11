@@ -154,6 +154,14 @@ header .profile #options{
     top: 50px;
 }
 
+header .profile #options a:hover {
+    color: #E6E6E6;
+}
+
+header .profile #options button:hover {
+    color: #E6E6E6;
+}
+
 header .profile #options form{
     display: inline-block; 
 }

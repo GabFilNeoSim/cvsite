@@ -1,0 +1,37 @@
+﻿@using Web.Models.Discover;
+
+@{
+    ViewData["Title"] = "Discover";
+
+    var notifyType = TempData["NotifyType"] as string;
+    var notifyMessage = TempData["NotifyMessage"] as string;
+
+    @if (!string.IsNullOrEmpty(notifyMessage) && !string.IsNullOrEmpty(notifyType))
+    {
+        <script>
+            notify({ type: "@notifyType", text: "@notifyMessage" });
+        </script>
+    }
+}
+
+@model DiscoverViewModel
+
+<div id="discover-container">
+    <h1>Similar profiles to <a href="/profile/@Model.UserId">@Model.UserFullname</a></h1>
+    <div id="discover-account-parent">
+        @if (Model.SimilarUsers.Count > 0) {
+            @foreach (DiscoverUserViewModel user in Model.SimilarUsers)
+            {
+                <a class="discover-account-child" href="/profile/@user.UserId">
+                    <img src="/assets/avatars/@user.Avatar" class="discover-account-child-img" />
+                    <p>@user.Fullname</p>
+                    <p>@user.CommonSkillCount @(user.CommonSkillCount > 1 ? "skills incommon" : "skill incommon")</p>
+                </a>
+            }
+        }
+        else
+        {
+            <p>Couldn't find any similar profiles.</p>
+        }
+    </div>
+</div>

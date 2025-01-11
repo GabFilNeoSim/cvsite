@@ -6,22 +6,22 @@ namespace Models;
 public class User : IdentityUser
 {
     [Required]
-    [MaxLength(100)]
+    [MaxLength(20)]
     public string FirstName { get; set; }
 
     [Required]
-    [MaxLength(100)]
+    [MaxLength(20)]
     public string LastName { get; set; }
 
     [Required]
-    [MaxLength(150)]
+    [MaxLength(50)]
     public string Address { get; set; }
 
     [Required]
     [MaxLength(50)]
     public string AvatarUri { get; set; } = "default.png";
 
-    [MaxLength(1000)]
+    [MaxLength(255)]
     public string? Description { get; set; }
 
     [Required]

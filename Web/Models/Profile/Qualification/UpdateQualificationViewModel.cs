@@ -6,15 +6,15 @@ namespace Web.Models;
 public class UpdateQualificationViewModel
 {   
     [Required(ErrorMessage = "Title is required")]
-    [StringLength(150)]
+    [StringLength(50)]
     public string Title { get; set; }
 
     [Required(ErrorMessage = "Description is required")]
-    [StringLength(1000)]
+    [StringLength(255)]
     public string? Description { get; set; }
 
     [Required(ErrorMessage = "Location is required")]
-    [StringLength(150)]
+    [StringLength(50)]
     public string Location { get; set; }
 
     [Required(ErrorMessage = "Start date is required")]

@@ -7,7 +7,7 @@ public class Message
     public int Id { get; set; }
 
     [Required]
-    [MaxLength(2000)]
+    [MaxLength(500)]
     public string Text{ get; set; }
 
     [Required]

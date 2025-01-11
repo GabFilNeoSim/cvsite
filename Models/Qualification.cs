@@ -7,14 +7,14 @@ public class Qualification
     public int Id { get; set; }
 
     [Required]
-    [MaxLength(150)]
+    [MaxLength(50)]
     public string Title { get; set; }
 
-    [MaxLength(1000)]
+    [MaxLength(255)]
     public string? Description { get; set; }
 
     [Required]
-    [MaxLength(150)]
+    [MaxLength(50)]
     public string Location { get; set; }
 
     [Required]

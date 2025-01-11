@@ -9,7 +9,7 @@
 @model ProfileViewModel
 
 @{
-    ViewData["Title"] = "Profile";
+    ViewData["Title"] = $"{Model.User.FirstName} {Model.User.LastName}";
 
     var notifyType = TempData["NotifyType"] as string;
     var notifyMessage = TempData["NotifyMessage"] as string;
@@ -254,6 +254,7 @@ else
                     </div>
                 </div>
             </div>
+            <a class="discover-btn" asp-controller="Discover" asp-action="Index" asp-route-userId="@Model.User.Id">Find similar profiles</a>
         </div>
         <partial name="Partials/_AnonymousMessageModal" model="new AnonymousSendMessageViewModel {ReceiverId = Model.User.Id}" />
     </div>

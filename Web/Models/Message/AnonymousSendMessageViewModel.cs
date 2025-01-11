@@ -5,11 +5,11 @@ namespace Web.Models.Message;
 public class AnonymousSendMessageViewModel
 {
     [Required]
-    [StringLength(2000)]
+    [StringLength(255)]
     public string Text { get; set; }
 
     [Required]
-    [StringLength(100)]
+    [StringLength(50)]
     public string Name { get; set; }
 
     // Hidden

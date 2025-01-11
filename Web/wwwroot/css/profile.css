@@ -211,7 +211,7 @@
     gap: 70px;
     margin-bottom: 10px;
     max-height: 450px;
-    min-height: 200px;
+    min-height: 350px;
     overflow-y: auto;
     padding: 0 10px;
 }
@@ -345,8 +345,9 @@
 
 #misc-parent {
     margin-top: 20px;
-    padding-top: 20px;
+    padding: 40px 0;
     border-top: 1px solid rgb(212, 212, 212);
+    border-bottom: 1px solid rgb(212, 212, 212);
     display: flex;
     gap: 10px;
 }
@@ -527,6 +528,25 @@
     cursor: pointer;
     transition: all 0.3s;
 }
+
+.discover-btn {
+    display: block;
+    width: max-content;
+    background-color: #5289ff;
+    margin: 45px auto 0 auto;
+    color: #fff;
+    padding: 7px 15px;
+    border-radius: 50px;
+    text-decoration: none
+}
+
+.discover-btn:hover {
+    background-color: #4172da;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+
 
 
 @media only screen and (max-width: 1200px) {
