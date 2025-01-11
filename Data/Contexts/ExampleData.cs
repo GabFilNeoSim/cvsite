@@ -22,14 +22,15 @@ public partial class AppDbContext : IdentityDbContext<User>
             LastName = "Smith",
             Address = "123 Main St",
             AvatarUri = "a2138670-ffb4-466c-b40c-44dde76566ed.jpg",
-            Description = "Senior Backend Developer med expertis inom C#, Python och DevOps.",
+            Description = "Senior Backend Developer with expertise in C#, Python, and DevOps.",
             Private = false,
+            VisitCount = 11,
             UserName = user1Email,
             NormalizedUserName = user1Email.ToUpper(),
             Email = user1Email,
             NormalizedEmail = user1Email.ToUpper(),
             EmailConfirmed = true,
-            PasswordHash = "AQAAAAIAAYagAAAAEG719JW0JH1H9VQgj8uzgJ4HLJ+/2qP7NjjLeDMIku1+rtQT16BvU3uracoab0E0Gg==",
+            PasswordHash = "AQAAAAIAAYagAAAAEG719JW0JH1H9VQgj8uzgJ4HLJ+/2qP7NjjLeDMIku1+rtQT16BvU3uracoab0E0Gg==", // 12345
             SecurityStamp = "",
             ConcurrencyStamp = null,
             PhoneNumber = null,
@@ -46,14 +47,15 @@ public partial class AppDbContext : IdentityDbContext<User>
             LastName = "Jones",
             Address = "456 Elm St",
             AvatarUri = "d10ae3ea-a55c-4d4a-8191-2f28ba82dc33.jpg",
-            Description = "Senior Frontend Developer med fokus på JavaScript, React och AI.",
+            Description = "Senior Frontend Developer with a focus on JavaScript, React, and AI.",
             Private = false,
+            VisitCount = 7,
             UserName = user2Email,
             NormalizedUserName = user2Email.ToUpper(),
             Email = user2Email,
             NormalizedEmail = user2Email.ToUpper(),
             EmailConfirmed = true,
-            PasswordHash = "AQAAAAIAAYagAAAAEG719JW0JH1H9VQgj8uzgJ4HLJ+/2qP7NjjLeDMIku1+rtQT16BvU3uracoab0E0Gg==",
+            PasswordHash = "AQAAAAIAAYagAAAAEG719JW0JH1H9VQgj8uzgJ4HLJ+/2qP7NjjLeDMIku1+rtQT16BvU3uracoab0E0Gg==", // 12345
             SecurityStamp = "",
             ConcurrencyStamp = null,
             PhoneNumber = null,
@@ -70,14 +72,15 @@ public partial class AppDbContext : IdentityDbContext<User>
             LastName = "Davis",
             Address = "789 Oak St",
             AvatarUri = "f5069b20-908a-4207-bebf-d1dab2ebc8a2.jpg",
-            Description = "Senior DevOps Engineer med erfarenhet av automation och Cybersecurity.",
+            Description = "Senior DevOps Engineer with experience in automation and cybersecurity.",
             Private = true,
+            VisitCount = 3,
             UserName = user3Email,
             NormalizedUserName = user3Email.ToUpper(),
             Email = user3Email,
             NormalizedEmail = user3Email.ToUpper(),
             EmailConfirmed = true,
-            PasswordHash = "AQAAAAIAAYagAAAAEG719JW0JH1H9VQgj8uzgJ4HLJ+/2qP7NjjLeDMIku1+rtQT16BvU3uracoab0E0Gg==",
+            PasswordHash = "AQAAAAIAAYagAAAAEG719JW0JH1H9VQgj8uzgJ4HLJ+/2qP7NjjLeDMIku1+rtQT16BvU3uracoab0E0Gg==", // 12345
             SecurityStamp = "",
             ConcurrencyStamp = null,
             PhoneNumber = null,
@@ -94,14 +97,15 @@ public partial class AppDbContext : IdentityDbContext<User>
             LastName = "Lee",
             Address = "321 Pine St",
             AvatarUri = "93bf8ebe-0f12-41bf-8fbe-c69a9a44b176.jpg",
-            Description = "Lead Security Engineer med expertis inom IT-säkerhet och nätverksdesign.",
+            Description = "Lead Security Engineer with expertise in IT security and network design.",
             Private = false,
+            VisitCount = 9,
             UserName = user4Email,
             NormalizedUserName = user4Email.ToUpper(),
             Email = user4Email,
             NormalizedEmail = user4Email.ToUpper(),
             EmailConfirmed = true,
-            PasswordHash = "AQAAAAIAAYagAAAAEG719JW0JH1H9VQgj8uzgJ4HLJ+/2qP7NjjLeDMIku1+rtQT16BvU3uracoab0E0Gg==",
+            PasswordHash = "AQAAAAIAAYagAAAAEG719JW0JH1H9VQgj8uzgJ4HLJ+/2qP7NjjLeDMIku1+rtQT16BvU3uracoab0E0Gg==", // 12345
             SecurityStamp = "",
             ConcurrencyStamp = null,
             PhoneNumber = null,
@@ -118,14 +122,15 @@ public partial class AppDbContext : IdentityDbContext<User>
             LastName = "White",
             Address = "654 Birch St",
             AvatarUri = "58c185e2-0754-4499-8f24-c2463e7753e2.jpg",
-            Description = "Senior Backend Developer med erfarenhet av Python och API-utveckling.",
+            Description = "Senior Backend Developer with experience in Python and API development.",
             Private = false,
+            VisitCount = 5,
             UserName = user5Email,
             NormalizedUserName = user5Email.ToUpper(),
             Email = user5Email,
             NormalizedEmail = user5Email.ToUpper(),
             EmailConfirmed = true,
-            PasswordHash = "AQAAAAIAAYagAAAAEG719JW0JH1H9VQgj8uzgJ4HLJ+/2qP7NjjLeDMIku1+rtQT16BvU3uracoab0E0Gg==",
+            PasswordHash = "AQAAAAIAAYagAAAAEG719JW0JH1H9VQgj8uzgJ4HLJ+/2qP7NjjLeDMIku1+rtQT16BvU3uracoab0E0Gg==", // 12345
             SecurityStamp = "",
             ConcurrencyStamp = null,
             PhoneNumber = null,
@@ -142,14 +147,15 @@ public partial class AppDbContext : IdentityDbContext<User>
             LastName = "Hall",
             Address = "987 Cedar St",
             AvatarUri = "8abcbe76-a51d-4f29-8baf-321e6de65fb3.jpg",
-            Description = "Tech Lead med erfarenhet av Fullstack-utveckling och systemdesign.",
+            Description = "Tech Lead with experience in Fullstack development and system design.",
             Private = false,
+            VisitCount = 14,
             UserName = user6Email,
             NormalizedUserName = user6Email.ToUpper(),
             Email = user6Email,
             NormalizedEmail = user6Email.ToUpper(),
             EmailConfirmed = true,
-            PasswordHash = "AQAAAAIAAYagAAAAEG719JW0JH1H9VQgj8uzgJ4HLJ+/2qP7NjjLeDMIku1+rtQT16BvU3uracoab0E0Gg==",
+            PasswordHash = "AQAAAAIAAYagAAAAEG719JW0JH1H9VQgj8uzgJ4HLJ+/2qP7NjjLeDMIku1+rtQT16BvU3uracoab0E0Gg==", // 12345
             SecurityStamp = "",
             ConcurrencyStamp = null,
             PhoneNumber = null,
@@ -255,59 +261,58 @@ public partial class AppDbContext : IdentityDbContext<User>
 
         // Insert user and skill relationships
         modelBuilder.Entity<UserSkill>().HasData(
-            new { UserId = user1.Id, SkillId = 1 }, // C#
-            new { UserId = user1.Id, SkillId = 2 }, // JavaScript
-            new { UserId = user1.Id, SkillId = 3 }, // Python
-            new { UserId = user1.Id, SkillId = 4 }, // SQL
-            new { UserId = user1.Id, SkillId = 5 }, // DevOps
-            new { UserId = user1.Id, SkillId = 6 }, // HTML/CSS
-            new { UserId = user1.Id, SkillId = 7 }, // React
-            new { UserId = user1.Id, SkillId = 8 }, // ASP.NET
-            new { UserId = user1.Id, SkillId = 14 }, // Docker
-            new { UserId = user1.Id, SkillId = 15 }, // Kubernetes
+            new { UserId = user1.Id, SkillId = 1 },
+            new { UserId = user1.Id, SkillId = 2 },
+            new { UserId = user1.Id, SkillId = 3 },
+            new { UserId = user1.Id, SkillId = 4 },
+            new { UserId = user1.Id, SkillId = 5 },
+            new { UserId = user1.Id, SkillId = 6 },
+            new { UserId = user1.Id, SkillId = 7 },
+            new { UserId = user1.Id, SkillId = 8 },
+            new { UserId = user1.Id, SkillId = 14 },
+            new { UserId = user1.Id, SkillId = 15 },
 
-            new { UserId = user2.Id, SkillId = 2 }, // JavaScript
-            new { UserId = user2.Id, SkillId = 4 }, // SQL
-            new { UserId = user2.Id, SkillId = 6 }, // HTML/CSS
-            new { UserId = user2.Id, SkillId = 7 }, // React
-            new { UserId = user2.Id, SkillId = 9 }, // Angular
-            new { UserId = user2.Id, SkillId = 12 }, // Node.js
-            new { UserId = user2.Id, SkillId = 13 }, // TypeScript
+            new { UserId = user2.Id, SkillId = 2 },
+            new { UserId = user2.Id, SkillId = 4 },
+            new { UserId = user2.Id, SkillId = 6 },
+            new { UserId = user2.Id, SkillId = 7 },
+            new { UserId = user2.Id, SkillId = 9 },
+            new { UserId = user2.Id, SkillId = 12 },
+            new { UserId = user2.Id, SkillId = 13 },
 
-            new { UserId = user3.Id, SkillId = 1 }, // C#
-            new { UserId = user3.Id, SkillId = 3 }, // Python
-            new { UserId = user3.Id, SkillId = 4 }, // SQL
-            new { UserId = user3.Id, SkillId = 14 }, // Docker
-            new { UserId = user3.Id, SkillId = 11 }, // Cybersecurity
+            new { UserId = user3.Id, SkillId = 1 },
+            new { UserId = user3.Id, SkillId = 3 },
+            new { UserId = user3.Id, SkillId = 4 },
+            new { UserId = user3.Id, SkillId = 14 },
+            new { UserId = user3.Id, SkillId = 11 },
 
-            new { UserId = user4.Id, SkillId = 1 }, // C#
-            new { UserId = user4.Id, SkillId = 4 }, // SQL
-            new { UserId = user4.Id, SkillId = 6 }, // HTML/CSS
-            new { UserId = user4.Id, SkillId = 7 }, // React
-            new { UserId = user4.Id, SkillId = 8 }, // ASP.NET
-            new { UserId = user4.Id, SkillId = 9 }, // Angular
-            new { UserId = user4.Id, SkillId = 16 }, // CSS
+            new { UserId = user4.Id, SkillId = 1 },
+            new { UserId = user4.Id, SkillId = 4 },
+            new { UserId = user4.Id, SkillId = 6 },
+            new { UserId = user4.Id, SkillId = 7 },
+            new { UserId = user4.Id, SkillId = 8 },
+            new { UserId = user4.Id, SkillId = 9 },
+            new { UserId = user4.Id, SkillId = 16 },
 
-            new { UserId = user5.Id, SkillId = 3 }, // Python
-            new { UserId = user5.Id, SkillId = 8 }, // ASP.NET
-            new { UserId = user5.Id, SkillId = 14 }, // Docker
-            new { UserId = user5.Id, SkillId = 19 }, // Terraform
+            new { UserId = user5.Id, SkillId = 3 },
+            new { UserId = user5.Id, SkillId = 8 },
+            new { UserId = user5.Id, SkillId = 14 },
+            new { UserId = user5.Id, SkillId = 19 },
 
-            new { UserId = user6.Id, SkillId = 2 }, // JavaScript
-            new { UserId = user6.Id, SkillId = 3 }, // Python
-            new { UserId = user6.Id, SkillId = 4 }, // SQL
-            new { UserId = user6.Id, SkillId = 5 }, // DevOps
-            new { UserId = user6.Id, SkillId = 6 }, // HTML/CSS
-            new { UserId = user6.Id, SkillId = 7 }, // React
-            new { UserId = user6.Id, SkillId = 12 }, // Node.js
-            new { UserId = user6.Id, SkillId = 14 }, // Docker
-            new { UserId = user6.Id, SkillId = 15 }, // Kubernetes
-            new { UserId = user6.Id, SkillId = 16 }, // CSS
-            new { UserId = user6.Id, SkillId = 19 }, // Terraform
-            new { UserId = user6.Id, SkillId = 23 }, // Git
-            new { UserId = user6.Id, SkillId = 24 }  // Jenkins
+            new { UserId = user6.Id, SkillId = 2 },
+            new { UserId = user6.Id, SkillId = 3 },
+            new { UserId = user6.Id, SkillId = 4 },
+            new { UserId = user6.Id, SkillId = 5 },
+            new { UserId = user6.Id, SkillId = 6 },
+            new { UserId = user6.Id, SkillId = 7 },
+            new { UserId = user6.Id, SkillId = 12 },
+            new { UserId = user6.Id, SkillId = 14 },
+            new { UserId = user6.Id, SkillId = 15 },
+            new { UserId = user6.Id, SkillId = 16 },
+            new { UserId = user6.Id, SkillId = 19 },
+            new { UserId = user6.Id, SkillId = 23 },
+            new { UserId = user6.Id, SkillId = 24 }
         );
-
 
         // Insert qualification types
         modelBuilder.Entity<QualificationType>().HasData(
@@ -317,36 +322,36 @@ public partial class AppDbContext : IdentityDbContext<User>
 
         // Insert qualifications
         modelBuilder.Entity<Qualification>().HasData(
-            new Qualification { Id = 1, Title = "Gymnasieutbildning i Ekonomiprogrammet", Description = "Inriktning mot företagsekonomi", Location = "Örebro Gymnasium", StartDate = new DateOnly(2012, 9, 1), EndDate = new DateOnly(2015, 6, 30), UserId = user1.Id, TypeId = 1 },
-            new Qualification { Id = 2, Title = "Kandidat inom systemutveckling", Description = "3 årig kandidatexamen inom systemutveckling", Location = "Örebro Universitet", StartDate = new DateOnly(2015, 9, 1), EndDate = new DateOnly(2019, 6, 30), UserId = user1.Id, TypeId = 1 },
-            new Qualification { Id = 3, Title = "Systemutvecklare", Description = "Arbetade som systemutvecklare med fokus på backend-utveckling.", Location = "TechCorp", StartDate = new DateOnly(2019, 7, 1), EndDate = new DateOnly(2022, 12, 31), UserId = user1.Id, TypeId = 2 },
-            new Qualification { Id = 4, Title = "Senior Backend Developer", Description = "Ledde utvecklingen av serverlösningar och databasstruktur.", Location = "CloudTech", StartDate = new DateOnly(2023, 1, 1), EndDate = null, UserId = user1.Id, TypeId = 2 },
+           new Qualification { Id = 1, Title = "High School Degree in the Economics Program", Description = "Focus on Business Economics", Location = "Jensen High School", StartDate = new DateOnly(2012, 9, 1), EndDate = new DateOnly(2015, 6, 30), UserId = user1.Id, TypeId = 1 },
+           new Qualification { Id = 2, Title = "Bachelor's Degree in System Development", Description = "3-year Bachelor's degree in system development", Location = "Örebro University", StartDate = new DateOnly(2015, 9, 1), EndDate = new DateOnly(2019, 6, 30), UserId = user1.Id, TypeId = 1 },
+           new Qualification { Id = 3, Title = "System Developer", Description = "Worked as a system developer with a focus on backend development.", Location = "TechCorp", StartDate = new DateOnly(2019, 7, 1), EndDate = new DateOnly(2022, 12, 31), UserId = user1.Id, TypeId = 2 },
+           new Qualification { Id = 4, Title = "Senior Backend Developer", Description = "Led the development of server solutions and database structure.", Location = "CloudTech", StartDate = new DateOnly(2023, 1, 1), EndDate = null, UserId = user1.Id, TypeId = 2 },
 
-            new Qualification { Id = 5, Title = "Gymnasieutbildning i Naturvetenskap", Description = "Inriktning på matematik och naturvetenskap", Location = "Stockholms Gymnasium", StartDate = new DateOnly(2013, 9, 1), EndDate = new DateOnly(2016, 6, 30), UserId = user2.Id, TypeId = 1 },
-            new Qualification { Id = 6, Title = "Master inom datavetenskap", Description = "2 års masterprogram inom datavetenskap med fokus på AI", Location = "Stockholms Universitet", StartDate = new DateOnly(2017, 8, 1), EndDate = new DateOnly(2019, 6, 30), UserId = user2.Id, TypeId = 1 },
-            new Qualification { Id = 7, Title = "Frontend Developer", Description = "Arbetade med att utveckla användargränssnitt och interaktivitet.", Location = "Web Solutions", StartDate = new DateOnly(2019, 8, 1), EndDate = new DateOnly(2021, 5, 31), UserId = user2.Id, TypeId = 2 },
-            new Qualification { Id = 8, Title = "Senior Frontend Developer", Description = "Ledde frontendteamet i utvecklingen av dynamiska webbsidor.", Location = "NextGen Web", StartDate = new DateOnly(2021, 6, 1), EndDate = null, UserId = user2.Id, TypeId = 2 },
+           new Qualification { Id = 5, Title = "High School Degree in Natural Sciences", Description = "Focus on mathematics and natural sciences", Location = "London Academy", StartDate = new DateOnly(2013, 9, 1), EndDate = new DateOnly(2016, 6, 30), UserId = user2.Id, TypeId = 1 },
+           new Qualification { Id = 6, Title = "Master's in Computer Science", Description = "2-year Master's program in Computer Science with a focus on AI", Location = "Harvard University", StartDate = new DateOnly(2017, 8, 1), EndDate = new DateOnly(2019, 6, 30), UserId = user2.Id, TypeId = 1 },
+           new Qualification { Id = 7, Title = "Frontend Developer", Description = "Worked on developing user interfaces and interactivity.", Location = "Web Solutions", StartDate = new DateOnly(2019, 8, 1), EndDate = new DateOnly(2021, 5, 31), UserId = user2.Id, TypeId = 2 },
+           new Qualification { Id = 8, Title = "Senior Frontend Developer", Description = "Led the frontend team in the development of dynamic web pages.", Location = "NextGen Web", StartDate = new DateOnly(2021, 6, 1), EndDate = null, UserId = user2.Id, TypeId = 2 },
 
-            new Qualification { Id = 9, Title = "Gymnasieutbildning i Teknikprogrammet", Description = "Inriktning på IT och programmering", Location = "Uppsala Gymnasium", StartDate = new DateOnly(2013, 9, 1), EndDate = new DateOnly(2016, 6, 30), UserId = user3.Id, TypeId = 1 },
-            new Qualification { Id = 10, Title = "Kandidat inom mjukvaruutveckling", Description = "3 års kandidatexamen inom mjukvaruutveckling", Location = "Uppsala Universitet", StartDate = new DateOnly(2016, 9, 1), EndDate = new DateOnly(2019, 6, 30), UserId = user3.Id, TypeId = 1 },
-            new Qualification { Id = 11, Title = "DevOps Engineer", Description = "Arbetade som DevOps Engineer med fokus på automation och CI/CD pipelines.", Location = "CloudTech", StartDate = new DateOnly(2019, 7, 1), EndDate = new DateOnly(2022, 12, 31), UserId = user3.Id, TypeId = 2 },
-            new Qualification { Id = 12, Title = "Senior DevOps Engineer", Description = "Ledde CI/CD-projekt och utvecklade effektiva bygg- och deploylösningar.", Location = "NextGen Cloud", StartDate = new DateOnly(2023, 1, 1), EndDate = null, UserId = user3.Id, TypeId = 2 },
+           new Qualification { Id = 9, Title = "High School Degree in Engineering Program", Description = "Focus on IT and programming", Location = "Oxford High School", StartDate = new DateOnly(2013, 9, 1), EndDate = new DateOnly(2016, 6, 30), UserId = user3.Id, TypeId = 1 },
+           new Qualification { Id = 10, Title = "Bachelor's Degree in Software Development", Description = "3-year Bachelor's degree in software development", Location = "University of California", StartDate = new DateOnly(2016, 9, 1), EndDate = new DateOnly(2019, 6, 30), UserId = user3.Id, TypeId = 1 },
+           new Qualification { Id = 11, Title = "DevOps Engineer", Description = "Worked as a DevOps Engineer with a focus on automation and CI/CD pipelines.", Location = "CloudTech", StartDate = new DateOnly(2019, 7, 1), EndDate = new DateOnly(2022, 12, 31), UserId = user3.Id, TypeId = 2 },
+           new Qualification { Id = 12, Title = "Senior DevOps Engineer", Description = "Led CI/CD projects and developed efficient build and deploy solutions.", Location = "NextGen Cloud", StartDate = new DateOnly(2023, 1, 1), EndDate = null, UserId = user3.Id, TypeId = 2 },
 
-            new Qualification { Id = 13, Title = "Gymnasieutbildning i Data- och IT-programmet", Description = "Inriktning på nätverksteknik och säkerhet", Location = "Chalmers Gymnasium", StartDate = new DateOnly(2012, 9, 1), EndDate = new DateOnly(2015, 6, 30), UserId = user4.Id, TypeId = 1 },
-            new Qualification { Id = 14, Title = "Master inom IT-säkerhet", Description = "Masterexamen inom IT-säkerhet och nätverksdesign", Location = "Chalmers Tekniska Högskola", StartDate = new DateOnly(2016, 9, 1), EndDate = new DateOnly(2018, 6, 30), UserId = user4.Id, TypeId = 1 },
-            new Qualification { Id = 15, Title = "IT-säkerhetsspecialist", Description = "Arbetade som IT-säkerhetsspecialist med fokus på penetrationstester och sårbarhetsbedömning.", Location = "SecureTech", StartDate = new DateOnly(2018, 7, 1), EndDate = new DateOnly(2022, 5, 31), UserId = user4.Id, TypeId = 2 },
-            new Qualification { Id = 16, Title = "Lead Security Engineer", Description = "Ledde säkerhetsåtgärder på företagsnivå, inklusive sårbarhetshantering och säkerhetsrevisioner.", Location = "CyberSafe", StartDate = new DateOnly(2022, 6, 1), EndDate = null, UserId = user4.Id, TypeId = 2 },
+           new Qualification { Id = 13, Title = "High School Degree in Network Engineering Program", Description = "Focus on network technology and security", Location = "Swiss Technical Academy", StartDate = new DateOnly(2012, 9, 1), EndDate = new DateOnly(2015, 6, 30), UserId = user4.Id, TypeId = 1 },
+           new Qualification { Id = 14, Title = "Master's in IT Security", Description = "Master's degree in IT security and network design", Location = "ETH Zurich", StartDate = new DateOnly(2016, 9, 1), EndDate = new DateOnly(2018, 6, 30), UserId = user4.Id, TypeId = 1 },
+           new Qualification { Id = 15, Title = "IT Security Specialist", Description = "Worked as an IT security specialist with a focus on penetration testing and vulnerability assessments.", Location = "SecureTech", StartDate = new DateOnly(2018, 7, 1), EndDate = new DateOnly(2022, 5, 31), UserId = user4.Id, TypeId = 2 },
+           new Qualification { Id = 16, Title = "Lead Security Engineer", Description = "Led security measures at the enterprise level, including vulnerability management and security audits.", Location = "CyberSafe", StartDate = new DateOnly(2022, 6, 1), EndDate = null, UserId = user4.Id, TypeId = 2 },
 
-            new Qualification { Id = 17, Title = "Gymnasieutbildning i IT och nätverksprogmmet", Description = "Inriktning på IT och nätverk", Location = "Lunds Gymnasium", StartDate = new DateOnly(2012, 9, 1), EndDate = new DateOnly(2015, 6, 30), UserId = user5.Id, TypeId = 1 },
-            new Qualification { Id = 18, Title = "Kandidat inom dataingenjör", Description = "3 års kandidatexamen inom dataingenjör", Location = "Lunds Universitet", StartDate = new DateOnly(2016, 9, 1), EndDate = new DateOnly(2019, 6, 30), UserId = user5.Id, TypeId = 1 },
-            new Qualification { Id = 19, Title = "Backend Developer", Description = "Arbetade som backendutvecklare med fokus på databasdesign och serverhantering.", Location = "CodeFactory", StartDate = new DateOnly(2019, 7, 1), EndDate = new DateOnly(2021, 12, 31), UserId = user5.Id, TypeId = 2 },
-            new Qualification { Id = 20, Title = "Senior Backend Developer", Description = "Arbetade som senior backendutvecklare och ledde utvecklingen av API:er.", Location = "DataTech", StartDate = new DateOnly(2022, 1, 1), EndDate = null, UserId = user5.Id, TypeId = 2 },
+           new Qualification { Id = 17, Title = "High School Degree in IT and Network Program", Description = "Focus on IT and networking", Location = "University of Melbourne", StartDate = new DateOnly(2012, 9, 1), EndDate = new DateOnly(2015, 6, 30), UserId = user5.Id, TypeId = 1 },
+           new Qualification { Id = 18, Title = "Bachelor's Degree in Computer Engineering", Description = "3-year Bachelor's degree in computer engineering", Location = "University of Sydney", StartDate = new DateOnly(2016, 9, 1), EndDate = new DateOnly(2019, 6, 30), UserId = user5.Id, TypeId = 1 },
+           new Qualification { Id = 19, Title = "Backend Developer", Description = "Worked as a backend developer with a focus on database design and server management.", Location = "CodeFactory", StartDate = new DateOnly(2019, 7, 1), EndDate = new DateOnly(2021, 12, 31), UserId = user5.Id, TypeId = 2 },
+           new Qualification { Id = 20, Title = "Senior Backend Developer", Description = "Worked as a senior backend developer and led the development of APIs.", Location = "DataTech", StartDate = new DateOnly(2022, 1, 1), EndDate = null, UserId = user5.Id, TypeId = 2 },
 
-            new Qualification { Id = 21, Title = "Gymnasieutbildning i Teknikprogrammet", Description = "Inriktning på IT och programmering", Location = "KTH Gymnasium", StartDate = new DateOnly(2012, 9, 1), EndDate = new DateOnly(2015, 6, 30), UserId = user6.Id, TypeId = 1 },
-            new Qualification { Id = 22, Title = "Kandidat inom IT och programmering", Description = "3 års kandidatexamen inom IT och programmering", Location = "Göteborgs Universitet", StartDate = new DateOnly(2014, 9, 1), EndDate = new DateOnly(2017, 6, 30), UserId = user6.Id, TypeId = 1 },
-            new Qualification { Id = 23, Title = "Master inom programvaruteknik", Description = "2 års masterprogram inom programvaruteknik med fokus på systemdesign och arkitektur", Location = "KTH", StartDate = new DateOnly(2017, 8, 1), EndDate = new DateOnly(2019, 6, 30), UserId = user6.Id, TypeId = 1 },
-            new Qualification { Id = 24, Title = "Fullstack Developer", Description = "Arbetade som Fullstack Developer med fokus på både frontend och backend", Location = "Tech Innovators", StartDate = new DateOnly(2019, 7, 1), EndDate = new DateOnly(2021, 12, 31), UserId = user6.Id, TypeId = 2 },
-            new Qualification { Id = 25, Title = "Tech Lead", Description = "Ledde utvecklingsteamet för ett större systemprojekt inom fintech.", Location = "Fintech Solutions", StartDate = new DateOnly(2022, 1, 1), EndDate = null, UserId = user6.Id, TypeId = 2 }
+           new Qualification { Id = 21, Title = "High School Degree in Engineering Program", Description = "Focus on IT and programming", Location = "MIT High School", StartDate = new DateOnly(2012, 9, 1), EndDate = new DateOnly(2015, 6, 30), UserId = user6.Id, TypeId = 1 },
+           new Qualification { Id = 22, Title = "Bachelor's Degree in IT and Programming", Description = "3-year Bachelor's degree in IT and programming", Location = "University of Amsterdam", StartDate = new DateOnly(2014, 9, 1), EndDate = new DateOnly(2017, 6, 30), UserId = user6.Id, TypeId = 1 },
+           new Qualification { Id = 23, Title = "Master's in Software Engineering", Description = "2-year Master's program in software engineering with a focus on system design and architecture", Location = "University of Cambridge", StartDate = new DateOnly(2017, 8, 1), EndDate = new DateOnly(2019, 6, 30), UserId = user6.Id, TypeId = 1 },
+           new Qualification { Id = 24, Title = "Fullstack Developer", Description = "Worked as a Fullstack Developer focusing on both frontend and backend", Location = "Tech Innovators", StartDate = new DateOnly(2019, 7, 1), EndDate = new DateOnly(2021, 12, 31), UserId = user6.Id, TypeId = 2 },
+           new Qualification { Id = 25, Title = "Tech Lead", Description = "Led the development team for a major fintech system project.", Location = "Fintech Solutions", StartDate = new DateOnly(2022, 1, 1), EndDate = null, UserId = user6.Id, TypeId = 2 }
         );
 
         // Insert messages
