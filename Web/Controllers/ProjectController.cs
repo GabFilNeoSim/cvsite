@@ -222,6 +222,11 @@ public class ProjectController : BaseController
             return Error("Unknown Project", "Project not found!");
         }
 
+        if (userId != project.OwnerId)
+        {
+            return Error("Unauthorized", "You do not own this project");
+        }
+
         var model = new UpdateProjectViewModel
         {
             ProjectId = project.Id,
@@ -253,6 +258,11 @@ public class ProjectController : BaseController
         if (project == null)
         {
             return Error("Unknown Project", "Project not found!");
+        }
+
+        if (userId != project.OwnerId)
+        {
+            return Unauthorized("You do not own this project.");
         }
 
         if (project.Title != model.Title) project.Title = model.Title;
@@ -335,6 +345,11 @@ public class ProjectController : BaseController
         if (project == null)
         {
             return Error("Unknown Project", "Project not found!");
+        }
+
+        if (userId != project.OwnerId)
+        {
+            return Unauthorized("You do not own this project.");
         }
 
         _context.Projects.Remove(project);

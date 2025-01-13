@@ -11,7 +11,6 @@ public class BaseController : Controller
     protected readonly AppDbContext _context;
     protected readonly UserManager<User> _userManager;
 
-	// Constructor with dependency injecting.
 	public BaseController(AppDbContext context, UserManager<User> userManager)
     {
         _context = context;
@@ -23,7 +22,6 @@ public class BaseController : Controller
 
     public override void OnActionExecuting(ActionExecutingContext context)
     {
-		// Check if the user is authenticated and store the authenticated user's ID in ViewData.
 		if (User.Identity.IsAuthenticated)
         {
             ViewData["UserId"] = GetUserIdFromClaim();

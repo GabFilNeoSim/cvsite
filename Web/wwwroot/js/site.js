@@ -52,7 +52,6 @@ function scrollToBottom() {
     const messageParent = document.querySelector('.message-parent');
     if (messageParent) {
         messageParent.scrollTop = messageParent.scrollHeight;
-        console.log("asd");
     }
 }
 
@@ -70,11 +69,8 @@ $("#delete-work-btn, #delete-education-btn, #delete-project-btn, #deactivate-acc
 
 $("#confirm-yes").on("click", function (event) {
     event.preventDefault();
-    //console.log($(`.${currentConfirmationForm}[data-fid="${currentFormDataId}"]`));
-
     $(`.${currentConfirmationForm}[data-fid="${currentFormDataId}"]`).submit();
 });
-
 
 function showConfirmModal(text) {
     $("#confirm-wrapper").show();

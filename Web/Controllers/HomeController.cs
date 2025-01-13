@@ -10,15 +10,13 @@ namespace Web.Controllers;
 
 public class HomeController : BaseController
 {
-	// Constructor with dependency injection
 	public HomeController(AppDbContext context, UserManager<User> userManager) : base(context, userManager) { }
 
     public async Task<IActionResult> Index()
     {
-		// Creating a HomeViewModel and populating it with data from the database.
 		var model = new HomeViewModel
         {
-			// Fetching all users and projecting them into UserViewModel instances.
+            // Get all users
 			Users = await _context.Users.Where(x => !x.IsDeactivated).Select(x => new UserViewModel
             {
                 Id = x.Id,
@@ -29,13 +27,14 @@ public class HomeController : BaseController
                 Private = x.Private
             }).ToListAsync(),
 
-			// Fetching the latest project based on the CreatedAt timestamp and ordering by most recent first.
+			// Get latest project
 			LatestProject = await _context.Projects
                 .OrderByDescending(y => y.CreatedAt)
                 .Select(p => new HomeProjectViewModel
                 {
                     Title = p.Title,
                     Description = p.Description,
+
 					// Fetching associated users for the project
 					Users = _context.UserProjects.Where(up => up.ProjectId == p.Id).Select(u => new HomeProjectUserViewModel
                     {

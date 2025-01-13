@@ -13,7 +13,6 @@ public class AuthController : BaseController
 {
     private readonly SignInManager<User> _signInManager;
 
-    // Constructor with dependency injection
     public AuthController(AppDbContext context, UserManager<User> userManager, SignInManager<User> signInManager) : base(context, userManager)
     {
         _signInManager = signInManager;
@@ -23,11 +22,10 @@ public class AuthController : BaseController
     [HttpGet("auth/register")]
     public IActionResult Register() => View(new RegisterViewModel());
 
-	// Endpoint for account registration logic
+	// Endpoint for account registration post request
 	[HttpPost("auth/register")]
     public async Task<IActionResult> Register(RegisterViewModel model)
     {   
-        // Return errors if the model is invalid
         if (!ModelState.IsValid) return View(model);
 
 		// Ensure password fields are not null.
@@ -50,7 +48,6 @@ public class AuthController : BaseController
             Address = model.Address
         };
 
-		// Attempt to create the user.
 		var result = await _userManager.CreateAsync(newUser, model.Password);
 
 		// Handle any errors during user creation.
@@ -63,10 +60,8 @@ public class AuthController : BaseController
             return View(model);
         }
 
-		// Sign the user in after successful registration.
 		await _signInManager.SignInAsync(newUser, isPersistent: false);
 
-		// Redirect to the profile page of the new user.
 		return RedirectToAction("Index", "Profile", new { id = newUser.Id });
     }
 
@@ -74,11 +69,10 @@ public class AuthController : BaseController
 	[HttpGet("auth/login")]
     public IActionResult Login() => View(new LoginViewModel());
 
-	// Endpoint for account login logic
+	// Endpoint for account login post request
 	[HttpPost("auth/login")]
     public async Task<IActionResult> Login(LoginViewModel model)
     {
-        // Return errors if the model is invalid
         if (!ModelState.IsValid) return View(model);
 
 		// Ensure the password field is not null.
@@ -95,7 +89,6 @@ public class AuthController : BaseController
             return View(model);
         }
 
-        // If the user is deactivated return and display errors
         if (user.IsDeactivated)
         {
             TempData["NotifyType"] = "error";
@@ -131,7 +124,7 @@ public class AuthController : BaseController
         return RedirectToAction("Index", "Profile", new { id = user.Id });
     }
 
-	// Endpoint for account logout logic
+	// Endpoint for account logout post request
 	[HttpPost("auth/logout")]
     public async Task<IActionResult> Logout()
     {
@@ -139,30 +132,27 @@ public class AuthController : BaseController
         return RedirectToAction("Index", "Home");
     }
 
-    // Endpoint for account deactivation logic
+    // Endpoint for account deactivation post request
     [Authorize]
     [HttpPost("auth/deactivate")]
     public async Task<IActionResult> Deactivate()
     {
-		// Retrieves the currently logged-in user's ID
 		string? userId = GetUserIdFromClaim();
         if (userId == null)
         {
             return Error("User not logged in", "The user is not logged in");
         }
 
-		// Attempts to find the user in the database using the ID.
 		User? user = await _userManager.FindByIdAsync(userId);
         if (user == null)
         {
             return Error("Internal error", "The user was not found");
         }
 
-        // Updates and signs out user.
-        
         user.IsDeactivated = true;
 
         _context.Update(user);
+
         await _context.SaveChangesAsync();
         await _signInManager.SignOutAsync();
 

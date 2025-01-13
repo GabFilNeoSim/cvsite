@@ -2,21 +2,14 @@
     $("#message-container").show();
 });
 
-
 $("#message-modal-close").on("click", function () {
     $("#message-container").hide();
 });
 
+$("#profile-avatar").on("click", function () {
+    $("#profile-change-avatar-input").click();
+});
 
-
-const avatar = document.getElementById("profile-avatar");
-const form = document.getElementById("profile-change-avatar");
-const input = document.getElementById("profile-change-avatar-input");
-
-avatar.addEventListener("click", () => input.click());
-
-input.addEventListener("change", () => {
-    if (input.files.length > 0) {
-        form.submit();
-    }
+$("#profile-change-avatar-input").on("change", function () {
+    $("#profile-change-avatar").submit();
 });

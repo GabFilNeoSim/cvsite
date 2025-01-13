@@ -13,6 +13,9 @@ public class DiscoverController : BaseController
 {
     public DiscoverController(AppDbContext context, UserManager<User> userManager) : base(context, userManager) { }
 
+    /// <summary>
+    /// Endpoint for discover simmilar profiles page
+    /// </summary>
     [Authorize]
     [HttpGet("{userId}/discover")]
     public async Task<IActionResult> Index(string userId)
@@ -32,6 +35,7 @@ public class DiscoverController : BaseController
 
         var userSkillIds = user.Skills.Select(us => us.SkillId).ToList();
 
+        // Get top 5 users with similar skills
         var topUsers = await _context.Users
             .Where(u => u.Id != userId && !u.IsDeactivated)
             .Select(u => new

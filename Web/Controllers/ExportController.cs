@@ -45,7 +45,7 @@ public class ExportController : BaseController
                 Private = user.Private,
             },
 
-            // Get work experience qualifications.
+            // Get user work experience
             WorkExperience = user.Qualifications.Where(x => x.Type.Name == "Work").OrderByDescending(x => x.StartDate).Select(y => new QualificationViewModel
             {
                 Title = y.Title,
@@ -55,7 +55,7 @@ public class ExportController : BaseController
                 EndDate = y.EndDate?.ToString("MMM yyyy")
             }).ToList(),
 
-            // Get education qualifications.
+            // Get user education experience
             Education = user.Qualifications.Where(x => x.Type.Name == "Education").OrderByDescending(x => x.StartDate).Select(y => new QualificationViewModel
             {
                 Title = y.Title,
@@ -65,20 +65,20 @@ public class ExportController : BaseController
                 EndDate = y.EndDate?.ToString("MMM yyyy")
             }).ToList(),
 
-			// Get the user's skills.
+			// Get user skills
 			Skills = user.Skills.Select(x => new SkillViewModel
             {
                 Title = x.Skill.Title,
             }).ToList(),
 
-			// Get the user's collaborating projects.
+			// Get the users collaborating projects.
 			CollaboratingProjects = user.Projects.Select(x => new ProfileProjectViewModel
             {
                 Title = x.Project.Title,
                 Description = x.Project.Description
             }).ToList(),
 
-			// Get the user's owned projects.
+			// Get the users owned projects.
 			OwnedProjects = await _context.Projects.Where(x => x.OwnerId == user.Id).Select(p => new ProfileProjectViewModel
             {
                 Id = p.Id,

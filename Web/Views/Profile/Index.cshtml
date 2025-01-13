@@ -241,7 +241,7 @@ else
                         {
                             @foreach(ProfileProjectViewModel project in Model.Projects)
                             {
-                                <a class="profile-project-child">
+                                <a class="profile-project-child" asp-controller="Project" asp-action="MyProjects">
                                     <p class="profile-project-child-title">@project.Title</p>
                                     <p>@project.Description</p>
                                 </a>
