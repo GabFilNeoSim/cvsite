@@ -241,10 +241,20 @@ else
                         {
                             @foreach(ProfileProjectViewModel project in Model.Projects)
                             {
-                                <a class="profile-project-child" asp-controller="Project" asp-action="MyProjects">
-                                    <p class="profile-project-child-title">@project.Title</p>
-                                    <p>@project.Description</p>
-                                </a>
+                                if (signInManager.IsSignedIn(User))
+                                {
+                                    <a class="profile-project-child" asp-controller="Project" asp-action="MyProjects">
+                                        <p class="profile-project-child-title">@project.Title</p>
+                                        <p>@project.Description</p>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a class="profile-project-child" asp-controller="Project" asp-action="Index">
+                                        <p class="profile-project-child-title">@project.Title</p>
+                                        <p>@project.Description</p>
+                                    </a>
+                                }
                             }
                         }
                         else 
