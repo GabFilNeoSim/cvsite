@@ -1,9 +1,4 @@
-﻿
-$("#searchbar input").on('keyup', function (event) {
-    processChange(event);
-});
-
-function updateLinkContent() {
+﻿function updateLinkContent() {
     if ($(window).width() <= 700) {
         $('#home').html('<i class="fa fa-home"></i>');
     } else {
@@ -11,11 +6,17 @@ function updateLinkContent() {
     }
 }
 
-// Run on page load
 $(document).ready(updateLinkContent);
 
-// Run on window resize
 $(window).resize(updateLinkContent);
+
+
+
+$("#searchbar input").on('keyup', function (event) {
+    processChange(event);
+});
+
+const processChange = debounce(searchUsers);
 
 function debounce(func, timeout = 500) {
     let timer;
@@ -24,7 +25,7 @@ function debounce(func, timeout = 500) {
         timer = setTimeout(() => { func.apply(this, args); }, timeout);
     };
 }
-function saveInput(event) {
+function searchUsers(event) {
     const search = event.target.value;
     if (!search) {
         $('#search-result').hide();
@@ -42,7 +43,6 @@ function saveInput(event) {
         }
     });
 }
-const processChange = debounce(saveInput);
 
 function listUsers(users) {
     $("#search-result").html("");

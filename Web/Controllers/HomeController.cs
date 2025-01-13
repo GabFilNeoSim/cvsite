@@ -65,12 +65,14 @@ public class HomeController : BaseController
         var searchTerms = search.Split(" ", StringSplitOptions.RemoveEmptyEntries);
 
         // Get users based on search criteria
-        var users = await _context.Users.Where(u =>
-            searchTerms.All(term =>
-                u.FirstName.Contains(term) ||
-                u.LastName.Contains(term) ||
-                u.Skills.Any(s => s.Skill.Title.Contains(term))
-            )).Select(u => new SearchUserViewModel
+        var users = await _context.Users
+            .Where(u =>
+                searchTerms.All(term =>
+                    u.FirstName.Contains(term) ||
+                    u.LastName.Contains(term) ||
+                    u.Skills.Any(s => s.Skill.Title.Contains(term))
+                ))
+            .Select(u => new SearchUserViewModel
             {
                 Id = u.Id,
                 Name = u.FirstName + " " + u.LastName,
