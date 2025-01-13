@@ -53,46 +53,29 @@ public class HomeController : BaseController
 		return View(model);
     }
 
-	// An HTTP GET method to search for users by a query string.
-	[HttpGet("home/users")]
-    public async Task<IActionResult> SearchUsers([FromQuery] string query)
+    // An HTTP GET method to search for users by a query string.
+    [HttpGet("home/users")]
+    public async Task<IActionResult> SearchUsers([FromQuery] string search)
     {
-        if (string.IsNullOrWhiteSpace(query))
+        if (string.IsNullOrWhiteSpace(search))
         {
             return Ok(new List<SearchUserViewModel>());
         }
 
-        string[] queryParts = query.ToLower().Split(" ", StringSplitOptions.RemoveEmptyEntries);
+        var searchTerms = search.Split(" ", StringSplitOptions.RemoveEmptyEntries);
 
-        // Get all users that is not private nor is deactivated.
-        var searchableUsers = _context.Users
-            .Where(u => (User.Identity.IsAuthenticated || !u.Private) && !u.IsDeactivated);
-
-        // Filter users by name.
-        var nameMatches = searchableUsers.Where(u =>
-            queryParts.Any(part => (u.FirstName + " " + u.LastName).ToLower().Contains(part)));
-
-        // Filter users by skill.
-        var skillMatches = searchableUsers.Where(u =>
-            queryParts.Any(part => u.Skills.Any(s => s.Skill.Title.ToLower().Contains(part))));
-
-        // Combine name & skill matches.
-        var combinedMatches = nameMatches.Intersect(skillMatches);
-
-        // If only one part is in the query, include the user that matches either the name or a skill.
-        var result = queryParts.Length == 1
-            ? nameMatches.Union(skillMatches)
-            : combinedMatches;
-
-        // Select and convert the result into the model.
-        var users = await result
-            .Select(u => new SearchUserViewModel
+        // Get users based on search criteria
+        var users = await _context.Users.Where(u =>
+            searchTerms.All(term =>
+                u.FirstName.Contains(term) ||
+                u.LastName.Contains(term) ||
+                u.Skills.Any(s => s.Skill.Title.Contains(term))
+            )).Select(u => new SearchUserViewModel
             {
                 Id = u.Id,
-                Name = $"{u.FirstName} {u.LastName}",
+                Name = u.FirstName + " " + u.LastName,
                 Avatar = u.AvatarUri
-            })
-            .ToListAsync();
+            }).ToListAsync();
 
         return Ok(users);
     }

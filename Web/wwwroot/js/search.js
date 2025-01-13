@@ -32,7 +32,7 @@ function saveInput(event) {
     }
 
     $.ajax({
-        url: `/home/users?query=${encodeURIComponent(search)}`,
+        url: `/home/users?search=${encodeURIComponent(search)}`,
         method: 'GET',
         success: function (data) {
             listUsers(data);
