@@ -67,6 +67,8 @@ public class HomeController : BaseController
         // Get users based on search criteria
         var users = await _context.Users
             .Where(u =>
+                (User.Identity.IsAuthenticated || !u.Private) && !u.IsDeactivated &&
+
                 searchTerms.All(term =>
                     u.FirstName.Contains(term) ||
                     u.LastName.Contains(term) ||
