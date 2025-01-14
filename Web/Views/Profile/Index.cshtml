@@ -130,7 +130,7 @@ else
                                             <h3 class="roadmap-title">@q.Title</h3>
                                             <p class="roadmap-place">@q.Location</p>
                                             <p>@q.Description</p>
-                                            <span class="roadmap-date">@q.StartDate - @q.EndDate</span>
+                                            <span class="roadmap-date">@q.StartDate - @(q.EndDate == null ? "Now" : q.EndDate)</span>
                                         </div>
                                         @if (Model.IsProfileOwner)
                                         {

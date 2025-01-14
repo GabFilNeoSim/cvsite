@@ -16,7 +16,7 @@
                 <input type="hidden" asp-for="Types" value="@Model.Types.ToList()"/>
 
                 <div class="form-child">
-                    <label asp-for="Title">Title</label>
+                    <label asp-for="Title">Title<span>*</span></label>
                     <div class="form-child-input">
                         <div><i class="fa-solid fa-heading"></i></div>
                         <input asp-for="Title" type="text" placeholder="Write title here">
@@ -24,7 +24,7 @@
                     <span class="form-error" asp-validation-for="Title"></span>
                 </div>
                 <div class="form-child">
-                    <label asp-for="Location">Location</label>
+                    <label asp-for="Location">Location<span>*</span></label>
                     <div class="form-child-input">
                         <div><i class="fa-solid fa-location-dot"></i></div>
                         <input type="text" placeholder="Stockholm" asp-for="Location">
@@ -32,7 +32,7 @@
                     <span class="form-error" asp-validation-for="Location"></span>
                 </div>
                 <div class="form-child">
-                    <label asp-for="Description">Description</label>
+                    <label asp-for="Description">Description<span>*</span></label>
                     <div class="form-child-input">
                         <div><i class="fa-solid fa-quote-left"></i></div>
                         <input type="text" placeholder="Lorem ipsum" asp-for="Description">
@@ -41,10 +41,10 @@
                 </div>
                 <div class="form-row">
                     <div class="form-child">
-                        <label asp-for="StartDate">Start date</label>
+                        <label asp-for="StartDate">Start date<span>*</span></label>
                         <div class="form-child-input">
                             <div><i class="fa-solid fa-calendar-days"></i></div>
-                            <input type="date" asp-for="StartDate" value="@Model.StartDate.ToString("YYYY-MM-DD")">
+                            <input type="date" asp-for="StartDate">
                         </div>
                         <span class="form-error" asp-validation-for="StartDate"></span>
                     </div>

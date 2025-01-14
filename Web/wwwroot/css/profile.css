@@ -51,6 +51,7 @@
     position: relative;
     height: 130px;
     width: max-content;
+    cursor: pointer;
 }
 
 .change-avatar{
@@ -84,7 +85,6 @@
     height: 130px;
     border-radius: 50%;
     align-self: center;
-    cursor: pointer;
 }
 
 #profile-content {

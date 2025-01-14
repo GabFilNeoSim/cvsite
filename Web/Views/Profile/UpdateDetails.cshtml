@@ -23,7 +23,7 @@
             <form class="form" asp-controller="Profile" asp-action="UpdateDetails" asp-route-id="@userId">
                 <div class="form-row">
                     <div class="form-child">
-                        <label asp-for="FirstName">Firstname</label>
+                        <label asp-for="FirstName">Firstname<span>*</span></label>
                         <div class="form-child-input">
                             <div><i class="fa-solid fa-signature"></i></div>
                             <input type="text" asp-for="FirstName">
@@ -31,7 +31,7 @@
                         <span class="form-error" asp-validation-for="FirstName"></span>
                     </div>
                     <div class="form-child">
-                        <label asp-for="LastName">Lastname</label>
+                        <label asp-for="LastName">Lastname<span>*</span></label>
                         <div class="form-child-input">
                             <div><i class="fa-solid fa-signature"></i></div>
                             <input type="text" asp-for="LastName">
@@ -40,7 +40,7 @@
                     </div>
                 </div>
                 <div class="form-child">
-                    <label asp-for="Address">Address</label>
+                    <label asp-for="Address">Address<span>*</span></label>
                     <div class="form-child-input">
                         <div><i class="fa-solid fa-house"></i></div>
                         <input type="text" asp-for="Address">

@@ -16,7 +16,7 @@
             <form class="form" asp-action="Register">
                 <div class="form-row">
                     <div class="form-child">
-                        <label asp-for="FirstName">Firstname</label>
+                        <label asp-for="FirstName">Firstname<span>*</span></label>
                         <div class="form-child-input">
                             <div><i class="fa-solid fa-signature"></i></div>
                             <input type="text" placeholder="John" asp-for="FirstName">
@@ -24,7 +24,7 @@
                         <span class="form-error" asp-validation-for="FirstName"></span>
                     </div>
                     <div class="form-child">
-                        <label asp-for="LastName">Lastname</label>
+                        <label asp-for="LastName">Lastname<span>*</span</label>
                         <div class="form-child-input">
                             <div><i class="fa-solid fa-signature"></i></div>
                             <input type="text" placeholder="Doe" asp-for="LastName">
@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <div class="form-child">
-                    <label asp-for="Address">Address</label>
+                    <label asp-for="Address">Address<span>*</span</label>
                     <div class="form-child-input">
                         <div><i class="fa-solid fa-house"></i></div>
                         <input type="text" placeholder="Täby, Stockolm"  asp-for="Address">
@@ -41,7 +41,7 @@
                     <span class="form-error" asp-validation-for="Address"></span>
                 </div>
                 <div class="form-child">
-                    <label asp-for="Email">Email</label>
+                    <label asp-for="Email">Email<span>*</span</label>
                     <div class="form-child-input">
                         <div><i class="fa-solid fa-envelope"></i></div>
                         <input type="text" placeholder="Enter email" asp-for="Email">
@@ -49,7 +49,7 @@
                     <span class="form-error" asp-validation-for="Email"></span>
                 </div>
                 <div class="form-child">
-                    <label asp-for="Password">Password</label>
+                    <label asp-for="Password">Password<span>*</span</label>
                     <div class="form-child-input">
                         <div><i class="fa-solid fa-lock"></i></div>
                         <input type="password" placeholder="Password" asp-for="Password">
@@ -57,7 +57,7 @@
                     <span class="form-error" asp-validation-for="Password"></span>
                 </div>
                 <div class="form-child">
-                    <label asp-for="ConfirmPassword">Confirm password</label>
+                    <label asp-for="ConfirmPassword">Confirm password<span>*</span</label>
                     <div class="form-child-input">
                         <div><i class="fa-solid fa-lock"></i></div>
                         <input type="password" placeholder="Confirm password" asp-for="ConfirmPassword">

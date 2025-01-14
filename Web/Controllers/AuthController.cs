@@ -92,7 +92,7 @@ public class AuthController : BaseController
         if (user.IsDeactivated)
         {
             TempData["NotifyType"] = "error";
-            TempData["NotifyMessage"] = "You're account is deactivated.";
+            TempData["NotifyMessage"] = "You're account is deactivated";
             return View(model);
         }
 

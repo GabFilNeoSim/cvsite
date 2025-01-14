@@ -21,7 +21,7 @@ public partial class AppDbContext : IdentityDbContext<User>
     {
         base.OnModelCreating(modelBuilder);
         
-        // User-Project relationship (Many-to-Many)
+        // User-Project relationship
         modelBuilder.Entity<UserProject>()
             .HasKey(up => new { up.UserId, up.ProjectId });
 
@@ -37,9 +37,9 @@ public partial class AppDbContext : IdentityDbContext<User>
             .HasForeignKey(up => up.ProjectId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // User-Skill relationship (Many-to-Many)
+        // User-Skill relationship
         modelBuilder.Entity<UserSkill>()
-            .HasKey(us => new { us.UserId, us.SkillId }); // Composite Key
+            .HasKey(us => new { us.UserId, us.SkillId });
 
         modelBuilder.Entity<UserSkill>()
             .HasOne(us => us.User)

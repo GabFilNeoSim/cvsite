@@ -18,7 +18,7 @@ public class AddQualificationViewModel
     public string Location { get; set; }
 
     [Required(ErrorMessage = "Start date is required")]
-    public DateOnly StartDate { get; set; } = new DateOnly();
+    public DateOnly StartDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
 
     public DateOnly? EndDate { get; set; }
 

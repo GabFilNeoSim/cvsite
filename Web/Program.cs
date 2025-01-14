@@ -22,10 +22,10 @@ public class Program
 
         builder.Services.ConfigureApplicationCookie(options =>
         {
-            options.ExpireTimeSpan = TimeSpan.FromDays(7); // Cookie lifespan
-            options.SlidingExpiration = true; // Extends the cookie expiration on activity
-            options.LoginPath = "/Auth/Login"; // Redirect to login page if not authenticated
-            options.AccessDeniedPath = "/Auth/Login"; // Redirect to access denied page
+            options.ExpireTimeSpan = TimeSpan.FromDays(7);
+            options.SlidingExpiration = true;
+            options.LoginPath = "/Auth/Login";
+            options.AccessDeniedPath = "/Auth/Login";
         });
 
         builder.Services.Configure<IdentityOptions>(options =>
@@ -61,12 +61,12 @@ public class Program
 
         app.UseAuthorization();
 
-        //app.UseStatusCodePagesWithRedirects("/404");
+        app.UseStatusCodePagesWithRedirects("/404");
 
-        //app.MapControllerRoute(
-        //    name: "404",
-        //    pattern: "404",
-        //    defaults: new { controller = "Base", action = "Error404" });
+        app.MapControllerRoute(
+            name: "404",
+            pattern: "404",
+            defaults: new { controller = "Base", action = "Error404" });
 
         app.MapControllerRoute(
             name: "default",

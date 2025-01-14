@@ -10,12 +10,12 @@
 			<form id="message-form" asp-controller="Message" asp-action="SendAnonymous">
 				<input type="hidden" asp-for="@Model.ReceiverId" />
 				<div class="message-form-child">
-					<label asp-for="Name">Name</label>
+					<label asp-for="Name">Name<span>*</span></label>
 					<input asp-for=Name type="text" placeholder="John Doe" />
 				</div>
 				<span class="form-error" asp-validation-for="Name"></span>
 				<div class="message-form-child">
-					<label asp-for="Text">Message</label>
+					<label asp-for="Text">Message<span>*</span></label>
 					<textarea asp-for="Text" placeholder="Lorem ipsum..."></textarea>
 				</div>
 				<span class="form-error" asp-validation-for="Text"></span>

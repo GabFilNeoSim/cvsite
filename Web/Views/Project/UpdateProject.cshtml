@@ -16,7 +16,7 @@
         <div class="form-content">
             <form class="form" asp-controller="Project" asp-action="UpdateProject" asp-route-pid="@Model.ProjectId">
                 <div class="form-child">
-                    <label asp-for="Title">Title</label>
+                    <label asp-for="Title">Title<span>*</span</label>
                     <div class="form-child-input">
                         <div><i class="fa-solid fa-signature"></i></div>
                         <input type="text" asp-for="Title">
@@ -24,7 +24,7 @@
                     <span class="form-error" asp-validation-for="Title"></span>
                 </div>
                 <div class="form-child">
-                    <label asp-for="Description">Description</label>
+                    <label asp-for="Description">Description<span>*</span</label>
                     <div class="form-child-input">
                         <textarea asp-for="Description"></textarea>
                     </div>

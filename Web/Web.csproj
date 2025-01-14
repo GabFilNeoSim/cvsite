@@ -54,8 +54,4 @@
       <ProjectReference Include="..\Models\Models.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="wwwroot\assets\projects\" />
-    </ItemGroup>
-
 </Project>
