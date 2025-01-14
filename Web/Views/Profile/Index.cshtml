@@ -163,7 +163,7 @@ else
                                             <h3 class="roadmap-title">@qualification.Title</h3>
                                             <p class="roadmap-place">@qualification.Location</p>
                                             <p>@qualification.Description</p>
-                                            <span class="roadmap-date">@qualification.StartDate - @qualification.EndDate</span>
+                                            <span class="roadmap-date">@qualification.StartDate - @(qualification.EndDate == null ? "Now" : qualification.EndDate)</span>
                                         </div>
                                         @if (Model.IsProfileOwner)
                                         {
